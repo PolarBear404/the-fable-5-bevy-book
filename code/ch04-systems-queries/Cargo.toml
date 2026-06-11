@@ -1,0 +1,11 @@
+[package]
+name = "ch04-systems-queries"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+# ANCHOR: deps
+[dependencies]
+# debug feature 让运行期报错（如 B0001 借用冲突）带上系统与组件的真实类型名
+bevy = { workspace = true, features = ["debug"] }
+# ANCHOR_END: deps
