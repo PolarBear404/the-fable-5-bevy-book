@@ -17,7 +17,7 @@
 | 章 | 标题 | 状态 | 产物（crate / 正文文件，动工时填写） |
 |---|---|---|---|
 | 1 | 认识 Bevy | ✅ | book/src/ch01-00～04（本章无代码 crate；引用 code/Cargo.toml 的 dev_profile 片段） |
-| 2 | 第一个 Bevy App | ⬜ | |
+| 2 | 第一个 Bevy App | ✅ | code/ch02-first-app（src/main.rs + examples/listing-02-01～06）；book/src/ch02-00～03 |
 | 3 | Entity 与 Component | ⬜ | |
 | 4 | System 与 Query | ⬜ | |
 | 5 | Resource——全局唯一数据 | ⬜ | |

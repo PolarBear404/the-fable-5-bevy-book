@@ -9,3 +9,7 @@
   - [ECS 思维模型](ch01-02-ecs-mental-model.md)
   - [安装与项目搭建](ch01-03-installation.md)
   - [如何使用本书](ch01-04-how-to-use-this-book.md)
+- [第一个 Bevy App](ch02-00-your-first-bevy-app.md)
+  - [App 与 System](ch02-01-app-and-systems.md)
+  - [Plugin：App 能力的来源](ch02-02-plugins.md)
+  - [一个会动的 Sprite](ch02-03-a-moving-sprite.md)
