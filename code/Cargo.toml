@@ -1,6 +1,6 @@
 [workspace]
 resolver = "2"
-members = ["smoke", "ch02-first-app"]
+members = ["smoke", "ch02-first-app", "ch03-entities-components"]
 
 [workspace.package]
 edition = "2024"
