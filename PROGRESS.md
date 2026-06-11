@@ -16,7 +16,7 @@
 
 | 章 | 标题 | 状态 | 产物（crate / 正文文件，动工时填写） |
 |---|---|---|---|
-| 1 | 认识 Bevy | 🟡 | book/src/ch01-*.md（本章无代码 crate） |
+| 1 | 认识 Bevy | ✅ | book/src/ch01-00～04（本章无代码 crate；引用 code/Cargo.toml 的 dev_profile 片段） |
 | 2 | 第一个 Bevy App | ⬜ | |
 | 3 | Entity 与 Component | ⬜ | |
 | 4 | System 与 Query | ⬜ | |

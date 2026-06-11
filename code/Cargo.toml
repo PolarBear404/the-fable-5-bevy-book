@@ -10,8 +10,10 @@ publish = false
 bevy = "=0.18.1"
 
 # Bevy 官方推荐的开发期配置：自身代码 O1、依赖 O3，加快迭代时的编译与运行
+# ANCHOR: dev_profile
 [profile.dev]
 opt-level = 1
 
 [profile.dev.package."*"]
 opt-level = 3
+# ANCHOR_END: dev_profile
