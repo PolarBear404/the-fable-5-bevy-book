@@ -1,0 +1,14 @@
+# ANCHOR: deps
+[package]
+name = "ch14-assets"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# file_watcher 让 AssetServer 监视磁盘文件改动——热重载（14.6 节）的开关。
+# 这是开发期 feature，发布构建不应该带它
+bevy = { workspace = true, features = ["file_watcher"] }
+# 自定义 AssetLoader（14.5 节）的错误类型用 thiserror 派生
+thiserror = "2"
+# ANCHOR_END: deps

@@ -14,6 +14,7 @@ members = [
     "ch11-deep-ecs",
     "ch12-transforms",
     "ch13-cameras",
+    "ch14-assets",
 ]
 
 [workspace.package]
