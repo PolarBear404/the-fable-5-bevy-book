@@ -23,7 +23,7 @@
 | 5 | Resource——全局唯一数据 | ✅ | code/ch05-resources（src/main.rs + examples/listing-05-01～07，开 bevy `debug` feature）；book/src/ch05-00～04 |
 | 6 | Schedule 与执行顺序 | ✅ | code/ch06-schedules（src/main.rs + examples/listing-06-01～08，开 bevy `debug` feature）；book/src/ch06-00～05 |
 | 7 | Message——缓冲消息 | ✅ | code/ch07-messages（src/main.rs + examples/listing-07-01～08，开 bevy `debug` feature）；book/src/ch07-00～05 |
-| 8 | Event 与 Observer | ⬜ | |
+| 8 | Event 与 Observer | ✅ | code/ch08-events-observers（src/main.rs + examples/listing-08-01～09，开 bevy `debug` feature）；book/src/ch08-00～05 |
 | 9 | 实体关系与层级 | ⬜ | |
 | 10 | State——游戏状态机 | ⬜ | |
 | 11 | 深入 ECS | ⬜ | |
