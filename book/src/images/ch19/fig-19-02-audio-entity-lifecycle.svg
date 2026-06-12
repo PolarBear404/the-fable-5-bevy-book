@@ -1,0 +1,59 @@
+<svg viewBox="0 0 780 430" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-19lc" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr-19lc-o" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="780" height="430" rx="10" fill="#f7f5f0"/>
+
+  <text x="390" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">一个发声实体的一生</text>
+
+  <!-- 第一站：spawn -->
+  <rect x="30" y="120" width="178" height="84" rx="8" fill="#ffffff" stroke="#b8b1a4" stroke-width="1.5"/>
+  <text x="119" y="146" text-anchor="middle" font-size="13.5" fill="#4a463f" font-weight="bold">spawn 实体</text>
+  <text x="119" y="168" text-anchor="middle" font-size="12" fill="#1d6b40">AudioPlayer(handle)</text>
+  <text x="119" y="188" text-anchor="middle" font-size="12" fill="#1d6b40">PlaybackSettings</text>
+  <text x="119" y="226" text-anchor="middle" font-size="11" fill="#7a7468">Handle 还在路上也没关系</text>
+
+  <!-- 箭头：到货 -->
+  <path d="M208,162 L266,162" stroke="#7a7468" stroke-width="1.8" fill="none" marker-end="url(#arr-19lc)"/>
+  <text x="237" y="150" text-anchor="middle" font-size="11" fill="#7a7468">资产到货</text>
+
+  <!-- 第二站：开播 -->
+  <rect x="268" y="120" width="196" height="84" rx="8" fill="#ffffff" stroke="#1d6b40" stroke-width="2"/>
+  <text x="366" y="146" text-anchor="middle" font-size="13.5" fill="#1d6b40" font-weight="bold">引擎接通，开播</text>
+  <text x="366" y="168" text-anchor="middle" font-size="12" fill="#4a463f">插上 AudioSink</text>
+  <text x="366" y="188" text-anchor="middle" font-size="11" fill="#7a7468">PostUpdate · 经 Commands</text>
+  <text x="366" y="226" text-anchor="middle" font-size="11" fill="#7a7468">最早也要下一帧才查得到</text>
+
+  <!-- 箭头：播完 -->
+  <path d="M464,162 L505,162 L505,108 L530,108" stroke="#c05a2e" stroke-width="1.8" fill="none" marker-end="url(#arr-19lc-o)"/>
+  <path d="M505,162 L505,176 L530,176" stroke="#c05a2e" stroke-width="1.8" fill="none" marker-end="url(#arr-19lc-o)"/>
+  <path d="M505,176 L505,244 L530,244" stroke="#c05a2e" stroke-width="1.8" fill="none" marker-end="url(#arr-19lc-o)"/>
+  <path d="M505,244 L505,312 L530,312" stroke="#c05a2e" stroke-width="1.8" fill="none" marker-end="url(#arr-19lc-o)"/>
+  <text x="484" y="98" text-anchor="middle" font-size="11.5" fill="#c05a2e">播完了？</text>
+
+  <!-- 四种 PlaybackMode -->
+  <rect x="532" y="82" width="218" height="52" rx="8" fill="#efe9dd" stroke="#b8b1a4" stroke-width="1.5"/>
+  <text x="544" y="103" font-size="12.5" fill="#4a463f" font-weight="bold">Once（默认）</text>
+  <text x="544" y="122" font-size="11" fill="#7a7468">声停了，实体和哑组件留在场上</text>
+
+  <rect x="532" y="150" width="218" height="52" rx="8" fill="#ffffff" stroke="#1d6b40" stroke-width="1.5"/>
+  <text x="544" y="171" font-size="12.5" fill="#1d6b40" font-weight="bold">Loop</text>
+  <text x="544" y="190" font-size="11" fill="#7a7468">根本播不完——等你拿 sink 喊停</text>
+
+  <rect x="532" y="218" width="218" height="52" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="1.5"/>
+  <text x="544" y="239" font-size="12.5" fill="#c05a2e" font-weight="bold">Despawn</text>
+  <text x="544" y="258" font-size="11" fill="#7a7468">引擎拆台：整个实体连同子实体</text>
+
+  <rect x="532" y="286" width="218" height="52" rx="8" fill="#ffffff" stroke="#8a6f9e" stroke-width="1.5"/>
+  <text x="544" y="307" font-size="12.5" fill="#8a6f9e" font-weight="bold">Remove</text>
+  <text x="544" y="326" font-size="11" fill="#7a7468">只卸音频组件，实体本身留用</text>
+
+  <!-- 底注 -->
+  <line x1="36" y1="372" x2="744" y2="372" stroke="#b8b1a4" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="390" y="398" text-anchor="middle" font-size="12" fill="#4a463f">开播之后改 PlaybackSettings 不起作用——播放中的一切控制，都从 AudioSink 拧</text>
+</svg>

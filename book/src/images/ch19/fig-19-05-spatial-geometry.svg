@@ -1,0 +1,60 @@
+<svg viewBox="0 0 780 440" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <rect x="0" y="0" width="780" height="440" rx="10" fill="#f7f5f0"/>
+
+  <text x="390" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">空间音频的几何：每只耳朵各算各的账</text>
+
+  <!-- 台面（俯视） -->
+  <rect x="40" y="64" width="420" height="250" rx="8" fill="#efe9dd" stroke="#b8b1a4" stroke-width="1"/>
+  <text x="56" y="86" font-size="11" fill="#7a7468">俯视戏台</text>
+
+  <!-- 发声体：阿燕与梆子 -->
+  <circle cx="130" cy="120" r="11" fill="#e8c89e" stroke="#c05a2e" stroke-width="2.5"/>
+  <text x="130" y="103" text-anchor="middle" font-size="12" fill="#c05a2e" font-weight="bold">声源（梆子）</text>
+
+  <!-- 听者：双耳 -->
+  <line x1="190" y1="262" x2="330" y2="262" stroke="#7a7468" stroke-width="1.5"/>
+  <rect x="174" y="246" width="32" height="32" rx="5" fill="#d98c84" stroke="#a9554c" stroke-width="2"/>
+  <rect x="314" y="246" width="32" height="32" rx="5" fill="#8fc7bf" stroke="#3e8076" stroke-width="2"/>
+  <text x="190" y="300" text-anchor="middle" font-size="12" fill="#a9554c" font-weight="bold">左耳</text>
+  <text x="330" y="300" text-anchor="middle" font-size="12" fill="#3e8076" font-weight="bold">右耳</text>
+  <text x="260" y="302" text-anchor="middle" font-size="10.5" fill="#7a7468">SpatialListener</text>
+
+  <!-- 距离线 -->
+  <line x1="136" y1="131" x2="186" y2="248" stroke="#a9554c" stroke-width="1.8" stroke-dasharray="6,4"/>
+  <text x="136" y="200" text-anchor="middle" font-size="12.5" fill="#a9554c" font-weight="bold">d左</text>
+  <line x1="140" y1="127" x2="318" y2="250" stroke="#3e8076" stroke-width="1.8" stroke-dasharray="6,4"/>
+  <text x="262" y="172" text-anchor="middle" font-size="12.5" fill="#3e8076" font-weight="bold">d右</text>
+
+  <!-- 公式区 -->
+  <rect x="488" y="72" width="262" height="150" rx="8" fill="#ffffff" stroke="#b8b1a4" stroke-width="1.5"/>
+  <text x="619" y="98" text-anchor="middle" font-size="13" fill="#4a463f" font-weight="bold">每只耳朵的增益</text>
+  <text x="619" y="126" text-anchor="middle" font-size="12.5" fill="#4a463f">声像系数 × min(1 / d², 1)</text>
+  <line x1="508" y1="140" x2="730" y2="140" stroke="#b8b1a4" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="508" y="162" font-size="11.5" fill="#7a7468">· 衰减：距离平方反比，1 单位内不衰减</text>
+  <text x="508" y="182" font-size="11.5" fill="#7a7468">· 声像：哪只耳朵近，哪边响（0.5～1）</text>
+  <text x="508" y="202" font-size="11.5" fill="#7a7468">· 声源先被并成单声道再分给双耳</text>
+
+  <!-- 衰减曲线小图 -->
+  <rect x="488" y="240" width="262" height="150" rx="8" fill="#ffffff" stroke="#b8b1a4" stroke-width="1.5"/>
+  <text x="619" y="262" text-anchor="middle" font-size="11.5" fill="#7a7468">衰减系数随距离 d（音频单位）</text>
+  <g stroke="#b8b1a4" stroke-width="1.2">
+    <line x1="516" y1="368" x2="736" y2="368"/>
+    <line x1="516" y1="368" x2="516" y2="276"/>
+  </g>
+  <!-- min(1/d²,1)：d∈(0,1] 平台 1.0，之后 1/d² 下落；x: 516+d*44, y: 368-90*gain -->
+  <path d="M516,278 L560,278 L571,308.6 L582,329.4 L604,345.5 L626,353.0 L648,357.1 L670,359.5 L692,361.1 L714,362.2 L736,362.9"
+        stroke="#c05a2e" stroke-width="2.2" fill="none"/>
+  <text x="585" y="300" font-size="10.5" fill="#c05a2e">d=1</text>
+  <text x="510" y="282" font-size="10.5" fill="#7a7468" text-anchor="end">1.0</text>
+  <g font-size="10.5" fill="#7a7468" text-anchor="middle">
+    <text x="604" y="382">2</text>
+    <text x="648" y="382">3</text>
+    <text x="692" y="382">4</text>
+    <text x="736" y="382">5</text>
+  </g>
+
+  <!-- 底注：SpatialScale -->
+  <text x="250" y="352" text-anchor="middle" font-size="12" fill="#4a463f">d 用的是换算后的“音频单位”：</text>
+  <text x="250" y="374" text-anchor="middle" font-size="12" fill="#4a463f">世界坐标 × SpatialScale</text>
+  <text x="250" y="400" text-anchor="middle" font-size="11.5" fill="#c05a2e">2D 里 1 像素当 1 单位用，几百像素外就近乎无声——尺要自己定</text>
+</svg>

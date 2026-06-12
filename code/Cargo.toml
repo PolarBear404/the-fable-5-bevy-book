@@ -19,6 +19,7 @@ members = [
     "ch16-text",
     "ch17-input",
     "ch18-time",
+    "ch19-audio",
 ]
 
 [workspace.package]

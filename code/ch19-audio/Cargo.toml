@@ -1,0 +1,10 @@
+# ANCHOR: deps
+[package]
+name = "ch19-audio"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# 默认特性只认 .ogg（vorbis）；本章资产是脚本合成的 .wav，要把 wav 这道闸打开
+bevy = { workspace = true, features = ["wav"] }
+# ANCHOR_END: deps
