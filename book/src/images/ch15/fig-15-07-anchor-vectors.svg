@@ -1,0 +1,62 @@
+<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="470" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="36" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">Anchor(Vec2)：钉子钉在画的哪个点上，单位是自身宽高的比例</text>
+
+  <!-- 左：画框与九个锚点 -->
+  <rect x="104" y="110" width="220" height="220" fill="#f6dfd2" stroke="#c05a2e" stroke-width="2" rx="4"/>
+  <text x="214" y="296" text-anchor="middle" font-size="13.5" fill="#a14e26">这张画（Sprite 的可见矩形）</text>
+
+  <!-- 九个锚点 -->
+  <g fill="#2c55ab">
+    <circle cx="104"  cy="110" r="5"/><circle cx="214" cy="110" r="5"/><circle cx="324" cy="110" r="5"/>
+    <circle cx="104"  cy="220" r="5"/><circle cx="214" cy="220" r="5"/><circle cx="324" cy="220" r="5"/>
+    <circle cx="104"  cy="330" r="5"/><circle cx="214" cy="330" r="5"/><circle cx="324" cy="330" r="5"/>
+  </g>
+  <g font-size="12" fill="#2c55ab">
+    <text x="98"  y="100" text-anchor="end">TOP_LEFT</text>
+    <text x="214" y="98"  text-anchor="middle">TOP_CENTER</text>
+    <text x="332" y="100">TOP_RIGHT</text>
+    <text x="94"  y="224" text-anchor="end">CENTER_LEFT</text>
+    <text x="334" y="224">CENTER_RIGHT</text>
+    <text x="98"  y="352" text-anchor="end">BOTTOM_LEFT</text>
+    <text x="214" y="354" text-anchor="middle">BOTTOM_CENTER</text>
+    <text x="332" y="352">BOTTOM_RIGHT</text>
+  </g>
+  <text x="224" y="214" font-size="12" fill="#2c55ab">CENTER (0, 0)</text>
+
+  <!-- 角上的坐标值 -->
+  <g font-size="11.5" fill="#8a8378">
+    <text x="112" y="128">(-0.5, 0.5)</text>
+    <text x="258" y="128">(0.5, 0.5)</text>
+    <text x="112" y="322">(-0.5, -0.5)</text>
+    <text x="254" y="322">(0.5, -0.5)</text>
+  </g>
+
+  <!-- 右：同一枚钉子，两种钉法 -->
+  <text x="560" y="104" text-anchor="middle" font-size="14" fill="#4a463f" font-weight="bold">同一枚钉子（Transform 的平移）</text>
+  <text x="560" y="124" text-anchor="middle" font-size="14" fill="#4a463f" font-weight="bold">两种钉法</text>
+
+  <!-- CENTER：画盖在钉子上 -->
+  <rect x="425" y="205" width="90" height="90" fill="#dde6f7" stroke="#3b6ed9" stroke-width="2" opacity="0.9" rx="3"/>
+  <!-- BOTTOM_CENTER：画挂在钉子上方 -->
+  <rect x="605" y="160" width="90" height="90" fill="#d9efdd" stroke="#3f8a4e" stroke-width="2" opacity="0.9" rx="3"/>
+
+  <!-- 金十字 ×2（画在矩形之上） -->
+  <g stroke="#c8a23a" stroke-width="4">
+    <line x1="455" y1="250" x2="485" y2="250"/><line x1="470" y1="235" x2="470" y2="265"/>
+    <line x1="635" y1="250" x2="665" y2="250"/><line x1="650" y1="235" x2="650" y2="265"/>
+  </g>
+
+  <text x="470" y="320" text-anchor="middle" font-size="12.5" fill="#2c55ab">CENTER</text>
+  <text x="470" y="338" text-anchor="middle" font-size="12.5" fill="#2c55ab">腰眼对准钉子</text>
+  <text x="650" y="320" text-anchor="middle" font-size="12.5" fill="#3f8a4e">BOTTOM_CENTER</text>
+  <text x="650" y="338" text-anchor="middle" font-size="12.5" fill="#3f8a4e">鞋底踩着钉子</text>
+
+  <!-- 底注 -->
+  <rect x="80" y="378" width="600" height="74" rx="8" fill="#eceaf6" stroke="#b9b3d6" stroke-width="1"/>
+  <text x="100" y="402" font-size="13" fill="#5a548a" font-weight="bold">Anchor 是独立组件，也是 Sprite 的 required component：不写就是 CENTER。</text>
+  <text x="100" y="422" font-size="12.5" fill="#5a548a">钉法随实体走、不随图走——同一张图可以这边钉腰、那边钉脚；</text>
+  <text x="100" y="440" font-size="12.5" fill="#5a548a">不限于九个常量，任意比例都行：Anchor(Vec2::new(0.0, -0.4))。</text>
+</svg>

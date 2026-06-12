@@ -1,0 +1,75 @@
+<svg viewBox="0 0 760 420" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-b15" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#3b6ed9"/>
+    </marker>
+    <marker id="arr-o15" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="420" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="36" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">一张图，一份切格说明书：TextureAtlasLayout::from_grid(tile_size, columns, rows)</text>
+
+  <!-- 图片整体 -->
+  <rect x="80" y="70" width="432" height="160" fill="#efe9df" stroke="#8a8378" stroke-width="2" rx="4"/>
+
+  <!-- 单元格：6 列 2 行，每格 72×80 -->
+  <!-- 第 0 行：正面 idle（暖色） -->
+  <g stroke="#c05a2e" stroke-width="1.2" fill="#f6dfd2">
+    <rect x="80"  y="70" width="72" height="80"/>
+    <rect x="152" y="70" width="72" height="80"/>
+    <rect x="224" y="70" width="72" height="80"/>
+    <rect x="296" y="70" width="72" height="80"/>
+    <rect x="368" y="70" width="72" height="80"/>
+    <rect x="440" y="70" width="72" height="80"/>
+  </g>
+  <!-- 第 1 行：侧身走路（冷色） -->
+  <g stroke="#3b6ed9" stroke-width="1.2" fill="#dde6f7">
+    <rect x="80"  y="150" width="72" height="80"/>
+    <rect x="152" y="150" width="72" height="80"/>
+    <rect x="224" y="150" width="72" height="80"/>
+    <rect x="296" y="150" width="72" height="80"/>
+    <rect x="368" y="150" width="72" height="80"/>
+    <rect x="440" y="150" width="72" height="80"/>
+  </g>
+
+  <!-- 编号 -->
+  <g font-size="17" font-weight="bold" fill="#a14e26" text-anchor="middle">
+    <text x="116" y="116">0</text><text x="188" y="116">1</text><text x="260" y="116">2</text>
+    <text x="332" y="116">3</text><text x="404" y="116">4</text><text x="476" y="116">5</text>
+  </g>
+  <g font-size="17" font-weight="bold" fill="#2c55ab" text-anchor="middle">
+    <text x="116" y="196">6</text><text x="188" y="196">7</text><text x="260" y="196">8</text>
+    <text x="332" y="196">9</text><text x="404" y="196">10</text><text x="476" y="196">11</text>
+  </g>
+
+  <!-- 行说明 -->
+  <text x="528" y="100" font-size="13" fill="#a14e26">第 0 行（row 0）</text>
+  <text x="528" y="118" font-size="13" fill="#a14e26">正面原地 6 帧</text>
+  <text x="528" y="184" font-size="13" fill="#2c55ab">第 1 行（row 1）</text>
+  <text x="528" y="202" font-size="13" fill="#2c55ab">侧身走路 6 帧</text>
+
+  <!-- tile_size 标注（左上角那一格） -->
+  <line x1="80" y1="252" x2="152" y2="252" stroke="#3f8a4e" stroke-width="2"/>
+  <line x1="80" y1="246" x2="80" y2="258" stroke="#3f8a4e" stroke-width="2"/>
+  <line x1="152" y1="246" x2="152" y2="258" stroke="#3f8a4e" stroke-width="2"/>
+  <text x="116" y="274" text-anchor="middle" font-size="13" fill="#3f8a4e" font-weight="bold">tile_size.x = 32 像素</text>
+  <line x1="60" y1="70" x2="60" y2="150" stroke="#3f8a4e" stroke-width="2"/>
+  <line x1="54" y1="70" x2="66" y2="70" stroke="#3f8a4e" stroke-width="2"/>
+  <line x1="54" y1="150" x2="66" y2="150" stroke="#3f8a4e" stroke-width="2"/>
+  <text x="44" y="110" font-size="13" fill="#3f8a4e" font-weight="bold" text-anchor="middle" transform="rotate(-90 44 110)">tile_size.y = 40</text>
+
+  <!-- 索引规则 -->
+  <rect x="80" y="306" width="600" height="84" rx="8" fill="#eceaf6" stroke="#b9b3d6" stroke-width="1"/>
+  <text x="100" y="334" font-size="14" fill="#5a548a" font-weight="bold">编号从左到右、自上而下：index = row × columns + col</text>
+  <text x="100" y="360" font-size="13.5" fill="#5a548a">第 1 行第 1 列（都从 0 数起）→ index = 1 × 6 + 1 = 7</text>
+  <text x="100" y="380" font-size="13.5" fill="#5a548a">合法编号一共 columns × rows = 12 个：0..=11，不存在第 12 格</text>
+
+  <!-- 高亮第 7 格 + 引线 -->
+  <rect x="152" y="150" width="72" height="80" fill="none" stroke="#c8a23a" stroke-width="4"/>
+  <path d="M 230 296 C 260 270, 215 252, 196 236" fill="none" stroke="#c05a2e" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arr-o15)"/>
+  <text x="236" y="300" font-size="13" fill="#c05a2e" font-weight="bold">index = 7</text>
+</svg>
