@@ -1,0 +1,9 @@
+[package]
+name = "ch12-transforms"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug 让组件类型名出现在警告输出里（本章用它看清 B0004 报的是哪个组件）
+bevy = { workspace = true, features = ["debug"] }

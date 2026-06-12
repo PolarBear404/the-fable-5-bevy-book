@@ -27,7 +27,7 @@
 | 9 | 实体关系与层级 | ✅ | code/ch09-relationships（src/main.rs + examples/listing-09-01～09，其中 09-05 在 no-compile/ 下为编译失败示例，开 bevy `debug` feature）；book/src/ch09-00～05 |
 | 10 | State——游戏状态机 | ✅ | code/ch10-states（src/main.rs + examples/listing-10-01～09，其中 10-10 在 no-compile/ 下为编译失败示例，开 bevy `debug` feature）；book/src/ch10-00～06 |
 | 11 | 深入 ECS | ✅ | code/ch11-deep-ecs（src/main.rs + examples/listing-11-01～13，其中 11-02 在 no-compile/ 下为编译失败示例、11-05 为运行 panic 示例；main.rs 即 Listing 11-14；开 bevy `debug`+`track_location` feature）；book/src/ch11-00～07 |
-| 12 | Transform 与坐标系统 | ⬜ | |
+| 12 | Transform 与坐标系统 | ✅ | code/ch12-transforms（src/main.rs + examples/listing-12-01～12，main.rs 即 Listing 12-13，开 bevy `debug` feature）；book/src/ch12-00～08 |
 | 13 | Camera 与视口 | ⬜ | |
 | 14 | Asset 系统 | ⬜ | |
 | 15 | 2D 渲染：Sprite 与图集 | ⬜ | |

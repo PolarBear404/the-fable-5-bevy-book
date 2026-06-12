@@ -12,6 +12,7 @@ members = [
     "ch09-relationships",
     "ch10-states",
     "ch11-deep-ecs",
+    "ch12-transforms",
 ]
 
 [workspace.package]

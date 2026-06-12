@@ -69,3 +69,15 @@
   - [变更检测的发条](ch11-05-change-detection-internals.md)
   - [Disabled：隐身的实体](ch11-06-disabled-entities.md)
   - [盘点日](ch11-07-census-day.md)
+
+# 第三部分　画面、资产与交互
+
+- [Transform 与坐标系统](ch12-00-transforms-and-coordinates.md)
+  - [哪边是上：坐标系约定](ch12-01-which-way-is-up.md)
+  - [Vec：既是位置，也是箭头](ch12-02-vectors.md)
+  - [Transform：摆放、旋转与缩放](ch12-03-translate-rotate-scale.md)
+  - [朝向：Quat、Rot2 与 Dir](ch12-04-facing-directions.md)
+  - [月亮的难题：把轨道交给层级](ch12-05-the-moons-problem.md)
+  - [两本账：GlobalTransform 与传播](ch12-06-two-ledgers.md)
+  - [观测站的几何课](ch12-07-geometry-toolbox.md)
+  - [天文馆开馆](ch12-08-planetarium-opens.md)
