@@ -1,0 +1,69 @@
+<svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="prop-o" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+    <marker id="prop-g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L7,4 L0,8 z" fill="#8a8378"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="430" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="40" text-anchor="middle" font-size="13.5" fill="#5a5650"><tspan font-weight="bold">你写的</tspan>：每一级的局部 Transform，各记各的小账</text>
+
+  <!-- 局部账链条：地球盘 × 地球 × 月亮盘 × 月亮 -->
+  <rect x="30" y="60" width="150" height="84" rx="8" fill="none" stroke="#3b6ed9" stroke-dasharray="5 4"/>
+  <text x="105" y="86" text-anchor="middle" font-size="14" font-weight="bold" fill="#5a5650">地球盘</text>
+  <text x="105" y="108" text-anchor="middle" font-size="11.5" fill="#8a8378">Transform</text>
+  <text x="105" y="128" text-anchor="middle" font-size="13" fill="#3b6ed9">绕 z 转 0.5t</text>
+
+  <text x="197" y="112" text-anchor="middle" font-size="24" fill="#5a5650">×</text>
+
+  <rect x="215" y="60" width="150" height="84" rx="8" fill="#e7edfb" stroke="#3b6ed9"/>
+  <text x="290" y="86" text-anchor="middle" font-size="14" font-weight="bold" fill="#5a5650">地球</text>
+  <text x="290" y="108" text-anchor="middle" font-size="11.5" fill="#8a8378">Transform</text>
+  <text x="290" y="128" text-anchor="middle" font-size="13" fill="#3b6ed9">(240, 0, 0)</text>
+
+  <text x="382" y="112" text-anchor="middle" font-size="24" fill="#5a5650">×</text>
+
+  <rect x="400" y="60" width="150" height="84" rx="8" fill="none" stroke="#c05a2e" stroke-dasharray="5 4"/>
+  <text x="475" y="86" text-anchor="middle" font-size="14" font-weight="bold" fill="#5a5650">月亮盘</text>
+  <text x="475" y="108" text-anchor="middle" font-size="11.5" fill="#8a8378">Transform</text>
+  <text x="475" y="128" text-anchor="middle" font-size="13" fill="#c05a2e">绕 z 转 2.0t</text>
+
+  <text x="567" y="112" text-anchor="middle" font-size="24" fill="#5a5650">×</text>
+
+  <rect x="585" y="60" width="150" height="84" rx="8" fill="#f1ece6" stroke="#9b958c"/>
+  <text x="660" y="86" text-anchor="middle" font-size="14" font-weight="bold" fill="#5a5650">月亮</text>
+  <text x="660" y="108" text-anchor="middle" font-size="11.5" fill="#8a8378">Transform（籍册）</text>
+  <text x="660" y="128" text-anchor="middle" font-size="13" fill="#5a5650">(55, 0, 0) 从不变</text>
+
+  <!-- 传播：沿树逐级相乘 -->
+  <line x1="380" y1="156" x2="380" y2="200" stroke="#c05a2e" stroke-width="3" marker-end="url(#prop-o)"/>
+  <text x="398" y="176" font-size="13" fill="#c05a2e" font-weight="bold">引擎写的：传播沿树把小账相乘</text>
+  <text x="398" y="194" font-size="12" fill="#8a8378">PostUpdate · TransformSystems::Propagate</text>
+
+  <!-- 世界账 -->
+  <rect x="170" y="208" width="420" height="86" rx="8" fill="#f0ece3" stroke="#c05a2e" stroke-width="1.5"/>
+  <text x="380" y="234" text-anchor="middle" font-size="14" font-weight="bold" fill="#c05a2e">月亮的 GlobalTransform（世界账）</text>
+  <text x="380" y="258" text-anchor="middle" font-size="13" fill="#5a5650">= 地球盘 × 地球 × 月亮盘 × (55, 0, 0)</text>
+  <text x="380" y="280" text-anchor="middle" font-size="12.5" fill="#8a8378">帧帧重算：籍册一动不动，实测每报必变</text>
+
+  <!-- 一帧之内的时刻表 -->
+  <text x="380" y="326" text-anchor="middle" font-size="12.5" fill="#8a8378">一帧之内的时刻表</text>
+  <rect x="36" y="336" width="196" height="44" rx="7" fill="#fdfcf9" stroke="#d8d2c4"/>
+  <text x="134" y="354" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a5650">Update</text>
+  <text x="134" y="372" text-anchor="middle" font-size="11.5" fill="#8a8378">你的系统改 Transform</text>
+  <line x1="236" y1="358" x2="266" y2="358" stroke="#8a8378" stroke-width="2" marker-end="url(#prop-g)"/>
+  <rect x="270" y="336" width="250" height="44" rx="7" fill="#fdfcf9" stroke="#c05a2e"/>
+  <text x="395" y="354" text-anchor="middle" font-size="13" font-weight="bold" fill="#c05a2e">PostUpdate</text>
+  <text x="395" y="372" text-anchor="middle" font-size="11.5" fill="#8a8378">传播：折算出 GlobalTransform</text>
+  <line x1="524" y1="358" x2="554" y2="358" stroke="#8a8378" stroke-width="2" marker-end="url(#prop-g)"/>
+  <rect x="558" y="336" width="166" height="44" rx="7" fill="#fdfcf9" stroke="#d8d2c4"/>
+  <text x="641" y="354" text-anchor="middle" font-size="13" font-weight="bold" fill="#5a5650">渲染</text>
+  <text x="641" y="372" text-anchor="middle" font-size="11.5" fill="#8a8378">按新的世界账画</text>
+
+  <text x="380" y="412" text-anchor="middle" font-size="12.5" fill="#8a8378">在 Update 里读 GlobalTransform：传播还没跑，拿到的是上一帧的世界账</text>
+</svg>

@@ -12,6 +12,10 @@
 
 折算的算法第 9 章已经口头预告过：从树根往下，把每一级的局部变换**逐级相乘**。月亮的世界位置 = 地球盘的变换 × 地球的变换 × 月亮盘的变换 × 月亮自己的 `(55, 0, 0)`。这套折算叫 **Transform 传播**（propagation）。
 
+![示意图：上排四张卡片是地球盘、地球、月亮盘、月亮各自的局部 Transform，用乘号串起；橙色箭头标注引擎在 PostUpdate 沿树把小账相乘，得到下方的月亮 GlobalTransform 世界账；底部一条时间线写着 Update 改 Transform、PostUpdate 传播、渲染按新账画](images/ch12/fig-12-09-propagation.svg)
+
+<span class="caption">Figure 12-9：两本账的分工——你写各级局部小账，引擎在 PostUpdate 沿树相乘出世界账</span>
+
 `GlobalTransform` 没有公开字段，也不该手改——你写进去的值会在下一轮传播里被冲掉。它内部存的不是“平移、旋转、缩放”三件套，而是一个仿射矩阵（`Affine3A`），读取要走方法：`translation()`、`rotation()`、`scale()`，或者一次性拆成三件套的 `compute_transform()`。
 
 ## 传播的时刻表
@@ -86,6 +90,10 @@ This will cause inconsistent behaviors! See: https://bevy.org/learn/errors/b0004
 
 - **行星甲（父亲缺 `Transform`）：瘫在窗口正中央**，写好的 `(150, 0)` 全然无效。传播是从“有 `Transform` 的树根”往下走的，转盘 A 不在任何一棵传播树上，行星甲的 `GlobalTransform` 永远停在出厂默认值——原点。位置、旋转、缩放，整套报废；
 - **行星乙（父亲缺 `Visibility`）：照常显示，位置也对**——眼下看不出任何毛病。毛病是潜伏的：可见性继承链断了，将来你想“隐藏整条轨道”（把父亲设成 `Visibility::Hidden`，第 15 章的内容）时，行星乙不会跟着隐身。正应了警告里那句 inconsistent behaviors——不是立刻坏，是说不准什么时候坏。
+
+![截图：红色的行星甲瘫在画面正中央，它写的 (150, 0) 处空空如也；蓝色的行星乙照常待在左侧 (−150, 0)](images/ch12/fig-12-10-b0004.png)
+
+<span class="caption">Figure 12-10：B0004 实拍——行星甲写着 (150, 0) 却瘫在原点；行星乙看着没事，但它断的是另一条链</span>
 
 修法不值一行字：缺啥补啥。空实体要当爹，`Transform` 加 `Visibility` 二件套带齐，就是上一节转盘的标准配置。
 

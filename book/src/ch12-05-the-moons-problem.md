@@ -40,6 +40,10 @@ cargo run -p ch12-transforms --example listing-12-08
 
 <span class="caption">Listing 12-9（其一）：轨道盘层级——盘套盘，children! 一挂到底（examples/listing-12-09.rs）</span>
 
+![示意图：左侧场景视角画着三块虚线圆盘——地球盘、水星盘绕着太阳，月亮盘钉在地球身上，各标着转速，天体坐在各自的盘沿；右侧是对应的实体树，虚线节点是看不见的转盘，实线节点是天体，每个节点只记自己的局部 Transform](images/ch12/fig-12-07-orbit-turntables.svg)
+
+<span class="caption">Figure 12-7：轨道盘层级——左边是场景里的三块转盘，右边是 children! 搭出的实体树；天体坐在盘沿从不挪窝，公转 = 盘的自转</span>
+
 ```rust
 {{#include ../../code/ch12-transforms/examples/listing-12-09.rs:spin}}
 ```
@@ -55,6 +59,10 @@ cargo run -p ch12-transforms --example listing-12-09
 - **跨查询打听消失了**。月亮的圆心是月亮盘的原点，写在 `ChildOf` 关系里，没有任何系统需要“打听别人在哪”；
 - **顺序敏感消失了**。`spin` 改的全是各实体自己的局部 `Transform`，谁先谁后无所谓——并行调度器随便排；
 - **松紧带消失了**。地球的公转由地球盘承担，月亮盘连同月亮整体被带着走，几何关系由坐标的乘法严格保证，没有逐帧追赶的误差。
+
+![并排动图：左侧 Listing 12-8 的月亮一会儿贴近地球一会儿甩远，轨道像松紧带；右侧 Listing 12-9 的月亮贴着地球画出纹丝不差的小圆](images/ch12/fig-12-08-moon-compare.webp)
+
+<span class="caption">Figure 12-8：两版月亮同台对比（动图）——左路逐帧追赶，轨道半径胀缩如松紧带；右路轨道盘层级，小圆纹丝不差</span>
 
 运动逻辑从两个互相牵扯的系统缩成一个不挑实体的 `spin`——这是本章最值得带走的一手：**“相对运动”不要用代码追，要用层级描述**。载具上的乘客、角色手里的武器、炮塔上的炮管，全是同一个配方。
 

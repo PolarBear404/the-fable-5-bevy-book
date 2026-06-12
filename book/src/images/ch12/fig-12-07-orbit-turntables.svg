@@ -1,0 +1,83 @@
+<svg viewBox="0 0 760 460" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="spin-b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L7,4 L0,8 z" fill="#3b6ed9"/>
+    </marker>
+    <marker id="spin-g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L7,4 L0,8 z" fill="#8a8378"/>
+    </marker>
+    <marker id="spin-o" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L7,4 L0,8 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="460" rx="10" fill="#f7f5f0"/>
+
+  <!-- ============ 左：场景视角 ============ -->
+  <text x="205" y="50" text-anchor="middle" font-size="15" fill="#5a5650">场景里的三块转盘</text>
+
+  <!-- 地球的轨道盘 -->
+  <circle cx="205" cy="235" r="149" fill="#3b6ed9" fill-opacity="0.05" stroke="#3b6ed9" stroke-opacity="0.5" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <path d="M243.6,91.1 A149,149 0 0 0 166.4,91.1" fill="none" stroke="#3b6ed9" stroke-width="2.5" marker-end="url(#spin-b)"/>
+  <text x="205" y="78" text-anchor="middle" font-size="12.5" fill="#3b6ed9">地球盘 0.5 rad/s</text>
+
+  <!-- 水星的轨道盘 -->
+  <circle cx="205" cy="235" r="74" fill="#8a8378" fill-opacity="0.07" stroke="#8a8378" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <path d="M224.2,163.5 A74,74 0 0 0 185.8,163.5" fill="none" stroke="#8a8378" stroke-width="2.5" marker-end="url(#spin-g)"/>
+  <text x="205" y="152" text-anchor="middle" font-size="11.5" fill="#8a8378">水星盘 1.2 rad/s</text>
+
+  <!-- 太阳（自己带 Spin，不需要盘） -->
+  <rect x="194" y="224" width="22" height="22" fill="#d9a521" transform="rotate(18 205 235)"/>
+  <text x="205" y="272" text-anchor="middle" font-size="12.5" fill="#5a5650">太阳</text>
+
+  <!-- 水星：坐在水星盘的盘沿 -->
+  <rect x="151.5" y="172.5" width="11" height="11" fill="#7d7468" transform="rotate(-130 157 178)"/>
+  <text x="143" y="183" text-anchor="end" font-size="12.5" fill="#5a5650">水星</text>
+
+  <!-- 月亮的轨道盘：钉在地球身上 -->
+  <circle cx="340" cy="172" r="34" fill="#c05a2e" fill-opacity="0.07" stroke="#c05a2e" stroke-opacity="0.6" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <path d="M357,142.6 A34,34 0 0 0 323,142.6" fill="none" stroke="#c05a2e" stroke-width="2.2" marker-end="url(#spin-o)"/>
+  <text x="340" y="128" text-anchor="middle" font-size="11.5" fill="#c05a2e">月亮盘 2.0 rad/s</text>
+
+  <!-- 地球：坐在地球盘的盘沿 -->
+  <rect x="333" y="165" width="14" height="14" fill="#3b6ed9" transform="rotate(-25 340 172)"/>
+  <text x="318" y="170" text-anchor="end" font-size="12.5" fill="#5a5650">地球</text>
+
+  <!-- 月亮：坐在月亮盘的盘沿 -->
+  <rect x="353" y="197" width="8" height="8" fill="#9b958c" transform="rotate(60 357 201)"/>
+  <text x="367" y="208" font-size="12.5" fill="#5a5650">月亮</text>
+
+  <text x="205" y="416" text-anchor="middle" font-size="13" fill="#5a5650">天体坐在盘沿，从不挪窝；</text>
+  <text x="205" y="436" text-anchor="middle" font-size="13" fill="#5a5650">公转 = 盘的自转</text>
+
+  <!-- ============ 右：实体树 ============ -->
+  <text x="570" y="50" text-anchor="middle" font-size="15" fill="#5a5650">对应的实体树（各记各的局部 Transform）</text>
+
+  <!-- 太阳 -->
+  <rect x="430" y="96" width="210" height="32" rx="7" fill="#fbf3df" stroke="#d9a521"/>
+  <text x="442" y="117" font-size="13" fill="#5a5650"><tspan font-weight="bold">太阳</tspan>　Spin 0.6</text>
+
+  <!-- 水星盘 → 水星 -->
+  <rect x="430" y="136" width="240" height="32" rx="7" fill="none" stroke="#8a8378" stroke-dasharray="5 4"/>
+  <text x="442" y="157" font-size="13" fill="#5a5650"><tspan font-weight="bold">水星盘</tspan>　Spin 1.2 · IDENTITY</text>
+  <path d="M445,168 V192 H460" fill="none" stroke="#b8b1a4" stroke-width="1.5"/>
+  <rect x="460" y="176" width="200" height="32" rx="7" fill="#efedea" stroke="#7d7468"/>
+  <text x="472" y="197" font-size="13" fill="#5a5650"><tspan font-weight="bold">水星</tspan>　(120, 0, 0)</text>
+
+  <!-- 地球盘 → 地球 → 月亮盘 → 月亮 -->
+  <rect x="430" y="216" width="240" height="32" rx="7" fill="none" stroke="#3b6ed9" stroke-dasharray="5 4"/>
+  <text x="442" y="237" font-size="13" fill="#5a5650"><tspan font-weight="bold">地球盘</tspan>　Spin 0.5 · IDENTITY</text>
+  <path d="M445,248 V272 H460" fill="none" stroke="#b8b1a4" stroke-width="1.5"/>
+  <rect x="460" y="256" width="200" height="32" rx="7" fill="#e7edfb" stroke="#3b6ed9"/>
+  <text x="472" y="277" font-size="13" fill="#5a5650"><tspan font-weight="bold">地球</tspan>　(240, 0, 0)</text>
+  <path d="M475,288 V312 H490" fill="none" stroke="#b8b1a4" stroke-width="1.5"/>
+  <rect x="490" y="296" width="240" height="32" rx="7" fill="none" stroke="#c05a2e" stroke-dasharray="5 4"/>
+  <text x="502" y="317" font-size="13" fill="#5a5650"><tspan font-weight="bold">月亮盘</tspan>　Spin 2.0 · IDENTITY</text>
+  <path d="M505,328 V352 H520" fill="none" stroke="#b8b1a4" stroke-width="1.5"/>
+  <rect x="520" y="336" width="190" height="32" rx="7" fill="#f1ece6" stroke="#9b958c"/>
+  <text x="532" y="357" font-size="13" fill="#5a5650"><tspan font-weight="bold">月亮</tspan>　(55, 0, 0)</text>
+
+  <text x="570" y="408" text-anchor="middle" font-size="12.5" fill="#8a8378">虚线节点 = 不带 Sprite 的转盘：肉眼看不见，</text>
+  <text x="570" y="428" text-anchor="middle" font-size="12.5" fill="#8a8378">但 Transform 与 Visibility 一件不少</text>
+</svg>

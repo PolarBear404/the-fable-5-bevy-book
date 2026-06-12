@@ -71,4 +71,10 @@ cargo run -p ch12-transforms --example listing-12-03
 彗星入册：[-120, 160, 5]，截回平面：[-120, 160]
 ```
 
+这页演算摊在图纸上就是 Figure 12-4：三个点是位置，太阳到彗星的实线是相减得到的箭头，虚线只报距离，`lerp` 的空心圈停在日地正中。
+
+![图纸示意：太阳 (0,0)、地球 (180,0)、彗星 (−120,160) 三个点；从太阳指向彗星的橙色箭头标注 comet − sun 与 length() = 200；彗星与地球之间的灰色虚线标注 distance() = 340；日地连线中点处有 lerp 的空心圆点；右下角图例画着 normalize 之后只剩方向的单位箭头](images/ch12/fig-12-04-positions-and-arrows.svg)
+
+<span class="caption">Figure 12-4：图纸演算的几何形状——位置是点，相减是箭头，归一化只留方向</span>
+
 图纸演算完毕。`Vec` 家族还有不少成员——整数版的 `IVec2`/`UVec2`、四维的 `Vec4`、双精度的 `DVec3`——API 形状全一样，用到再查。下一节正式开机：用 `Transform` 把太阳装上转轴。

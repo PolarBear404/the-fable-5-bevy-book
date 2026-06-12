@@ -1,0 +1,49 @@
+<svg viewBox="0 0 760 540" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="clamp-o" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="540" rx="10" fill="#f7f5f0"/>
+
+  <!-- 小行星带 Annulus(300, 380)：比例尺 0.59 px/单位 -->
+  <circle cx="380" cy="270" r="224" fill="#8a8378" fill-opacity="0.12"/>
+  <circle cx="380" cy="270" r="177" fill="#f7f5f0"/>
+  <circle cx="380" cy="270" r="224" fill="none" stroke="#8a8378" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <circle cx="380" cy="270" r="177" fill="none" stroke="#8a8378" stroke-width="1.5" stroke-dasharray="7 6"/>
+  <text x="150" y="74" text-anchor="middle" font-size="13.5" fill="#5a5650" font-weight="bold">小行星带</text>
+  <text x="150" y="93" text-anchor="middle" font-size="12.5" fill="#8a8378">Annulus::new(300, 380)</text>
+  <line x1="178" y1="100" x2="218" y2="124" stroke="#8a8378" stroke-width="1.5"/>
+
+  <!-- 取景框 Rect(560 × 320) -->
+  <rect x="215" y="176" width="330" height="188" fill="none" stroke="#c05a2e" stroke-width="2" stroke-dasharray="8 5"/>
+  <text x="380" y="166" text-anchor="middle" font-size="12.5" fill="#c05a2e">取景框 Rect::from_center_size(原点, 560 × 320)</text>
+
+  <!-- 太阳（原点） -->
+  <circle cx="380" cy="270" r="5" fill="#d9a521"/>
+  <text x="380" y="291" text-anchor="middle" font-size="12" fill="#8a8378">太阳 (0, 0)</text>
+
+  <!-- contains 的两次问答 -->
+  <circle cx="522" cy="270" r="5" fill="#3b6ed9"/>
+  <text x="522" y="252" text-anchor="middle" font-size="12.5" fill="#3b6ed9" stroke="#f7f5f0" stroke-width="5" paint-order="stroke">地球 (240, 0)：在镜头里</text>
+  <circle cx="309" cy="81" r="5" fill="#4d7d8f"/>
+  <text x="296" y="68" text-anchor="middle" font-size="12.5" fill="#4d7d8f" stroke="#f7f5f0" stroke-width="5" paint-order="stroke">彗星 (−120, 320)：出镜了</text>
+
+  <!-- 外逃的小行星：closest_point 押回外圈 -->
+  <circle cx="645" cy="270" r="5" fill="#5a5650"/>
+  <text x="652" y="251" text-anchor="middle" font-size="12.5" fill="#5a5650">(450, 0)</text>
+  <line x1="637" y1="270" x2="612" y2="270" stroke="#c05a2e" stroke-width="2.5" marker-end="url(#clamp-o)"/>
+  <circle cx="604" cy="270" r="4" fill="#c05a2e"/>
+  <text x="612" y="296" text-anchor="middle" font-size="12.5" fill="#c05a2e" stroke="#f7f5f0" stroke-width="5" paint-order="stroke">押回 (380, 0)</text>
+
+  <!-- 内坠的小行星：closest_point 提到内圈 -->
+  <circle cx="451" cy="176" r="5" fill="#5a5650"/>
+  <text x="466" y="196" text-anchor="middle" font-size="12.5" fill="#5a5650">(120, 160)</text>
+  <line x1="457" y1="168" x2="478" y2="140" stroke="#c05a2e" stroke-width="2.5" marker-end="url(#clamp-o)"/>
+  <circle cx="486" cy="128" r="4" fill="#c05a2e"/>
+  <text x="495" y="112" text-anchor="middle" font-size="12.5" fill="#c05a2e">拉回 (180, 240)</text>
+
+  <text x="380" y="520" text-anchor="middle" font-size="13" fill="#5a5650">closest_point(p)：带内原样奉还，外逃押回外圈，内坠提到内圈</text>
+</svg>
