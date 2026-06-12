@@ -11,6 +11,7 @@ members = [
     "ch08-events-observers",
     "ch09-relationships",
     "ch10-states",
+    "ch11-deep-ecs",
 ]
 
 [workspace.package]

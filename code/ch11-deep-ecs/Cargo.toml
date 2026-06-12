@@ -1,0 +1,11 @@
+# ANCHOR: deps
+[package]
+name = "ch11-deep-ecs"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug 让类型名、track_location 让变更位置（file:line）出现在输出里——都是诊断用 feature
+bevy = { workspace = true, features = ["debug", "track_location"] }
+# ANCHOR_END: deps
