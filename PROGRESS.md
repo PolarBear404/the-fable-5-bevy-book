@@ -31,7 +31,7 @@
 | 13 | Camera 与视口 | ✅ | code/ch13-cameras（src/main.rs + examples/listing-13-01～11，其中 13-06 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 13-12）；book/src/ch13-00～08；插图 images/ch13（Figure 13-1～9，含 1 张动图，scripts/make_ch13_figures.py 一键重建） |
 | 14 | Asset 系统 | ✅ | code/ch14-assets（src/main.rs + examples/listing-14-01～10，main.rs 即 Listing 14-11；开 bevy `file_watcher` feature，依赖 thiserror）；book/src/ch14-00～08；插图 images/ch14（Figure 14-1～7，scripts/make_ch14_figures.py 一键重建；美术资产由 scripts/make_ch14_assets.py 生成） |
 | 15 | 2D 渲染：Sprite 与图集 | ✅ | code/ch15-sprites（src/main.rs + examples/listing-15-01～11，main.rs 即 Listing 15-12）；book/src/ch15-00～07；插图 images/ch15（Figure 15-1～14，含 3 张 SVG、1 张动图，scripts/make_ch15_figures.py 一键重建；美术资产由 scripts/make_ch15_assets.py 生成） |
-| 16 | 文本与字体 | ⬜ | |
+| 16 | 文本与字体 | ✅ | code/ch16-text（src/main.rs + examples/listing-16-01～10，main.rs 即 Listing 16-11；中文字体资产为 Noto Sans SC 的 GB2312 子集，scripts/make_ch16_assets.py 下载/子集化/按 OFL 改名一键重建）；book/src/ch16-00～08；插图 images/ch16（Figure 16-1～12，含 1 张 SVG、2 张动图，scripts/make_ch16_figures.py 一键重建） |
 | 17 | 输入处理 | ⬜ | |
 | 18 | 时间、定时器与 FixedUpdate | ⬜ | |
 | 19 | 音频 | ⬜ | |
