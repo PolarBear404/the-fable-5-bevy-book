@@ -1,0 +1,114 @@
+<svg viewBox="0 0 760 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="470" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">Bevy 的手柄词汇表：按方位命名，不认厂商字母</text>
+
+  <!-- ============ 手柄本体 ============ -->
+  <!-- 机身：圆角主体 + 两个握把 -->
+  <g>
+    <circle cx="225" cy="208" r="64" fill="#e3ddd0" stroke="#8a8378" stroke-width="2"/>
+    <circle cx="535" cy="208" r="64" fill="#e3ddd0" stroke="#8a8378" stroke-width="2"/>
+    <rect x="225" y="144" width="310" height="128" fill="#e3ddd0"/>
+    <line x1="225" y1="144" x2="535" y2="144" stroke="#8a8378" stroke-width="2"/>
+    <line x1="225" y1="272" x2="535" y2="272" stroke="#8a8378" stroke-width="2"/>
+
+    <!-- 肩键（数字） + 扳机（模拟） -->
+    <rect x="180" y="116" width="76" height="16" rx="8" fill="#cfc8b8" stroke="#8a8378" stroke-width="1.5"/>
+    <rect x="504" y="116" width="76" height="16" rx="8" fill="#cfc8b8" stroke="#8a8378" stroke-width="1.5"/>
+    <rect x="192" y="92" width="52" height="16" rx="8" fill="#b8b1a4" stroke="#8a8378" stroke-width="1.5"/>
+    <rect x="516" y="92" width="52" height="16" rx="8" fill="#b8b1a4" stroke="#8a8378" stroke-width="1.5"/>
+
+    <!-- 十字键（左） -->
+    <g fill="#cfc8b8" stroke="#8a8378" stroke-width="1.5">
+      <rect x="211" y="178" width="28" height="60" rx="4"/>
+      <rect x="195" y="194" width="60" height="28" rx="4"/>
+    </g>
+
+    <!-- 动作键盘面（右）：南东北西 -->
+    <g stroke="#8a8378" stroke-width="1.5">
+      <circle cx="535" cy="244" r="13" fill="#f6dfd2"/>
+      <circle cx="571" cy="208" r="13" fill="#f6dfd2"/>
+      <circle cx="535" cy="172" r="13" fill="#f6dfd2"/>
+      <circle cx="499" cy="208" r="13" fill="#f6dfd2"/>
+    </g>
+    <g font-size="11" fill="#a14227" text-anchor="middle" font-weight="bold">
+      <text x="535" y="248">南</text>
+      <text x="571" y="212">东</text>
+      <text x="535" y="176">北</text>
+      <text x="499" y="212">西</text>
+    </g>
+
+    <!-- 双摇杆（中下） -->
+    <g>
+      <circle cx="320" cy="252" r="26" fill="#cfc8b8" stroke="#8a8378" stroke-width="1.5"/>
+      <circle cx="320" cy="252" r="14" fill="#9a937f" stroke="#6f695c" stroke-width="1.5"/>
+      <circle cx="440" cy="252" r="26" fill="#cfc8b8" stroke="#8a8378" stroke-width="1.5"/>
+      <circle cx="440" cy="252" r="14" fill="#9a937f" stroke="#6f695c" stroke-width="1.5"/>
+    </g>
+
+    <!-- Select / Start -->
+    <rect x="346" y="170" width="26" height="12" rx="6" fill="#cfc8b8" stroke="#8a8378" stroke-width="1.2"/>
+    <rect x="388" y="170" width="26" height="12" rx="6" fill="#cfc8b8" stroke="#8a8378" stroke-width="1.2"/>
+  </g>
+
+  <!-- ============ 标注 ============ -->
+  <g font-size="12.5">
+    <!-- 左侧 -->
+    <g text-anchor="end">
+      <text x="160" y="92" fill="#274a91" font-weight="bold">LeftTrigger2</text>
+      <text x="160" y="106" fill="#7a7468" font-size="11">扳机，模拟量 0..1</text>
+      <line x1="166" y1="96" x2="192" y2="100" stroke="#8a8378" stroke-width="1"/>
+      <text x="148" y="126" fill="#274a91" font-weight="bold">LeftTrigger</text>
+      <text x="148" y="140" fill="#7a7468" font-size="11">肩键，数字量</text>
+      <line x1="154" y1="126" x2="180" y2="124" stroke="#8a8378" stroke-width="1"/>
+      <text x="142" y="212" fill="#274a91" font-weight="bold">DPadUp / Down /</text>
+      <text x="142" y="228" fill="#274a91" font-weight="bold">Left / Right</text>
+      <line x1="148" y1="214" x2="195" y2="208" stroke="#8a8378" stroke-width="1"/>
+    </g>
+    <!-- 右侧 -->
+    <g>
+      <text x="600" y="92" fill="#274a91" font-weight="bold">RightTrigger2</text>
+      <text x="600" y="106" fill="#7a7468" font-size="11">gamepad.get(…) 拿 0..1</text>
+      <line x1="594" y1="96" x2="568" y2="100" stroke="#8a8378" stroke-width="1"/>
+      <text x="612" y="126" fill="#274a91" font-weight="bold">RightTrigger</text>
+      <line x1="606" y1="126" x2="580" y2="124" stroke="#8a8378" stroke-width="1"/>
+      <text x="612" y="186" fill="#a14227" font-weight="bold">GamepadButton::North</text>
+      <text x="612" y="204" fill="#4a463f" font-size="11">South＝Xbox A＝PS ×</text>
+      <text x="612" y="219" fill="#4a463f" font-size="11">East＝B＝○，West＝X＝□，</text>
+      <text x="612" y="234" fill="#4a463f" font-size="11">North＝Y＝△</text>
+      <line x1="606" y1="182" x2="550" y2="172" stroke="#8a8378" stroke-width="1"/>
+    </g>
+    <!-- 中部 -->
+    <text x="380" y="158" text-anchor="middle" fill="#274a91" font-weight="bold" font-size="11.5">Select　Start</text>
+    <!-- 摇杆 -->
+    <g text-anchor="middle">
+      <text x="290" y="312" fill="#1d6b40" font-weight="bold">LeftStickX / LeftStickY</text>
+      <text x="290" y="328" fill="#7a7468" font-size="11">GamepadAxis，模拟量 −1..1</text>
+      <text x="290" y="343" fill="#7a7468" font-size="11">按下去是 LeftThumb（数字键）</text>
+      <line x1="305" y1="284" x2="316" y2="298" stroke="#8a8378" stroke-width="1"/>
+      <text x="490" y="312" fill="#1d6b40" font-weight="bold">RightStickX / RightStickY</text>
+      <line x1="462" y1="284" x2="472" y2="298" stroke="#8a8378" stroke-width="1"/>
+    </g>
+  </g>
+
+  <!-- ============ 死区刻度 ============ -->
+  <g>
+    <text x="80" y="394" font-size="13" fill="#4a463f" font-weight="bold">AxisSettings 给事件值的出厂滤波（轮询 left_stick() 是原始读数，死区自留）</text>
+    <!-- 轴线 -->
+    <line x1="100" y1="424" x2="660" y2="424" stroke="#8a8378" stroke-width="2"/>
+    <!-- 死区带 -->
+    <rect x="366" y="412" width="28" height="24" fill="#f6dfd2" stroke="#a14227" stroke-width="1.5"/>
+    <g font-size="11" fill="#7a7468" text-anchor="middle">
+      <text x="100" y="446">−1.0</text>
+      <text x="380" y="410">±0.05 死区→事件值报 0</text>
+      <text x="660" y="446">+1.0</text>
+      <text x="233" y="446">活区（事件值线性放大到满程）</text>
+      <text x="527" y="446">活区</text>
+    </g>
+    <g stroke="#8a8378" stroke-width="1.5">
+      <line x1="100" y1="418" x2="100" y2="430"/>
+      <line x1="660" y1="418" x2="660" y2="430"/>
+    </g>
+  </g>
+</svg>

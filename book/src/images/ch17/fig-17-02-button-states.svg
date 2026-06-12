@@ -1,0 +1,75 @@
+<svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-o17a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="360" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">一次按键在快照里的一生：三种问法各在哪几帧答“真”</text>
+
+  <!-- 帧轴：10 帧，每帧 56px，起点 x=150 -->
+  <g font-size="12" fill="#7a7468" text-anchor="middle">
+    <text x="178" y="76">帧 1</text>
+    <text x="234" y="76">帧 2</text>
+    <text x="290" y="76">帧 3</text>
+    <text x="346" y="76">帧 4</text>
+    <text x="402" y="76">帧 5</text>
+    <text x="458" y="76">帧 6</text>
+    <text x="514" y="76">帧 7</text>
+    <text x="570" y="76">帧 8</text>
+    <text x="626" y="76">帧 9</text>
+    <text x="682" y="76">帧 10</text>
+  </g>
+
+  <!-- 实体键状态带：3~7 帧按住 -->
+  <text x="138" y="106" text-anchor="end" font-size="13" fill="#4a463f" font-weight="bold">手上的键</text>
+  <rect x="150" y="88" width="112" height="28" fill="#ffffff" stroke="#b8b1a4" stroke-width="1"/>
+  <rect x="262" y="88" width="280" height="28" fill="#e8c89e" stroke="#b8862e" stroke-width="1.5"/>
+  <rect x="542" y="88" width="168" height="28" fill="#ffffff" stroke="#b8b1a4" stroke-width="1"/>
+  <text x="402" y="107" text-anchor="middle" font-size="12" fill="#7a5414">按住</text>
+  <text x="206" y="107" text-anchor="middle" font-size="12" fill="#a09a8e">抬着</text>
+  <text x="626" y="107" text-anchor="middle" font-size="12" fill="#a09a8e">抬着</text>
+
+  <!-- 事件到达标注 -->
+  <path d="M262,140 L262,120" fill="none" stroke="#c05a2e" stroke-width="2" marker-end="url(#arr-o17a)"/>
+  <text x="262" y="156" text-anchor="middle" font-size="12" fill="#c05a2e">按下事件到达</text>
+  <path d="M542,140 L542,120" fill="none" stroke="#c05a2e" stroke-width="2" marker-end="url(#arr-o17a)"/>
+  <text x="542" y="156" text-anchor="middle" font-size="12" fill="#c05a2e">松开事件到达</text>
+
+  <!-- 三行问法 -->
+  <g font-size="13" text-anchor="end" font-weight="bold">
+    <text x="138" y="201" fill="#274a91">pressed</text>
+    <text x="138" y="251" fill="#1d6b40">just_pressed</text>
+    <text x="138" y="301" fill="#a14227">just_released</text>
+  </g>
+
+  <!-- pressed：帧 3..7 为真 -->
+  <g>
+    <rect x="150" y="182" width="560" height="28" fill="#ffffff" stroke="#b8b1a4" stroke-width="1"/>
+    <rect x="262" y="182" width="280" height="28" fill="#dde6f7" stroke="#3b6ed9" stroke-width="1.5"/>
+    <g font-size="13" fill="#274a91" text-anchor="middle" font-weight="bold">
+      <text x="290" y="201">真</text><text x="346" y="201">真</text><text x="402" y="201">真</text>
+      <text x="458" y="201">真</text><text x="514" y="201">真</text>
+    </g>
+  </g>
+
+  <!-- just_pressed：仅帧 3 为真 -->
+  <g>
+    <rect x="150" y="232" width="560" height="28" fill="#ffffff" stroke="#b8b1a4" stroke-width="1"/>
+    <rect x="262" y="232" width="56" height="28" fill="#d9eddf" stroke="#1d6b40" stroke-width="1.5"/>
+    <text x="290" y="251" text-anchor="middle" font-size="13" fill="#1d6b40" font-weight="bold">真</text>
+  </g>
+
+  <!-- just_released：仅帧 8 为真 -->
+  <g>
+    <rect x="150" y="282" width="560" height="28" fill="#ffffff" stroke="#b8b1a4" stroke-width="1"/>
+    <rect x="542" y="282" width="56" height="28" fill="#f6dfd2" stroke="#a14227" stroke-width="1.5"/>
+    <text x="570" y="301" text-anchor="middle" font-size="13" fill="#a14227" font-weight="bold">真</text>
+  </g>
+
+  <!-- 底注 -->
+  <text x="380" y="342" text-anchor="middle" font-size="13" fill="#7a7468">按住五帧：pressed 真五次，just_pressed 与 just_released 各真一次——系统自动重复进不了快照</text>
+</svg>

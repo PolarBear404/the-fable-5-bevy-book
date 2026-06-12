@@ -1,0 +1,82 @@
+<svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-b17b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#3b6ed9"/>
+    </marker>
+    <marker id="arr-g17b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#1d6b40"/>
+    </marker>
+    <marker id="arr-o17b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="430" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">同一份输入的两种读法：流水账逐条看，快照每帧问</text>
+
+  <!-- 左：设备 -->
+  <g>
+    <rect x="30" y="64" width="116" height="170" rx="8" fill="#ffffff" stroke="#8a8378" stroke-width="1.5"/>
+    <text x="88" y="88" text-anchor="middle" font-size="13" fill="#4a463f" font-weight="bold">设备</text>
+    <g font-size="12" fill="#7a7468" text-anchor="middle">
+      <text x="88" y="118">键盘</text>
+      <text x="88" y="146">鼠标</text>
+      <text x="88" y="174">手柄</text>
+      <text x="88" y="202">触屏</text>
+    </g>
+  </g>
+
+  <!-- 中：消息流 -->
+  <g>
+    <rect x="196" y="64" width="218" height="170" rx="8" fill="#dde6f7" stroke="#3b6ed9" stroke-width="2"/>
+    <text x="305" y="88" text-anchor="middle" font-size="13" fill="#274a91" font-weight="bold">消息流（第 7 章的 Message）</text>
+    <g font-size="12" fill="#4a5a7d" text-anchor="middle">
+      <text x="305" y="116">KeyboardInput ×N</text>
+      <text x="305" y="140">MouseMotion ×N</text>
+      <text x="305" y="164">MouseWheel ×N</text>
+      <text x="305" y="188">TouchInput、GamepadEvent…</text>
+    </g>
+    <text x="305" y="216" text-anchor="middle" font-size="11" fill="#7a7468">一帧里来几条是几条，含系统重复</text>
+  </g>
+  <path d="M146,149 L192,149" fill="none" stroke="#3b6ed9" stroke-width="2" marker-end="url(#arr-b17b)"/>
+
+  <!-- 右：快照 -->
+  <g>
+    <rect x="466" y="64" width="264" height="170" rx="8" fill="#d9eddf" stroke="#1d6b40" stroke-width="2"/>
+    <text x="598" y="88" text-anchor="middle" font-size="13" fill="#1d6b40" font-weight="bold">本帧快照</text>
+    <g font-size="12" fill="#2c5c40" text-anchor="middle">
+      <text x="598" y="116">ButtonInput&lt;KeyCode / MouseButton&gt;</text>
+      <text x="598" y="140">AccumulatedMouseMotion / Scroll</text>
+      <text x="598" y="164">Touches 资源</text>
+      <text x="598" y="188">Gamepad 组件（在手柄实体上）</text>
+    </g>
+    <text x="598" y="216" text-anchor="middle" font-size="11" fill="#5a7a64">一帧一份，全帧不变</text>
+  </g>
+  <path d="M414,149 L462,149" fill="none" stroke="#1d6b40" stroke-width="2" marker-end="url(#arr-g17b)"/>
+  <text x="438" y="136" text-anchor="middle" font-size="11" fill="#1d6b40">折叠</text>
+
+  <!-- 调度段位标尺 -->
+  <g>
+    <line x1="30" y1="262" x2="730" y2="262" stroke="#b8b1a4" stroke-width="1.5"/>
+    <rect x="196" y="252" width="270" height="20" rx="4" fill="#efe9df" stroke="#8a8378" stroke-width="1"/>
+    <text x="331" y="266" text-anchor="middle" font-size="11" fill="#4a463f">PreUpdate：InputSystems 在这儿干折叠的活</text>
+    <rect x="486" y="252" width="160" height="20" rx="4" fill="#efe9df" stroke="#8a8378" stroke-width="1"/>
+    <text x="566" y="266" text-anchor="middle" font-size="11" fill="#4a463f">Update：你的系统在这儿</text>
+  </g>
+
+  <!-- 底：你的系统，两条读法 -->
+  <g>
+    <rect x="196" y="300" width="430" height="92" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <text x="411" y="326" text-anchor="middle" font-size="14" fill="#a14227" font-weight="bold">你的系统（Update）</text>
+    <g font-size="12" fill="#4a463f" text-anchor="middle">
+      <text x="411" y="352">问快照：keyboard.pressed(KeyCode::KeyD)——绝大多数玩法用这条</text>
+      <text x="411" y="376">读流水：MessageReader&lt;KeyboardInput&gt;——要逐条细节（文本、重复）才用</text>
+    </g>
+  </g>
+  <path d="M598,238 C 598,266 560,280 540,296" fill="none" stroke="#1d6b40" stroke-width="2" marker-end="url(#arr-g17b)"/>
+  <path d="M305,238 C 305,266 330,280 348,296" fill="none" stroke="#3b6ed9" stroke-width="2" marker-end="url(#arr-b17b)"/>
+
+  <text x="380" y="416" text-anchor="middle" font-size="12" fill="#7a7468">快照在 PreUpdate 刷新一次：同一帧里所有 Update 系统看到的输入完全一致</text>
+</svg>

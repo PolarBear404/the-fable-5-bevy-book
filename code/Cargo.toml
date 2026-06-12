@@ -17,6 +17,7 @@ members = [
     "ch14-assets",
     "ch15-sprites",
     "ch16-text",
+    "ch17-input",
 ]
 
 [workspace.package]

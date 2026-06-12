@@ -1,0 +1,86 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-b17d" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#3b6ed9"/>
+    </marker>
+    <marker id="arr-o17d" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="400" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">意图层：设备只管“翻译”，动作只认“意图”</text>
+
+  <!-- 左列：四个设备读取系统 -->
+  <g font-size="12.5">
+    <rect x="36" y="62" width="190" height="58" rx="6" fill="#dde6f7" stroke="#3b6ed9" stroke-width="1.5"/>
+    <text x="131" y="86" text-anchor="middle" fill="#274a91" font-weight="bold">read_keyboard</text>
+    <text x="131" y="106" text-anchor="middle" fill="#4a5a7d" font-size="11.5">A/D→walk　空格→strike</text>
+
+    <rect x="36" y="134" width="190" height="58" rx="6" fill="#dde6f7" stroke="#3b6ed9" stroke-width="1.5"/>
+    <text x="131" y="158" text-anchor="middle" fill="#274a91" font-weight="bold">read_mouse</text>
+    <text x="131" y="178" text-anchor="middle" fill="#4a5a7d" font-size="11.5">左键反算落点→dash_to</text>
+
+    <rect x="36" y="206" width="190" height="58" rx="6" fill="#dde6f7" stroke="#3b6ed9" stroke-width="1.5"/>
+    <text x="131" y="230" text-anchor="middle" fill="#274a91" font-weight="bold">read_gamepad</text>
+    <text x="131" y="250" text-anchor="middle" fill="#4a5a7d" font-size="11.5">摇杆→walk（−1..1）南键→strike</text>
+
+    <rect x="36" y="278" width="190" height="58" rx="6" fill="#dde6f7" stroke="#3b6ed9" stroke-width="1.5"/>
+    <text x="131" y="302" text-anchor="middle" fill="#274a91" font-weight="bold">read_touch</text>
+    <text x="131" y="322" text-anchor="middle" fill="#4a5a7d" font-size="11.5">落指反算落点→dash_to</text>
+  </g>
+
+  <!-- 汇入箭头 -->
+  <g fill="none" stroke="#3b6ed9" stroke-width="2">
+    <path d="M226,91  C 268,91  270,150 306,168" marker-end="url(#arr-b17d)"/>
+    <path d="M226,163 C 256,163 260,178 306,186" marker-end="url(#arr-b17d)"/>
+    <path d="M226,235 C 256,235 260,222 306,206" marker-end="url(#arr-b17d)"/>
+    <path d="M226,307 C 268,307 270,250 306,224" marker-end="url(#arr-b17d)"/>
+  </g>
+
+  <!-- 中：Intent 资源 -->
+  <g>
+    <rect x="310" y="138" width="180" height="124" rx="8" fill="#fdf3df" stroke="#b8862e" stroke-width="2"/>
+    <text x="400" y="164" text-anchor="middle" font-size="14" fill="#7a5414" font-weight="bold">Intent 资源</text>
+    <g font-size="12" fill="#4a463f" text-anchor="middle">
+      <text x="400" y="190">walk: f32（瞬时）</text>
+      <text x="400" y="210">strike: bool（瞬时）</text>
+      <text x="400" y="230">dash_to: Option（持续）</text>
+    </g>
+    <text x="400" y="252" text-anchor="middle" font-size="11" fill="#a08a54">瞬时项每帧清空重填</text>
+  </g>
+
+  <!-- 流出箭头 -->
+  <g fill="none" stroke="#c05a2e" stroke-width="2">
+    <path d="M490,170 C 520,164 524,130 554,118" marker-end="url(#arr-o17d)"/>
+    <path d="M490,200 L 554,200" marker-end="url(#arr-o17d)"/>
+    <path d="M490,230 C 520,236 524,272 554,282" marker-end="url(#arr-o17d)"/>
+  </g>
+
+  <!-- 右列：动作系统 -->
+  <g font-size="12.5">
+    <rect x="558" y="88" width="166" height="54" rx="6" fill="#f6dfd2" stroke="#a14227" stroke-width="1.5"/>
+    <text x="641" y="110" text-anchor="middle" fill="#a14227" font-weight="bold">act_move</text>
+    <text x="641" y="130" text-anchor="middle" fill="#6f4a3a" font-size="11.5">walk 优先，dash 其次</text>
+
+    <rect x="558" y="174" width="166" height="54" rx="6" fill="#f6dfd2" stroke="#a14227" stroke-width="1.5"/>
+    <text x="641" y="196" text-anchor="middle" fill="#a14227" font-weight="bold">act_strike</text>
+    <text x="641" y="216" text-anchor="middle" fill="#6f4a3a" font-size="11.5">剑光 + 木桩判定</text>
+
+    <rect x="558" y="260" width="166" height="54" rx="6" fill="#f6dfd2" stroke="#a14227" stroke-width="1.5"/>
+    <text x="641" y="282" text-anchor="middle" fill="#a14227" font-weight="bold">hud / animate…</text>
+    <text x="641" y="302" text-anchor="middle" fill="#6f4a3a" font-size="11.5">谁在发话、走不走路</text>
+  </g>
+
+  <!-- 调度标尺 -->
+  <g font-size="11.5" fill="#7a7468" text-anchor="middle">
+    <rect x="60" y="352" width="380" height="20" rx="4" fill="#efe9df" stroke="#8a8378" stroke-width="1"/>
+    <text x="250" y="366">BoothSystems::Listen（先听）</text>
+    <rect x="460" y="352" width="240" height="20" rx="4" fill="#efe9df" stroke="#8a8378" stroke-width="1"/>
+    <text x="580" y="366">BoothSystems::Act（后动）</text>
+  </g>
+
+  <text x="380" y="392" text-anchor="middle" font-size="12" fill="#7a7468">改键位只动左列；改玩法只动右列；加一种设备 = 多写一个 read_* 系统</text>
+</svg>
