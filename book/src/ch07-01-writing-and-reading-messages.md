@@ -28,7 +28,7 @@ DJ：砰！
 
 - **定义**：`#[derive(Message)]` 把任意类型变成消息。和 Component、Resource 一个待遇——普通结构体即可，约束只有 `Send + Sync + 'static`，这里的 `RailHit` 干脆是个空结构体。
 - **注册**：`add_message::<RailHit>()` 在 App 里为这个类型开出一条通道。
-- **写**：`MessageWriter<RailHit>` 是普通的系统参数——第 4 章那张参数清单里标着"第 7 章"的一行，今天兑现。`write` 把消息投进缓冲就返回，**不当场触发任何人**：读者要等自己被调度到才看见。
+- **写**：`MessageWriter<RailHit>` 是普通的系统参数——第 4 章那张参数清单里标着“第 7 章”的一行，今天兑现。`write` 把消息投进缓冲就返回，**不当场触发任何人**：读者要等自己被调度到才看见。
 - **读**：`MessageReader<RailHit>` 的 `read()` 给出一个迭代器，内容是**这个系统还没见过的**全部消息；读过即翻篇，下一帧不会重读。
 
 最值得盯住的是两个函数的签名：`drive` 里没有 `play_sound`，`play_sound` 里也没有 `drive`。把他们连起来的是消息类型本身——**类型就是频道**。每个类型一条独立通道，`MessageWriter<RailHit>` 写的消息，只有 `MessageReader<RailHit>` 收得到。
@@ -54,7 +54,7 @@ If this is an expected state, wrap the parameter in `Option<T>` and handle `None
 when it happens, or wrap the parameter in `If<T>` to skip the system when it happens.
 ```
 
-报错把三件事一次说清：哪个系统（`drive`）、哪个参数（`MessageWriter` 内部那个 `messages`）、什么毛病（`Message not initialized`）。"failed validation"的口径来自第 4 章的参数校验家族——和 `Single` 找不到实体是同一套机制；报错末尾甚至附了 `Option`/`If` 的药方，第 5 章"资源的有无"那两件工具在这里原样可用。不过对消息来说，正确答案几乎总是补上那行 `add_message`，而不是把参数包成可选。
+报错把三件事一次说清：哪个系统（`drive`）、哪个参数（`MessageWriter` 内部那个 `messages`）、什么毛病（`Message not initialized`）。“failed validation”的口径来自第 4 章的参数校验家族——和 `Single` 找不到实体是同一套机制；报错末尾甚至附了 `Option`/`If` 的药方，第 5 章“资源的有无”那两件工具在这里原样可用。不过对消息来说，正确答案几乎总是补上那行 `add_message`，而不是把参数包成可选。
 
 报错里那个 `messages` 参数顺带掀开了通道的底牌：`add_message::<M>()` 注册的其实是一个叫 **`Messages<M>`** 的普通 Resource，所有在途消息都存在里面。`MessageWriter<M>` 不过是 `ResMut<Messages<M>>` 的薄封装，`MessageReader<M>` 则是 `Res<Messages<M>>` 加一个 `Local` 游标——第 4、5 章的零件，拼出了一套新机制。这个出身决定了它的并发性质和生命周期规则，本章后面每一节都会回到这里；引擎还会亲口承认一次，见 Listing 7-8。
 

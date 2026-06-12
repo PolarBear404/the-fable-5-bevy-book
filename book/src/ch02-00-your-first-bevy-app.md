@@ -13,4 +13,4 @@ cargo run -p ch02-first-app                           # 运行最终版（Listin
 
 - [App 与 System](ch02-01-app-and-systems.md)：最小的 Bevy 程序长什么样，System 怎么注册，为什么它只跑了一次
 - [Plugin：App 能力的来源](ch02-02-plugins.md)：主循环和窗口都是插件给的；MinimalPlugins、DefaultPlugins，以及写一个自己的 Plugin
-- [一个会动的 Sprite](ch02-03-a-moving-sprite.md)：相机、方块、每帧改写位置——第 1 章那张"表"第一次跑起来
+- [一个会动的 Sprite](ch02-03-a-moving-sprite.md)：相机、方块、每帧改写位置——第 1 章那张“表”第一次跑起来

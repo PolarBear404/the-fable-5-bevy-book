@@ -1,6 +1,6 @@
 # Plugin：App 能力的来源
 
-**Plugin**（插件）是把"对 App 的一组配置"打包起来的单元：注册几个 System、放入一些数据、替换 runner……任何你能对 App 做的事，都能装进一个 Plugin。Bevy 引擎自身就是这么组织的——时间是插件，日志是插件，窗口、渲染、音频全是插件。
+**Plugin**（插件）是把“对 App 的一组配置”打包起来的单元：注册几个 System、放入一些数据、替换 runner……任何你能对 App 做的事，都能装进一个 Plugin。Bevy 引擎自身就是这么组织的——时间是插件，日志是插件，窗口、渲染、音频全是插件。
 
 ## MinimalPlugins：先把循环装上
 
@@ -10,9 +10,9 @@
 
 <span class="caption">Listing 2-3：用 MinimalPlugins 获得主循环，每秒跑一轮</span>
 
-`add_plugins` 负责装插件。`MinimalPlugins` 不是单个插件，而是一个 **PluginGroup**（插件组）：官方打包好的最小运行环境，只有四个成员——线程池（`TaskPoolPlugin`）、帧计数（`FrameCountPlugin`）、时间（`TimePlugin`），以及关键的 `ScheduleRunnerPlugin`：**它把默认那个"跑一遍就走"的 runner 换成真正的循环**。
+`add_plugins` 负责装插件。`MinimalPlugins` 不是单个插件，而是一个 **PluginGroup**（插件组）：官方打包好的最小运行环境，只有四个成员——线程池（`TaskPoolPlugin`）、帧计数（`FrameCountPlugin`）、时间（`TimePlugin`），以及关键的 `ScheduleRunnerPlugin`：**它把默认那个“跑一遍就走”的 runner 换成真正的循环**。
 
-这个循环默认不停顿，以 CPU 允许的最快速度空转。所以这里用插件组的 `.set()` 方法**定制组内某个成员**：把组里的 `ScheduleRunnerPlugin` 替换成"每轮之间至少等一秒"的配置。运行：
+这个循环默认不停顿，以 CPU 允许的最快速度空转。所以这里用插件组的 `.set()` 方法**定制组内某个成员**：把组里的 `ScheduleRunnerPlugin` 替换成“每轮之间至少等一秒”的配置。运行：
 
 ```text
 Hello, Bevy!
@@ -21,7 +21,7 @@ Hello, Bevy!
 （每秒一行，按 Ctrl+C 终止）
 ```
 
-同一个 `hello` 一行没改，从"跑一次"变成了"每秒一次"——改变的只是插件。`MinimalPlugins` 适合不需要窗口的场合：专用服务器、命令行工具、自动化测试。
+同一个 `hello` 一行没改，从“跑一次”变成了“每秒一次”——改变的只是插件。`MinimalPlugins` 适合不需要窗口的场合：专用服务器、命令行工具、自动化测试。
 
 ## DefaultPlugins：完整的引擎
 
@@ -49,7 +49,7 @@ Hello, Bevy!
 
 `Update` 现在真的每帧跑一次——在写作本书的机器上，窗口开着的十来秒里刷了一万两千多行。眼下帧率之所以毫无节制，是因为这个 App 连相机都没有、无画可渲染，循环不受显示器刷新节奏的约束；画面与帧率的节奏控制在第 13、18 章展开。
 
-**点击窗口的关闭按钮，程序退出**。这个行为来自 `WindowPlugin` 的默认退出条件："所有窗口关闭即退出"。
+**点击窗口的关闭按钮，程序退出**。这个行为来自 `WindowPlugin` 的默认退出条件：“所有窗口关闭即退出”。
 
 驱动这个循环的是 `WinitPlugin`——Bevy 与操作系统窗口体系的桥梁，基于 Rust 生态的跨平台窗口库 [winit](https://github.com/rust-windowing/winit)。它把 runner 替换成**操作系统的事件循环**：移动窗口、缩放、键鼠输入这些事件由系统推送给程序，程序每帧执行一轮调度并渲染。从此主循环不再是你代码里的某个 `loop`，而是操作系统、winit 与 Bevy 协作的产物——这也是 `run()` 之后的代码不该指望被执行的原因：在一些平台上，事件循环一结束进程就直接终止了。
 
@@ -73,9 +73,9 @@ Hello, Bevy!
 
 <span class="caption">Listing 2-5：通过 .set() 配置 WindowPlugin</span>
 
-`Window` 是个普通结构体：`title` 是标题，`resolution` 是分辨率（单位为物理像素，`(800, 600).into()` 把元组转换过去）。它的字段很多，`..default()` 让其余一切保持默认——这个写法在 Bevy 代码里无处不在，之后不再解释。运行后，窗口标题变成"我的第一个 Bevy 窗口"，尺寸 800×600。
+`Window` 是个普通结构体：`title` 是标题，`resolution` 是分辨率（单位为物理像素，`(800, 600).into()` 把元组转换过去）。它的字段很多，`..default()` 让其余一切保持默认——这个写法在 Bevy 代码里无处不在，之后不再解释。运行后，窗口标题变成“我的第一个 Bevy 窗口”，尺寸 800×600。
 
-一个此刻可以不在意、但值得记一笔的事实：`Window` 本身是一个 Component，这个窗口就是 World 里的一个实体。在 Bevy 里连窗口都长在那张"表"上——第 35 章会用查询来操控多窗口。
+一个此刻可以不在意、但值得记一笔的事实：`Window` 本身是一个 Component，这个窗口就是 World 里的一个实体。在 Bevy 里连窗口都长在那张“表”上——第 35 章会用查询来操控多窗口。
 
 ## 写一个自己的 Plugin
 

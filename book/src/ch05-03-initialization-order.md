@@ -34,7 +34,7 @@ cargo run -p ch05-resources --example listing-05-05
 
 ## FromWorld：看着 World 算初始值
 
-`init_resource` 的签名里藏着第二层："没有才创建"时调用的其实不是 `Default`，而是 **`FromWorld`**：
+`init_resource` 的签名里藏着第二层：“没有才创建”时调用的其实不是 `Default`，而是 **`FromWorld`**：
 
 ```rust
 pub trait FromWorld {

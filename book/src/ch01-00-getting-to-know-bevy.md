@@ -5,6 +5,6 @@
 本章内容：
 
 - [游戏引擎与 Bevy](ch01-01-what-is-bevy.md)：引擎的职责，Bevy 的取舍与现状
-- [ECS 思维模型](ch01-02-ecs-mental-model.md)：忘掉继承树，用"一张表"理解游戏世界
+- [ECS 思维模型](ch01-02-ecs-mental-model.md)：忘掉继承树，用“一张表”理解游戏世界
 - [安装与项目搭建](ch01-03-installation.md)：环境准备、创建项目、编译加速
 - [如何使用本书](ch01-04-how-to-use-this-book.md)：版本锁定、配套代码、查源码这个元技能

@@ -2,7 +2,7 @@
 
 第 2 章 `spawn(Camera2d)` 时说过：表里的列比你写的多——`Camera`、投影方式等一整套组件被自动补了上来。机制的名字当时就报过：**required components**（必需组件）。现在拆开看它怎么运作。
 
-## 声明"有我必有它"
+## 声明“有我必有它”
 
 required components 让一个组件类型在定义处声明：凡是挂上我的实体，必须同时有某几个组件；spawn 时缺了哪个，引擎就地补上。声明用 `#[require(...)]` 属性：
 
@@ -46,13 +46,13 @@ cargo run -p ch03-entities-components --example listing-03-05
 2. **手动优先**：史莱姆王手动给了 `Health(99)`，required 构造器让位——你写的永远赢；
 3. **递归生效**：石巨人只 spawn 了 `Golem`，却出现在 `With<Monster>` 的清单里，说明 `Monster` 被递归补上了，血量用的是 `Golem` 声明的 120，而不是 `Monster` 链上的默认 30——直接声明比间接声明优先级高。
 
-现在回头看第 2 章就一目了然了。翻开 Bevy 源码：`Camera2d` 的定义上挂着 `#[require(Camera, Projection::Orthographic(...), Frustum = ...)]`——三种构造语法全用上了；`Sprite` 则要求 `Transform`、`Visibility` 等。所谓"自动冒出来的列"，全是各类型自己声明的标配。
+现在回头看第 2 章就一目了然了。翻开 Bevy 源码：`Camera2d` 的定义上挂着 `#[require(Camera, Projection::Orthographic(...), Frustum = ...)]`——三种构造语法全用上了；`Sprite` 则要求 `Transform`、`Visibility` 等。所谓“自动冒出来的列”，全是各类型自己声明的标配。
 
-这个机制的价值在于把"这类东西必须有什么"写在类型定义处，而不是散落在每个 spawn 调用里：调用方少写样板，更重要的是**忘不了**——你不可能 spawn 出一个没有 `Health` 的 `Monster`，就像不可能 spawn 出一个没法渲染的 `Sprite`。它给了组合式的 ECS 一点"继承"的便利，却没有继承树的僵硬：required 关系是按组件声明的图，不是单根的树。
+这个机制的价值在于把“这类东西必须有什么”写在类型定义处，而不是散落在每个 spawn 调用里：调用方少写样板，更重要的是**忘不了**——你不可能 spawn 出一个没有 `Health` 的 `Monster`，就像不可能 spawn 出一个没法渲染的 `Sprite`。它给了组合式的 ECS 一点“继承”的便利，却没有继承树的僵硬：required 关系是按组件声明的图，不是单根的树。
 
 ## Bundle：打包一组组件
 
-从第 2 章用到现在的元组，该给个正式名分了。**Bundle** 是"一组静态确定的组件"的抽象：`spawn` 和 `insert` 接受的、`remove` 摘除的，都是 Bundle。单个组件是 Bundle；至多 15 个成员的元组是 Bundle；元组套元组也是。
+从第 2 章用到现在的元组，该给个正式名分了。**Bundle** 是“一组静态确定的组件”的抽象：`spawn` 和 `insert` 接受的、`remove` 摘除的，都是 Bundle。单个组件是 Bundle；至多 15 个成员的元组是 Bundle；元组套元组也是。
 
 元组之外，Bundle 还有具名形式——派生宏 `#[derive(Bundle)]`：
 
@@ -66,14 +66,14 @@ cargo run -p ch03-entities-components --example listing-03-05
 
 <span class="caption">Listing 3-6（节选）：derive(Bundle) 的定义与使用</span>
 
-字段必须全是组件（或嵌套的 Bundle），spawn 时按字段填值。它适合"同一形状反复生成"的场合：出怪表、子弹工厂——把形状定义一次，调用处只填数据。
+字段必须全是组件（或嵌套的 Bundle），spawn 时按字段填值。它适合“同一形状反复生成”的场合：出怪表、子弹工厂——把形状定义一次，调用处只填数据。
 
-但要听一句源码文档里的告诫：**Bundle 只是组件的集合，不是行为单元**。它在 spawn 那一刻就解散成一个个组件，World 里不留任何"这行来自 MonsterBundle"的痕迹——所以也不存在"查询某个 Bundle"的语法，System 永远按组件组合筛选。不要把 Bundle 当成类或抽象边界来设计。
+但要听一句源码文档里的告诫：**Bundle 只是组件的集合，不是行为单元**。它在 spawn 那一刻就解散成一个个组件，World 里不留任何“这行来自 MonsterBundle”的痕迹——所以也不存在“查询某个 Bundle”的语法，System 永远按组件组合筛选。不要把 Bundle 当成类或抽象边界来设计。
 
 Bundle 和 required components 怎么分工？看表达的内容：
 
-- **类型天生需要什么**——用 required components。"怪物必有血条"是 `Monster` 这个类型的内在事实，写在类型上，谁 spawn 都生效。
-- **这次调用想打包什么**——用元组或 `derive(Bundle)`。"这一波出怪长这样"是调用点的便利。
+- **类型天生需要什么**——用 required components。“怪物必有血条”是 `Monster` 这个类型的内在事实，写在类型上，谁 spawn 都生效。
+- **这次调用想打包什么**——用元组或 `derive(Bundle)`。“这一波出怪长这样”是调用点的便利。
 
 Bevy 自己的取舍很能说明问题：0.15 之前引擎 API 充斥着 `SpriteBundle`、`Camera2dBundle` 这类打包类型，required components 落地后已全部移除——如今 `spawn(Camera2d)` 一个组件就够，标配由类型自己声明。
 
@@ -118,10 +118,10 @@ cargo run -p ch03-entities-components
 
 ## 小结
 
-- **定义组件**：`#[derive(Component)]`，任何自有类型皆可；空结构体是标记组件，"有没有"本身就是信息
+- **定义组件**：`#[derive(Component)]`，任何自有类型皆可；空结构体是标记组件，“有没有”本身就是信息
 - **Entity = 行号 + 世代号**：轻量、可复制的 ID；行号会复用，世代号防止旧 ID 错认新实体；查询遍历顺序不可依赖
 - **Commands 是指令队列**：结构修改（spawn/despawn/insert/remove）排队到同步点统一应用；组件值修改经 `&mut` 查询当场生效；调度结束必清队
-- **required components**：`#[require(...)]` 把"类型必备的组件"声明在定义处——缺失补齐、手动优先、递归生效
+- **required components**：`#[require(...)]` 把“类型必备的组件”声明在定义处——缺失补齐、手动优先、递归生效
 - **Bundle** 是组件包：元组或 `derive(Bundle)`；只是集合、不是行为单元，World 里不留打包痕迹
 
 ## 练习

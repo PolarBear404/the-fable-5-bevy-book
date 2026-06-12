@@ -1,6 +1,6 @@
 # 资源的变更检测
 
-第 4 章用 `Changed<Health>` 只挑"动过的"行。资源也有同款能力，但形式不同：资源不在实体表里，没有行可筛，所以变更检测不走查询过滤器，而是 `Res`/`ResMut` 自带的两个方法——
+第 4 章用 `Changed<Health>` 只挑“动过的”行。资源也有同款能力，但形式不同：资源不在实体表里，没有行可筛，所以变更检测不走查询过滤器，而是 `Res`/`ResMut` 自带的两个方法——
 
 - **`is_changed()`**：自本系统上次运行以来，这份资源被写过（或刚插入）吗？
 - **`is_added()`**：自本系统上次运行以来，这份资源是新插入的吗？
@@ -36,9 +36,9 @@ cargo run -p ch05-resources --example listing-05-07
 
 三处看点：
 
-1. **首帧一切皆新**，资源版同样成立：`Score` 是开赛前 `insert_resource` 进来的，第一帧 `is_added()` 和 `is_changed()` 双双为真——"通电"只此一声；
+1. **首帧一切皆新**，资源版同样成立：`Score` 是开赛前 `insert_resource` 进来的，第一帧 `is_added()` 和 `is_changed()` 双双为真——“通电”只此一声；
 2. 第 2 枪脱靶，`set_if_neq(Score(10))` 发现 10 == 10，不记账——**记分牌整帧沉默**；
-3. 若把 `shoot` 最后两行换成朴素的 `score.0 += hit`，第 2 枪也会触发"记分牌刷新 → 10 分"——加零也是写，写了就算变。真实游戏里记分牌刷新可能牵扯 UI 重绘，这笔账不省白不省。
+3. 若把 `shoot` 最后两行换成朴素的 `score.0 += hit`，第 2 枪也会触发“记分牌刷新 → 10 分”——加零也是写，写了就算变。真实游戏里记分牌刷新可能牵扯 UI 重绘，这笔账不省白不省。
 
 > 变更检测还能再省一步：第 6 章的 `run_if(resource_changed::<Score>)` 可以让 `scoreboard` 在分数没变的帧**根本不运行**，连 `if` 都不用进。
 
@@ -81,14 +81,14 @@ cargo run -p ch05-resources
 
 - **Resource = World 里按类型存放、全局唯一的数据**；`#[derive(Resource)]` 即可，要求 `Send + Sync + 'static`。每实体一份的数据用 Component，全场一份的用 Resource，只有自己用的记忆用 `Local`
 - **`Res<T>` 读、`ResMut<T>` 写**；访问声明照常驱动并行调度。同一系统对同一资源一读一写 → **B0002** panic，删掉冗余的 `Res` 即可
-- **缺失即 panic**：`Res` 把"资源不存在"当 bug；时有时无是设计时，用 `Option<Res<T>>` 分支处理，或 `If<Res<T>>` 跳过系统
-- **三条注册路径**：`App::insert_resource`/`init_resource` 构建期立即生效；Plugin 的 `build` 里同名调用随 `add_plugins` 执行；`Commands` 版本运行期排队、同步点落地。增删资源属于结构修改，"改值直接写、改结构走 Commands"对资源同样成立
+- **缺失即 panic**：`Res` 把“资源不存在”当 bug；时有时无是设计时，用 `Option<Res<T>>` 分支处理，或 `If<Res<T>>` 跳过系统
+- **三条注册路径**：`App::insert_resource`/`init_resource` 构建期立即生效；Plugin 的 `build` 里同名调用随 `add_plugins` 执行；`Commands` 版本运行期排队、同步点落地。增删资源属于结构修改，“改值直接写、改结构走 Commands”对资源同样成立
 - **`insert` 覆盖，`init` 让位**；`init_resource` 的初始值来自 `FromWorld`（实现 `Default` 的类型自动获得），`from_world` 能读整个 World——**初始化顺序就是书写顺序**，谁依赖谁，谁写在后面
 - **变更检测是方法不是过滤器**：`is_changed()`/`is_added()`；写访问即变更、首帧一切皆新的口径与组件一致；值没变就别记账，用 `set_if_neq`（要求 `PartialEq`）
 
 ## 练习
 
-1. **共享数据**：给 Listing 5-1 加一个弹药资源 `Bullets(u32)`，初始 3 发：`shoot` 每枪 -1，没子弹时只打印"没子弹了"不再加分；`announce` 同时播报剩余弹药。跑 5 帧，确认后两帧分数不再涨。体会同一份资源被两个系统一写一读的分工。
+1. **共享数据**：给 Listing 5-1 加一个弹药资源 `Bullets(u32)`，初始 3 发：`shoot` 每枪 -1，没子弹时只打印“没子弹了”不再加分；`announce` 同时播报剩余弹药。跑 5 帧，确认后两帧分数不再涨。体会同一份资源被两个系统一写一读的分工。
 2. **初始化顺序**：不看书，先预测——把 Listing 5-6 职业场那段的 `insert_resource` 与 `init_resource` 两行对调会发生什么？什么时机发生？然后运行验证。再试第三种写法：在 `init_resource::<ScoreRules>()` **之前**手动 `insert_resource(ScoreRules { bullseye: 99 })`，解释输出为什么是 99。
 3. **变更检测**：把 Listing 5-8 `shoot` 末尾的 `set_if_neq` 换回 `score.0 += gained`，先预测第 4 枪后记分牌的行为，运行验证；再想想 `scoreboard` 里若加一段 `is_added` 的欢迎语，它会在第几枪出现，为什么只出现一次。
 
