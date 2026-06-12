@@ -1,0 +1,9 @@
+[package]
+name = "ch05-resources"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug feature 让运行期报错（如 B0002 资源访问冲突）带上系统与资源的真实类型名
+bevy = { workspace = true, features = ["debug"] }

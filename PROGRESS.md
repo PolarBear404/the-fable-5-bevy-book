@@ -20,7 +20,7 @@
 | 2 | 第一个 Bevy App | ✅ | code/ch02-first-app（src/main.rs + examples/listing-02-01～06）；book/src/ch02-00～03 |
 | 3 | Entity 与 Component | ✅ | code/ch03-entities-components（src/main.rs + examples/listing-03-01～06）；book/src/ch03-00～03 |
 | 4 | System 与 Query | ✅ | code/ch04-systems-queries（src/main.rs + examples/listing-04-01～07，开 bevy `debug` feature）；book/src/ch04-00～04 |
-| 5 | Resource——全局唯一数据 | ⬜ | |
+| 5 | Resource——全局唯一数据 | ✅ | code/ch05-resources（src/main.rs + examples/listing-05-01～07，开 bevy `debug` feature）；book/src/ch05-00～04 |
 | 6 | Schedule 与执行顺序 | ⬜ | |
 | 7 | Message——缓冲消息 | ⬜ | |
 | 8 | Event 与 Observer | ⬜ | |

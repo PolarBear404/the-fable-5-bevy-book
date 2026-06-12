@@ -5,6 +5,7 @@ members = [
     "ch02-first-app",
     "ch03-entities-components",
     "ch04-systems-queries",
+    "ch05-resources",
 ]
 
 [workspace.package]

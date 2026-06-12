@@ -1871,6 +1871,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "ch05-resources"
+version = "0.1.0"
+dependencies = [
+ "bevy",
+]
+
+[[package]]
 name = "clang-sys"
 version = "1.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"

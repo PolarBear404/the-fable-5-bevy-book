@@ -25,3 +25,8 @@
   - [Query：精确取数据](ch04-02-query-data.md)
   - [过滤器与变更检测](ch04-03-query-filters.md)
   - [借用冲突与 ParamSet](ch04-04-borrow-conflicts-and-paramset.md)
+- [Resource——全局唯一数据](ch05-00-resources.md)
+  - [定义与访问 Resource](ch05-01-defining-and-accessing-resources.md)
+  - [资源的有无](ch05-02-resource-presence.md)
+  - [初始化：init_resource 与 FromWorld](ch05-03-initialization-order.md)
+  - [资源的变更检测](ch05-04-resource-change-detection.md)
