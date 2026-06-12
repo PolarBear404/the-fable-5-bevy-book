@@ -1,0 +1,9 @@
+[package]
+name = "ch06-schedules"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug feature 让调度器的诊断输出（如执行顺序歧义警告）带上系统的真实函数名
+bevy = { workspace = true, features = ["debug"] }
