@@ -11,3 +11,7 @@ preferred-dark-theme = "navy"
 [output.html.fold]
 enable = true
 level = 1
+
+# 本书代码依赖 bevy，Rust Playground 沙箱不支持，run 按钮必然失败，故全局关闭
+[output.html.playground]
+runnable = false
