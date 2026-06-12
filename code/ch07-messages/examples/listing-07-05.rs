@@ -1,22 +1,15 @@
-//! Listing 7-5：MessageMutator——消息在途中被修改
+//! Listing 7-5：错过即丢——打瞌睡的记分员每三帧才醒一次
 
 use bevy::prelude::*;
 
-#[derive(Clone, Copy)]
-enum Wall {
-    Left,
-    Right,
-}
-
-/// 消息带上撞击力道，供途中修改、供下游读取
+/// 消息带上碰撞序号，丢没丢一对便知
 #[derive(Message)]
-struct WallHit {
-    wall: Wall,
-    force: i32,
+struct RailHit {
+    n: u32,
 }
 
 #[derive(Component)]
-struct Ball {
+struct Car {
     pos: i32,
     velocity: i32,
 }
@@ -24,52 +17,50 @@ struct Ball {
 // ANCHOR: main
 fn main() {
     let mut app = App::new();
-    app.add_message::<WallHit>()
-        .add_systems(Startup, spawn_ball)
-        // 写 → 改 → 读，三段流水线
-        .add_systems(Update, (move_ball, cushion, play_sound).chain());
+    app.add_message::<RailHit>().add_systems(Startup, spawn_car);
+    app.add_systems(
+        Update,
+        (
+            drive,
+            // 记分员打瞌睡：每三帧才醒来读一次
+            drowsy_scorer.run_if(|mut frame: Local<u32>| {
+                *frame += 1;
+                frame.is_multiple_of(3)
+            }),
+        )
+            .chain(),
+    );
 
-    for frame in 1..=6 {
+    for frame in 1..=9 {
         println!("—— 第 {frame} 帧 ——");
         app.update();
     }
 }
 // ANCHOR_END: main
 
-fn spawn_ball(mut commands: Commands) {
-    commands.spawn(Ball {
+// ANCHOR: systems
+fn spawn_car(mut commands: Commands) {
+    // 还是那条 4 格直道：阿莱每一帧都在撞
+    commands.spawn(Car {
         pos: 0,
         velocity: 4,
     });
 }
 
-fn move_ball(mut ball: Single<&mut Ball>, mut hits: MessageWriter<WallHit>) {
-    ball.pos += ball.velocity;
-    if ball.pos == 0 || ball.pos == 12 {
-        let wall = if ball.pos == 0 { Wall::Left } else { Wall::Right };
-        hits.write(WallHit {
-            wall,
-            force: ball.velocity.abs(),
-        });
-        ball.velocity = -ball.velocity;
+/// 写者：每次撞护栏，消息编号递增
+fn drive(mut car: Single<&mut Car>, mut hits: MessageWriter<RailHit>, mut count: Local<u32>) {
+    car.pos += car.velocity;
+    if car.pos == 0 || car.pos == 4 {
+        car.velocity = -car.velocity;
+        *count += 1;
+        println!("阿莱：第 {} 次撞护栏", *count);
+        hits.write(RailHit { n: *count });
     }
 }
 
-// ANCHOR: cushion
-/// 右墙贴了海绵垫：途经的碰撞消息被吸掉 2 点力道
-fn cushion(mut hits: MessageMutator<WallHit>) {
-    for hit in hits.read() {
-        if let Wall::Right = hit.wall {
-            hit.force -= 2;
-            println!("海绵垫：吸掉 2 点力道");
-        }
-    }
+/// 读者：醒来时把缓冲里还剩的消息一次读完
+fn drowsy_scorer(mut hits: MessageReader<RailHit>) {
+    let heard: Vec<u32> = hits.read().map(|hit| hit.n).collect();
+    println!("记分员醒来：记下第 {heard:?} 次");
 }
-// ANCHOR_END: cushion
-
-/// 下游读者拿到的是修改后的消息
-fn play_sound(mut hits: MessageReader<WallHit>) {
-    for hit in hits.read() {
-        println!("音效：砰！（力道 {}）", hit.force);
-    }
-}
+// ANCHOR_END: systems

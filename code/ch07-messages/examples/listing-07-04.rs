@@ -1,15 +1,12 @@
-//! Listing 7-4：错过即丢——打瞌睡的记分员每三帧才醒一次
+//! Listing 7-4：DJ 排在车手之前——音效慢一拍，但一声不少
 
 use bevy::prelude::*;
 
-/// 消息带上碰撞序号，方便对账
 #[derive(Message)]
-struct WallHit {
-    n: u32,
-}
+struct RailHit;
 
 #[derive(Component)]
-struct Ball {
+struct Car {
     pos: i32,
     velocity: i32,
 }
@@ -17,54 +14,37 @@ struct Ball {
 // ANCHOR: main
 fn main() {
     let mut app = App::new();
-    app.add_message::<WallHit>().add_systems(Startup, spawn_ball);
-    app.add_systems(
-        Update,
-        (
-            move_ball,
-            // 记分员打瞌睡：每三帧才醒来读一次
-            drowsy_scorer.run_if(|mut frame: Local<u32>| {
-                *frame += 1;
-                frame.is_multiple_of(3)
-            }),
-        )
-            .chain(),
-    );
+    app.add_message::<RailHit>()
+        .add_systems(Startup, spawn_car)
+        // 故意接反：DJ 先跑，车手后跑
+        .add_systems(Update, (play_sound, drive).chain());
 
-    for frame in 1..=9 {
+    for frame in 1..=5 {
         println!("—— 第 {frame} 帧 ——");
         app.update();
     }
 }
 // ANCHOR_END: main
 
-fn spawn_ball(mut commands: Commands) {
-    // 走廊只有 4 格，速度拉满：每一帧都在撞墙
-    commands.spawn(Ball {
+fn spawn_car(mut commands: Commands) {
+    // 直道加长到 8 格：隔一帧撞一次，错拍看得更清楚
+    commands.spawn(Car {
         pos: 0,
         velocity: 4,
     });
 }
 
-// ANCHOR: systems
-/// 写者：球速失控，每帧撞一次墙，消息编号递增
-fn move_ball(
-    mut ball: Single<&mut Ball>,
-    mut hits: MessageWriter<WallHit>,
-    mut count: Local<u32>,
-) {
-    ball.pos += ball.velocity;
-    if ball.pos == 0 || ball.pos == 4 {
-        ball.velocity = -ball.velocity;
-        *count += 1;
-        println!("球：第 {} 次撞墙", *count);
-        hits.write(WallHit { n: *count });
+fn drive(mut car: Single<&mut Car>, mut hits: MessageWriter<RailHit>) {
+    car.pos += car.velocity;
+    if car.pos == 0 || car.pos == 8 {
+        car.velocity = -car.velocity;
+        println!("阿莱：撞上护栏！");
+        hits.write(RailHit);
     }
 }
 
-/// 读者：醒来时把还在缓冲里的消息一次读完
-fn drowsy_scorer(mut hits: MessageReader<WallHit>) {
-    let heard: Vec<u32> = hits.read().map(|hit| hit.n).collect();
-    println!("记分员醒来：听到第 {heard:?} 次");
+fn play_sound(mut hits: MessageReader<RailHit>) {
+    for _ in hits.read() {
+        println!("DJ：砰！");
+    }
 }
-// ANCHOR_END: systems

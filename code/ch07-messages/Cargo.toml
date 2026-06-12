@@ -5,4 +5,5 @@ edition.workspace = true
 publish.workspace = true
 
 [dependencies]
-bevy = { workspace = true }
+# debug feature 让本章两个"亲眼看报错"示例的 panic 信息带上真实的系统名与类型名
+bevy = { workspace = true, features = ["debug"] }
