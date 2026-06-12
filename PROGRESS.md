@@ -25,7 +25,7 @@
 | 7 | Message——缓冲消息 | ✅ | code/ch07-messages（src/main.rs + examples/listing-07-01～08，开 bevy `debug` feature）；book/src/ch07-00～05 |
 | 8 | Event 与 Observer | ✅ | code/ch08-events-observers（src/main.rs + examples/listing-08-01～09，开 bevy `debug` feature）；book/src/ch08-00～05 |
 | 9 | 实体关系与层级 | ✅ | code/ch09-relationships（src/main.rs + examples/listing-09-01～09，其中 09-05 在 no-compile/ 下为编译失败示例，开 bevy `debug` feature）；book/src/ch09-00～05 |
-| 10 | State——游戏状态机 | ⬜ | |
+| 10 | State——游戏状态机 | ✅ | code/ch10-states（src/main.rs + examples/listing-10-01～09，其中 10-10 在 no-compile/ 下为编译失败示例，开 bevy `debug` feature）；book/src/ch10-00～06 |
 | 11 | 深入 ECS | ⬜ | |
 | 12 | Transform 与坐标系统 | ⬜ | |
 | 13 | Camera 与视口 | ⬜ | |

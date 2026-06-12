@@ -1,0 +1,9 @@
+[package]
+name = "ch10-states"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug feature 让警告与报错信息带上真实的类型名和触发位置
+bevy = { workspace = true, features = ["debug"] }
