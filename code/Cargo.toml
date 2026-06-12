@@ -9,6 +9,7 @@ members = [
     "ch06-schedules",
     "ch07-messages",
     "ch08-events-observers",
+    "ch09-relationships",
 ]
 
 [workspace.package]
