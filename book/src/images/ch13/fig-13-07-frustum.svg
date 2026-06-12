@@ -1,0 +1,53 @@
+<svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="360" rx="10" fill="#f7f5f0"/>
+
+  <!-- ============ 左：正交 ============ -->
+  <text x="190" y="40" text-anchor="middle" font-size="16" fill="#3a3a3a" font-weight="bold">正交投影：长方体</text>
+
+  <!-- 相机 -->
+  <rect x="40" y="150" width="34" height="26" rx="4" fill="#4a4540" stroke="#3a3a3a" stroke-width="1.5"/>
+  <rect x="74" y="156" width="10" height="14" fill="#4a4540" stroke="#3a3a3a" stroke-width="1.5"/>
+  <text x="57" y="200" text-anchor="middle" font-size="13" fill="#5a5650">相机</text>
+
+  <!-- 取景体：矩形（侧视） -->
+  <rect x="110" y="110" width="230" height="106" fill="#3b6ed9" fill-opacity="0.14" stroke="#3b6ed9" stroke-width="2"/>
+  <line x1="110" y1="110" x2="110" y2="216" stroke="#3b6ed9" stroke-width="3"/>
+  <line x1="340" y1="110" x2="340" y2="216" stroke="#3b6ed9" stroke-width="3"/>
+  <text x="110" y="240" text-anchor="middle" font-size="13.5" fill="#3b6ed9">near</text>
+  <text x="340" y="240" text-anchor="middle" font-size="13.5" fill="#3b6ed9">far</text>
+
+  <!-- 平行光线 -->
+  <line x1="116" y1="130" x2="334" y2="130" stroke="#3b6ed9" stroke-width="1" stroke-dasharray="5 4" opacity="0.7"/>
+  <line x1="116" y1="163" x2="334" y2="163" stroke="#3b6ed9" stroke-width="1" stroke-dasharray="5 4" opacity="0.7"/>
+  <line x1="116" y1="196" x2="334" y2="196" stroke="#3b6ed9" stroke-width="1" stroke-dasharray="5 4" opacity="0.7"/>
+
+  <text x="225" y="282" text-anchor="middle" font-size="14" fill="#5a5650">投影线平行：远近一样大</text>
+  <text x="225" y="304" text-anchor="middle" font-size="13" fill="#8a8378">（2D 默认 near = −1000，相机身后也入账）</text>
+
+  <!-- ============ 右：透视 ============ -->
+  <text x="570" y="40" text-anchor="middle" font-size="16" fill="#3a3a3a" font-weight="bold">透视投影：锥台</text>
+
+  <!-- 相机（眼点） -->
+  <rect x="420" y="150" width="34" height="26" rx="4" fill="#4a4540" stroke="#3a3a3a" stroke-width="1.5"/>
+  <rect x="454" y="156" width="10" height="14" fill="#4a4540" stroke="#3a3a3a" stroke-width="1.5"/>
+  <text x="437" y="200" text-anchor="middle" font-size="13" fill="#5a5650">相机</text>
+
+  <!-- 视锥（侧视梯形）：眼点在 (466,163)，向右张开 -->
+  <path d="M 500 138 L 716 84 L 716 242 L 500 188 Z" fill="#c05a2e" fill-opacity="0.14" stroke="#c05a2e" stroke-width="2"/>
+  <line x1="500" y1="138" x2="500" y2="188" stroke="#c05a2e" stroke-width="3"/>
+  <line x1="716" y1="84" x2="716" y2="242" stroke="#c05a2e" stroke-width="3"/>
+  <text x="500" y="212" text-anchor="middle" font-size="13.5" fill="#c05a2e">near</text>
+  <text x="716" y="266" text-anchor="middle" font-size="13.5" fill="#c05a2e">far</text>
+
+  <!-- 被裁掉的锥尖（眼点到 near） -->
+  <line x1="466" y1="163" x2="500" y2="138" stroke="#c05a2e" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+  <line x1="466" y1="163" x2="500" y2="188" stroke="#c05a2e" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
+
+  <!-- fov 角标注 -->
+  <path d="M 488 152 A 24 24 0 0 1 488 174" fill="none" stroke="#c05a2e" stroke-width="1.5"/>
+  <text x="496" y="168" font-size="13" fill="#c05a2e" font-weight="bold">fov</text>
+
+  <text x="590" y="282" text-anchor="middle" font-size="14" fill="#5a5650">从眼点张开：近大远小</text>
+  <text x="590" y="304" text-anchor="middle" font-size="13" fill="#8a8378">（near = 0.1，贴脸与身后不入镜）</text>
+</svg>

@@ -89,8 +89,8 @@ fn setup(mut commands: Commands) {
         },
         Projection::Orthographic(OrthographicProjection {
             scaling_mode: ScalingMode::Fixed {
-                width: 1600.0,
-                height: 1200.0,
+                width: 1200.0,
+                height: 900.0,
             },
             ..OrthographicProjection::default_2d()
         }),
@@ -99,19 +99,19 @@ fn setup(mut commands: Commands) {
 
     // —— 布景 ——
     commands.spawn((
-        Sprite::from_color(Color::srgb(0.16, 0.13, 0.11), Vec2::new(1400.0, 900.0)),
+        Sprite::from_color(Color::srgb(0.16, 0.13, 0.11), Vec2::new(1000.0, 560.0)),
         Transform::from_xyz(0.0, 0.0, -10.0),
     ));
     for i in -3..=3 {
-        for y in [-350.0, 350.0] {
+        for y in [-240.0, 240.0] {
             commands.spawn((
                 Sprite::from_color(Color::srgb(0.95, 0.75, 0.25), Vec2::splat(22.0)),
-                Transform::from_xyz(i as f32 * 200.0, y, -5.0),
+                Transform::from_xyz(i as f32 * 160.0, y, -5.0),
             ));
         }
     }
     // 马克点：走位记号，只在工作层
-    for (x, y) in [(0.0, 0.0), (500.0, 0.0), (-500.0, 0.0), (354.0, 250.0), (-354.0, -250.0)] {
+    for (x, y) in [(0.0, 0.0), (420.0, 0.0), (-420.0, 0.0), (297.0, 210.0), (-297.0, -210.0)] {
         commands.spawn((
             Sprite::from_color(Color::srgb(1.0, 0.3, 0.7), Vec2::splat(16.0)),
             Transform::from_xyz(x, y, -4.0),
@@ -133,7 +133,7 @@ fn setup(mut commands: Commands) {
     commands.spawn((
         Horse,
         Sprite::from_color(Color::srgb(0.92, 0.92, 0.95), Vec2::new(52.0, 30.0)),
-        Transform::from_xyz(420.0, 0.0, 0.0),
+        Transform::from_xyz(350.0, 0.0, 0.0),
         children![(
             Sprite::from_color(Color::srgb(0.95, 0.95, 1.0), Vec2::splat(72.0)),
             Transform::from_xyz(0.0, 0.0, 5.0),
@@ -147,15 +147,15 @@ fn setup(mut commands: Commands) {
 /// 走位：阿燕满场跑“8”字
 fn walk_hero(time: Res<Time>, mut hero: Single<&mut Transform, With<Hero>>) {
     let t = time.elapsed_secs() * 0.5;
-    hero.translation.x = 500.0 * t.sin();
-    hero.translation.y = 250.0 * (2.0 * t).sin();
+    hero.translation.x = 420.0 * t.sin();
+    hero.translation.y = 210.0 * (2.0 * t).sin();
 }
 
 /// 走位：踏雪绕场奔驰
 fn run_horse(time: Res<Time>, mut horse: Single<&mut Transform, With<Horse>>) {
     let t = time.elapsed_secs() * 0.4;
-    horse.translation.x = 420.0 * t.cos();
-    horse.translation.y = 300.0 * t.sin();
+    horse.translation.x = 350.0 * t.cos();
+    horse.translation.y = 240.0 * t.sin();
 }
 
 /// 左路跟拍：平滑追向阿燕

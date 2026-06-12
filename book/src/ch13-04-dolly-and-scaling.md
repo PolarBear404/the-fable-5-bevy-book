@@ -59,6 +59,10 @@ cargo run -p ch13-cameras --example listing-13-07
 
 画面三秒一跳：远景里全场尽收，灯笼柱排成糖葫芦；特写里阿燕占满半屏，红衣的像素粒粒可数。注意这是“硬切”——`scale` 瞬间改值。想要“缓推缓拉”的电影感？上一节刚学的 `smooth_nudge` 对 `f32` 同样适用，练习里见。
 
+![三幅并排的实拍画面：远景 scale 1.5 里物体最小、视野最大，中景 scale 1.0 居中，特写 scale 0.6 里侠客和灯笼柱明显放大](images/ch13/fig-13-04-shot-scales.png)
+
+<span class="caption">Figure 13-4：三档分镜实拍——scale 越大，取景框越大，画面里的东西越小</span>
+
 ## 窗口一拉，画面听谁的
 
 Listing 13-7 的相机还埋了第二处新东西：`scaling_mode` 字段换成了 `ScalingMode::FixedVertical { viewport_height: 600.0 }`。它管的是另一件事：**窗口尺寸变了，取景框怎么应对**。

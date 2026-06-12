@@ -70,14 +70,14 @@ fn setup(mut commands: Commands) {
     // ANCHOR_END: cameras
 
     commands.spawn((
-        Sprite::from_color(Color::srgb(0.16, 0.13, 0.11), Vec2::new(1400.0, 900.0)),
+        Sprite::from_color(Color::srgb(0.16, 0.13, 0.11), Vec2::new(1000.0, 560.0)),
         Transform::from_xyz(0.0, 0.0, -10.0),
     ));
     for i in -3..=3 {
-        for y in [-350.0, 350.0] {
+        for y in [-240.0, 240.0] {
             commands.spawn((
                 Sprite::from_color(Color::srgb(0.95, 0.75, 0.25), Vec2::splat(22.0)),
-                Transform::from_xyz(i as f32 * 200.0, y, -5.0),
+                Transform::from_xyz(i as f32 * 160.0, y, -5.0),
             ));
         }
     }
@@ -89,7 +89,7 @@ fn setup(mut commands: Commands) {
     commands.spawn((
         Horse,
         Sprite::from_color(Color::srgb(0.92, 0.92, 0.95), Vec2::new(52.0, 30.0)),
-        Transform::from_xyz(420.0, 0.0, 0.0),
+        Transform::from_xyz(350.0, 0.0, 0.0),
     ));
 
     println!("老雷：导播台分屏——左路盯阿燕，右路盯踏雪！");
@@ -126,15 +126,15 @@ fn split_viewports(
 
 fn walk_hero(time: Res<Time>, mut hero: Single<&mut Transform, With<Hero>>) {
     let t = time.elapsed_secs() * 0.5;
-    hero.translation.x = 500.0 * t.sin();
-    hero.translation.y = 250.0 * (2.0 * t).sin();
+    hero.translation.x = 420.0 * t.sin();
+    hero.translation.y = 210.0 * (2.0 * t).sin();
 }
 
 /// 踏雪的走位：绕场一周又一周
 fn run_horse(time: Res<Time>, mut horse: Single<&mut Transform, With<Horse>>) {
     let t = time.elapsed_secs() * 0.4;
-    horse.translation.x = 420.0 * t.cos();
-    horse.translation.y = 300.0 * t.sin();
+    horse.translation.x = 350.0 * t.cos();
+    horse.translation.y = 240.0 * t.sin();
 }
 
 fn follow_hero(

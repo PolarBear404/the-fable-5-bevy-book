@@ -52,10 +52,10 @@ fn setup(mut commands: Commands) {
             ..default()
         },
         Projection::Orthographic(OrthographicProjection {
-            // 锁定取景 1600×1200 世界单位：整个片场一览无余
+            // 锁定取景 1200×900 世界单位：整个片场一览无余
             scaling_mode: ScalingMode::Fixed {
-                width: 1600.0,
-                height: 1200.0,
+                width: 1200.0,
+                height: 900.0,
             },
             ..OrthographicProjection::default_2d()
         }),
@@ -64,21 +64,21 @@ fn setup(mut commands: Commands) {
     // ANCHOR_END: cameras
 
     commands.spawn((
-        Sprite::from_color(Color::srgb(0.16, 0.13, 0.11), Vec2::new(1400.0, 900.0)),
+        Sprite::from_color(Color::srgb(0.16, 0.13, 0.11), Vec2::new(1000.0, 560.0)),
         Transform::from_xyz(0.0, 0.0, -10.0),
     ));
     for i in -3..=3 {
-        for y in [-350.0, 350.0] {
+        for y in [-240.0, 240.0] {
             commands.spawn((
                 Sprite::from_color(Color::srgb(0.95, 0.75, 0.25), Vec2::splat(22.0)),
-                Transform::from_xyz(i as f32 * 200.0, y, -5.0),
+                Transform::from_xyz(i as f32 * 160.0, y, -5.0),
             ));
         }
     }
 
     // ANCHOR: crew_props
     // 马克点：阿燕的走位记号，只许工作层看见
-    for (x, y) in [(0.0, 0.0), (500.0, 0.0), (-500.0, 0.0), (354.0, 250.0), (-354.0, -250.0)] {
+    for (x, y) in [(0.0, 0.0), (420.0, 0.0), (-420.0, 0.0), (297.0, 210.0), (-297.0, -210.0)] {
         commands.spawn((
             Sprite::from_color(Color::srgb(1.0, 0.3, 0.7), Vec2::splat(16.0)),
             Transform::from_xyz(x, y, -4.0),
@@ -113,7 +113,7 @@ fn dock_minimap(
         let Ok(window) = windows.get(message.window) else {
             continue;
         };
-        // 沙盘宽占窗口四分之一，比例锁 4:3，与取景范围 1600×1200 一致
+        // 沙盘宽占窗口四分之一，比例锁 4:3，与取景范围 1200×900 一致
         let width = window.physical_width() / 4;
         let size = UVec2::new(width, width * 3 / 4);
         minimap.viewport = Some(Viewport {
@@ -128,8 +128,8 @@ fn dock_minimap(
 
 fn walk_hero(time: Res<Time>, mut hero: Single<&mut Transform, With<Hero>>) {
     let t = time.elapsed_secs() * 0.5;
-    hero.translation.x = 500.0 * t.sin();
-    hero.translation.y = 250.0 * (2.0 * t).sin();
+    hero.translation.x = 420.0 * t.sin();
+    hero.translation.y = 210.0 * (2.0 * t).sin();
 }
 
 fn follow_hero(

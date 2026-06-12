@@ -56,6 +56,10 @@ cargo run -p ch13-cameras --example listing-13-02
 
 窗口里地毯之外的世界从灰变成深蓝夜空。`insert_resource` 写在 `App::new()` 的链上（第 5 章的旧识），从第一帧起生效。
 
+![左右两幅同一片场的画面：左幅地毯四周是默认的深灰清屏色，右幅换成了深蓝夜空](images/ch13/fig-13-01-clear-color.png)
+
+<span class="caption">Figure 13-1：同一片场换天幕前后——地毯之外露出的就是清屏色</span>
+
 清屏色其实有两级配置。`ClearColor` 资源是全局默认；每台相机还可以在 `Camera` 组件的 `clear_color` 字段上各持己见，它的类型是 `ClearColorConfig`，一共三种态度：
 
 | `ClearColorConfig` | 含义 |
