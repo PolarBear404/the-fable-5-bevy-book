@@ -1,0 +1,72 @@
+<svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <rect x="0" y="0" width="760" height="440" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">just_pressed 只真一帧——鼓点没踩进那一帧就丢，踩进几次就重几次</text>
+
+  <!-- ===== 场一：慢板（鼓点比帧稀）丢拍 ===== -->
+  <text x="150" y="76" font-size="13" fill="#4a463f" font-weight="bold">慢板：鼓点 4 拍/秒，帧照常跑</text>
+
+  <!-- 帧带 -->
+  <text x="138" y="110" text-anchor="end" font-size="12" fill="#7a7468">帧</text>
+  <g>
+    <rect x="150" y="92" width="480" height="26" fill="#ffffff" stroke="#b8b1a4" stroke-width="1"/>
+    <!-- 帧分隔 -->
+    <g stroke="#d8d2c6" stroke-width="1">
+      <line x1="190" y1="92" x2="190" y2="118"/><line x1="230" y1="92" x2="230" y2="118"/>
+      <line x1="270" y1="92" x2="270" y2="118"/><line x1="310" y1="92" x2="310" y2="118"/>
+      <line x1="350" y1="92" x2="350" y2="118"/><line x1="390" y1="92" x2="390" y2="118"/>
+      <line x1="430" y1="92" x2="430" y2="118"/><line x1="470" y1="92" x2="470" y2="118"/>
+      <line x1="510" y1="92" x2="510" y2="118"/><line x1="550" y1="92" x2="550" y2="118"/>
+      <line x1="590" y1="92" x2="590" y2="118"/>
+    </g>
+    <!-- just_pressed 的那一帧 -->
+    <rect x="270" y="92" width="40" height="26" fill="#d9eddf" stroke="#1d6b40" stroke-width="1.5"/>
+    <text x="290" y="109" text-anchor="middle" font-size="11" fill="#1d6b40" font-weight="bold">真</text>
+  </g>
+  <text x="290" y="140" text-anchor="middle" font-size="11" fill="#1d6b40">按下的那一帧</text>
+
+  <!-- 鼓点带 -->
+  <text x="138" y="174" text-anchor="end" font-size="12" fill="#7a7468">鼓点</text>
+  <line x1="150" y1="168" x2="630" y2="168" stroke="#b8b1a4" stroke-width="1.5"/>
+  <g stroke="#c05a2e" stroke-width="3">
+    <line x1="206" y1="156" x2="206" y2="180"/>
+    <line x1="466" y1="156" x2="466" y2="180"/>
+  </g>
+  <text x="206" y="198" text-anchor="middle" font-size="11" fill="#c05a2e">这一拍太早</text>
+  <text x="466" y="198" text-anchor="middle" font-size="11" fill="#c05a2e">这一拍太晚：真相已翻篇</text>
+  <text x="650" y="113" font-size="13" fill="#a14227" font-weight="bold">丢拍 ✗</text>
+
+  <!-- ===== 场二：拖戏（一帧塞好几拍）重复 ===== -->
+  <text x="150" y="256" font-size="13" fill="#4a463f" font-weight="bold">拖戏：帧被拖到 150 毫秒，鼓点 64 拍/秒照打</text>
+
+  <text x="138" y="290" text-anchor="end" font-size="12" fill="#7a7468">帧</text>
+  <g>
+    <rect x="150" y="272" width="480" height="26" fill="#ffffff" stroke="#b8b1a4" stroke-width="1"/>
+    <g stroke="#d8d2c6" stroke-width="1">
+      <line x1="310" y1="272" x2="310" y2="298"/>
+      <line x1="470" y1="272" x2="470" y2="298"/>
+    </g>
+    <rect x="310" y="272" width="160" height="26" fill="#d9eddf" stroke="#1d6b40" stroke-width="1.5"/>
+    <text x="390" y="289" text-anchor="middle" font-size="11" fill="#1d6b40" font-weight="bold">真</text>
+  </g>
+  <text x="390" y="316" text-anchor="middle" font-size="11" fill="#1d6b40">这一整帧都是“按下的那一帧”</text>
+
+  <text x="138" y="354" text-anchor="end" font-size="12" fill="#7a7468">鼓点</text>
+  <line x1="150" y1="348" x2="630" y2="348" stroke="#b8b1a4" stroke-width="1.5"/>
+  <g stroke="#c05a2e" stroke-width="3">
+    <line x1="166" y1="336" x2="166" y2="360"/><line x1="198" y1="336" x2="198" y2="360"/>
+    <line x1="230" y1="336" x2="230" y2="360"/><line x1="262" y1="336" x2="262" y2="360"/>
+    <line x1="294" y1="336" x2="294" y2="360"/><line x1="326" y1="336" x2="326" y2="360"/>
+    <line x1="358" y1="336" x2="358" y2="360"/><line x1="390" y1="336" x2="390" y2="360"/>
+    <line x1="422" y1="336" x2="422" y2="360"/><line x1="454" y1="336" x2="454" y2="360"/>
+    <line x1="486" y1="336" x2="486" y2="360"/><line x1="518" y1="336" x2="518" y2="360"/>
+    <line x1="550" y1="336" x2="550" y2="360"/><line x1="582" y1="336" x2="582" y2="360"/>
+    <line x1="614" y1="336" x2="614" y2="360"/>
+  </g>
+  <!-- 落进真帧的拍子圈出来 -->
+  <rect x="312" y="330" width="152" height="36" rx="6" fill="none" stroke="#1d6b40" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="390" y="386" text-anchor="middle" font-size="11" fill="#1d6b40">这五拍读到的是同一份快照——同一招收五遍</text>
+  <text x="650" y="293" font-size="13" fill="#a14227" font-weight="bold">重复 ✗</text>
+
+  <text x="380" y="420" text-anchor="middle" font-size="12" fill="#7a7468">快照按帧翻篇，鼓点不按帧落——“瞬时”的真假与拍子对不上号；持续的 pressed 不受此害</text>
+</svg>

@@ -1,0 +1,49 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-o18d" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="400" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">两拍之间找步子：alpha = overstep_fraction()</text>
+
+  <!-- 时间轴：两拍与“现在” -->
+  <text x="120" y="92" text-anchor="end" font-size="12" fill="#7a7468">时间</text>
+  <line x1="132" y1="88" x2="640" y2="88" stroke="#b8b1a4" stroke-width="2"/>
+  <g stroke="#1d6b40" stroke-width="3">
+    <line x1="180" y1="74" x2="180" y2="102"/>
+    <line x1="560" y1="74" x2="560" y2="102"/>
+  </g>
+  <text x="180" y="64" text-anchor="middle" font-size="12" fill="#1d6b40" font-weight="bold">上一拍</text>
+  <text x="560" y="64" text-anchor="middle" font-size="12" fill="#1d6b40" font-weight="bold">下一拍（还没到）</text>
+  <!-- 现在 -->
+  <line x1="332" y1="70" x2="332" y2="106" stroke="#c05a2e" stroke-width="2.5"/>
+  <text x="332" y="124" text-anchor="middle" font-size="12" fill="#c05a2e" font-weight="bold">本帧渲染的“现在”</text>
+  <!-- overstep 区段 -->
+  <path d="M184,144 L328,144" stroke="#c05a2e" stroke-width="1.5" fill="none" marker-end="url(#arr-o18d)"/>
+  <text x="256" y="162" text-anchor="middle" font-size="11.5" fill="#c05a2e">overstep（攒下没花完的）</text>
+  <text x="452" y="162" text-anchor="middle" font-size="11.5" fill="#7a7468">差这么多才够下一拍</text>
+  <text x="380" y="190" text-anchor="middle" font-size="12.5" fill="#4a463f">alpha = overstep ÷ 步长 = 0.4</text>
+
+  <!-- 台面：两本账上的位置与插值点 -->
+  <text x="120" y="266" text-anchor="end" font-size="12" fill="#7a7468">台面</text>
+  <rect x="132" y="276" width="508" height="14" fill="#e2d9c6" stroke="#b8b1a4" stroke-width="1"/>
+  <!-- previous -->
+  <circle cx="220" cy="262" r="7" fill="#ffffff" stroke="#1d6b40" stroke-width="2.5"/>
+  <text x="220" y="240" text-anchor="middle" font-size="12" fill="#1d6b40">previous</text>
+  <!-- current -->
+  <circle cx="520" cy="262" r="7" fill="#ffffff" stroke="#1d6b40" stroke-width="2.5"/>
+  <text x="520" y="240" text-anchor="middle" font-size="12" fill="#1d6b40">current（替身站这儿）</text>
+  <!-- 插值点 -->
+  <circle cx="340" cy="262" r="9" fill="#e8c89e" stroke="#c05a2e" stroke-width="2.5"/>
+  <text x="340" y="316" text-anchor="middle" font-size="12" fill="#c05a2e" font-weight="bold">阿燕画在这儿</text>
+  <text x="340" y="334" text-anchor="middle" font-size="11.5" fill="#4a463f">previous.lerp(current, 0.4)</text>
+  <!-- 0.4 分割标尺 -->
+  <path d="M220,288 L340,288" stroke="#c05a2e" stroke-width="1.5"/>
+  <path d="M340,288 L520,288" stroke="#b8b1a4" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="280" y="304" text-anchor="middle" font-size="10.5" fill="#c05a2e">0.4</text>
+  <text x="430" y="304" text-anchor="middle" font-size="10.5" fill="#a09a8e">0.6</text>
+
+  <text x="380" y="372" text-anchor="middle" font-size="12" fill="#7a7468">代价：画面永远落在 previous 与 current 之间——比账本慢至多一拍，但每帧都在动</text>
+</svg>

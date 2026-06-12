@@ -1,0 +1,61 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-o18a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+
+  <!-- 卡片底 -->
+  <rect x="0" y="0" width="760" height="400" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">同一秒，两种切法——delta 是相邻两帧的间隔</text>
+
+  <!-- ===== 新戏台 ===== -->
+  <text x="138" y="92" text-anchor="end" font-size="13" fill="#4a463f" font-weight="bold">新戏台</text>
+  <text x="138" y="110" text-anchor="end" font-size="11" fill="#7a7468">帧多，缝窄</text>
+  <!-- 一秒的横轴 -->
+  <line x1="150" y1="100" x2="630" y2="100" stroke="#b8b1a4" stroke-width="2"/>
+  <!-- 帧刻度（刻意不均匀：帧从来不是等宽的） -->
+  <g stroke="#3b6ed9" stroke-width="2">
+    <line x1="150" y1="88" x2="150" y2="112"/>
+    <line x1="228" y1="88" x2="228" y2="112"/>
+    <line x1="312" y1="88" x2="312" y2="112"/>
+    <line x1="386" y1="88" x2="386" y2="112"/>
+    <line x1="468" y1="88" x2="468" y2="112"/>
+    <line x1="552" y1="88" x2="552" y2="112"/>
+    <line x1="630" y1="88" x2="630" y2="112"/>
+  </g>
+  <!-- delta 标注：第二缝 -->
+  <path d="M228,128 L228,116 M312,128 L312,116" stroke="#c05a2e" stroke-width="1.5" fill="none"/>
+  <path d="M236,122 L304,122" stroke="#c05a2e" stroke-width="1.5" fill="none" marker-end="url(#arr-o18a)"/>
+  <text x="270" y="144" text-anchor="middle" font-size="12" fill="#c05a2e">delta</text>
+
+  <!-- 账目 -->
+  <text x="648" y="96" font-size="12" fill="#4a463f">替身：6 帧 × 4 = <tspan font-weight="bold">24</tspan></text>
+  <text x="648" y="114" font-size="12" fill="#1d6b40">阿燕：240 × Σdelta</text>
+
+  <!-- ===== 老戏台 ===== -->
+  <text x="138" y="206" text-anchor="end" font-size="13" fill="#4a463f" font-weight="bold">老戏台</text>
+  <text x="138" y="224" text-anchor="end" font-size="11" fill="#7a7468">帧少，缝宽</text>
+  <line x1="150" y1="214" x2="630" y2="214" stroke="#b8b1a4" stroke-width="2"/>
+  <g stroke="#3b6ed9" stroke-width="2">
+    <line x1="150" y1="202" x2="150" y2="226"/>
+    <line x1="318" y1="202" x2="318" y2="226"/>
+    <line x1="472" y1="202" x2="472" y2="226"/>
+    <line x1="630" y1="202" x2="630" y2="226"/>
+  </g>
+  <path d="M318,242 L318,230 M472,242 L472,230" stroke="#c05a2e" stroke-width="1.5" fill="none"/>
+  <path d="M326,236 L464,236" stroke="#c05a2e" stroke-width="1.5" fill="none" marker-end="url(#arr-o18a)"/>
+  <text x="395" y="258" text-anchor="middle" font-size="12" fill="#c05a2e">delta（宽了一倍）</text>
+
+  <text x="648" y="210" font-size="12" fill="#4a463f">替身：3 帧 × 4 = <tspan font-weight="bold">12</tspan></text>
+  <text x="648" y="228" font-size="12" fill="#1d6b40">阿燕：240 × Σdelta</text>
+
+  <!-- ===== 结论 ===== -->
+  <rect x="150" y="290" width="480" height="64" rx="8" fill="#eef3e6" stroke="#1d6b40" stroke-width="1"/>
+  <text x="390" y="316" text-anchor="middle" font-size="13" fill="#1d6b40" font-weight="bold">缝再宽再窄，加起来都是同一秒</text>
+  <text x="390" y="338" text-anchor="middle" font-size="12" fill="#4a463f">数帧的替身两台机器走出两种距离；乘 delta 的阿燕永远是 240 × 1 秒</text>
+
+  <!-- 底注 -->
+  <text x="380" y="382" text-anchor="middle" font-size="12" fill="#7a7468">帧的间隔由垂直同步、负载随时变化——“每帧迈一步”就是把步速交给机器抽签</text>
+</svg>

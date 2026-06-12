@@ -1,0 +1,60 @@
+<svg viewBox="0 0 760 440" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-d18c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr-b18c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#274a91"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="440" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">一族时钟：上游拧旋钮，下游跟着走</text>
+
+  <!-- Real -->
+  <rect x="40" y="80" width="180" height="92" rx="10" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+  <text x="130" y="108" text-anchor="middle" font-size="14" fill="#274a91" font-weight="bold">Time&lt;Real&gt;</text>
+  <text x="130" y="130" text-anchor="middle" font-size="12" fill="#4a463f">怀表：墙上的钟</text>
+  <text x="130" y="150" text-anchor="middle" font-size="11" fill="#7a7468">没有旋钮，谁也拧不动</text>
+
+  <!-- 旋钮组 -->
+  <path d="M220,126 L268,126" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr-d18c)"/>
+  <rect x="272" y="64" width="120" height="124" rx="10" fill="#f6ecdd" stroke="#b8862e" stroke-width="1.5"/>
+  <text x="332" y="88" text-anchor="middle" font-size="12" fill="#7a5414" font-weight="bold">三个旋钮</text>
+  <text x="332" y="112" text-anchor="middle" font-size="11.5" fill="#4a463f">pause / unpause</text>
+  <text x="332" y="134" text-anchor="middle" font-size="11.5" fill="#4a463f">relative_speed</text>
+  <text x="332" y="156" text-anchor="middle" font-size="11.5" fill="#4a463f">max_delta 上限</text>
+  <text x="332" y="176" text-anchor="middle" font-size="10.5" fill="#7a7468">（每帧最多补 250 毫秒）</text>
+
+  <!-- Virtual -->
+  <path d="M392,126 L440,126" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr-d18c)"/>
+  <rect x="444" y="80" width="180" height="92" rx="10" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+  <text x="534" y="108" text-anchor="middle" font-size="14" fill="#c05a2e" font-weight="bold">Time&lt;Virtual&gt;</text>
+  <text x="534" y="130" text-anchor="middle" font-size="12" fill="#4a463f">戏台钟：戏里的时间</text>
+  <text x="534" y="150" text-anchor="middle" font-size="11" fill="#7a7468">可暂停、可变速</text>
+
+  <!-- 切割器 -->
+  <path d="M534,172 L534,212" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr-d18c)"/>
+  <rect x="444" y="216" width="180" height="64" rx="10" fill="#f6ecdd" stroke="#b8862e" stroke-width="1.5"/>
+  <text x="534" y="240" text-anchor="middle" font-size="12" fill="#7a5414" font-weight="bold">按步长整拍切割</text>
+  <text x="534" y="262" text-anchor="middle" font-size="11" fill="#4a463f">零头存进 overstep</text>
+
+  <!-- Fixed -->
+  <path d="M534,280 L534,320" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr-d18c)"/>
+  <rect x="444" y="324" width="180" height="92" rx="10" fill="#ffffff" stroke="#1d6b40" stroke-width="2"/>
+  <text x="534" y="352" text-anchor="middle" font-size="14" fill="#1d6b40" font-weight="bold">Time&lt;Fixed&gt;</text>
+  <text x="534" y="374" text-anchor="middle" font-size="12" fill="#4a463f">鼓点：整拍走，delta 恒为步长</text>
+  <text x="534" y="394" text-anchor="middle" font-size="11" fill="#7a7468">中场时戏台钟不走，鼓也不响</text>
+
+  <!-- 通用视图 -->
+  <rect x="40" y="250" width="220" height="130" rx="10" fill="#eef0f7" stroke="#274a91" stroke-width="1.5"/>
+  <text x="150" y="278" text-anchor="middle" font-size="13.5" fill="#274a91" font-weight="bold">通用 Res&lt;Time&gt;</text>
+  <text x="150" y="300" text-anchor="middle" font-size="11.5" fill="#4a463f">不是第四只钟，是一面镜子：</text>
+  <text x="150" y="322" text-anchor="middle" font-size="11.5" fill="#4a463f">在 Update 里照出戏台钟</text>
+  <text x="150" y="344" text-anchor="middle" font-size="11.5" fill="#4a463f">在 FixedUpdate 里照出鼓点</text>
+  <text x="150" y="366" text-anchor="middle" font-size="10.5" fill="#7a7468">同一个系统两处都能用</text>
+  <path d="M260,292 C330,280 400,200 442,156" stroke="#274a91" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arr-b18c)"/>
+  <path d="M260,348 C320,356 380,366 440,368" stroke="#274a91" stroke-width="1.5" fill="none" stroke-dasharray="5,3" marker-end="url(#arr-b18c)"/>
+
+  <text x="380" y="430" text-anchor="middle" font-size="12" fill="#7a7468">需要拧旋钮就找具体的钟：ResMut&lt;Time&lt;Virtual&gt;&gt;.pause()——通用镜子上没有旋钮</text>
+</svg>

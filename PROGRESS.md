@@ -33,7 +33,7 @@
 | 15 | 2D 渲染：Sprite 与图集 | ✅ | code/ch15-sprites（src/main.rs + examples/listing-15-01～11，main.rs 即 Listing 15-12）；book/src/ch15-00～07；插图 images/ch15（Figure 15-1～14，含 3 张 SVG、1 张动图，scripts/make_ch15_figures.py 一键重建；美术资产由 scripts/make_ch15_assets.py 生成） |
 | 16 | 文本与字体 | ✅ | code/ch16-text（src/main.rs + examples/listing-16-01～10，main.rs 即 Listing 16-11；中文字体资产为 Noto Sans SC 的 GB2312 子集，scripts/make_ch16_assets.py 下载/子集化/按 OFL 改名一键重建）；book/src/ch16-00～08；插图 images/ch16（Figure 16-1～12，含 1 张 SVG、2 张动图，scripts/make_ch16_figures.py 一键重建） |
 | 17 | 输入处理 | ✅ | code/ch17-input（src/main.rs + examples/listing-17-01～07，其中 17-02 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 17-9；assets 全部复用 ch15/ch16，scripts/make_ch17_assets.py 一键就位）；book/src/ch17-00～07；插图 images/ch17（Figure 17-1～8，含 4 张 SVG、1 张动图，scripts/make_ch17_figures.py 用 SendInput 发真实键鼠一键重建） |
-| 18 | 时间、定时器与 FixedUpdate | ⬜ | |
+| 18 | 时间、定时器与 FixedUpdate | ✅ | code/ch18-time（src/main.rs + examples/listing-18-01～09，其中 18-02 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 18-10；assets 全部复用 ch15/ch16，scripts/make_ch18_assets.py 一键就位）；book/src/ch18-00～06；插图 images/ch18（Figure 18-1～10，含 6 张 SVG、1 张动图，scripts/make_ch18_figures.py 用 SendInput 发真实按键一键重建） |
 | 19 | 音频 | ⬜ | |
 | 20 | 项目实战 I：完整的 2D 游戏 | ⬜ | |
 | 21 | 3D 入门：Mesh 与 Material | ⬜ | |
