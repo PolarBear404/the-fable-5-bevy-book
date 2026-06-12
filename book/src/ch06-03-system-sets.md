@@ -44,9 +44,9 @@ cargo run -p ch06-schedules --example listing-06-06
 
 输出按工序走，分毫不乱。几个观察：
 
-- **同一集合内部不排序。**矿工和樵夫之间没有任何约束——他们一个管矿一个管柴，访问不冲突，调度器可以让他们并行。集合划的是"阶段"的界，不是阶段内的队形。
+- **同一集合内部不排序**。矿工和樵夫之间没有任何约束——他们一个管矿一个管柴，访问不冲突，调度器可以让他们并行。集合划的是"阶段"的界，不是阶段内的队形。
 - **集合约束与系统约束随意混用。**`Settle` 内部，账房用 `.after(mint_coins)` 加了一条细粒度约束；粗排靠集合、细排靠点名，两层叠加。
-- **`configure_sets` 与 `add_systems` 谁先谁后无所谓。**集合是调度图上的节点，先挂系统后配顺序也一样。
+- **`configure_sets` 与 `add_systems` 谁先谁后无所谓**。集合是调度图上的节点，先挂系统后配顺序也一样。
 
 集合的真正威力在工程组织：Plugin A 把自己的系统全挂进 `MintStage::Produce`，Plugin B 挂进 `MintStage::Settle`，两个 Plugin 的作者互不相识，顺序却由集合的一行 `configure_sets` 统一裁定。Bevy 引擎和第三方插件也都公开自己的集合（比如 `bevy_transform` 的 `TransformSystems`），供你的系统 `before`/`after`——后面章节用到时会一一指出。
 

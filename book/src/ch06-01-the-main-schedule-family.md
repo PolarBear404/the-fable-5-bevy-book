@@ -38,9 +38,9 @@ cargo run -p ch06-schedules --example listing-06-01
 
 输出印证三件事：
 
-1. **执行顺序与注册顺序无关。**代码里 `Update` 注册在最前、`PreStartup` 几乎垫底，跑起来各回各位。`add_systems` 只是把系统放进对应调度的清单，清单之间的次序由引擎统一安排。
+1. **执行顺序与注册顺序无关**。代码里 `Update` 注册在最前、`PreStartup` 几乎垫底，跑起来各回各位。`add_systems` 只是把系统放进对应调度的清单，清单之间的次序由引擎统一安排。
 2. **启动三件套只跑一次。**`PreStartup` → `Startup` → `PostStartup` 只出现在第 1 帧。它们正是第 4 章那句"`Startup` 只在第一次 `update()` 时运行"的完整版本。
-3. **`FixedUpdate` 一声不吭。**注册了，却一次都没跑——它需要时钟驱动，而裸 `App` 里没有时钟。本节稍后单独处理它。
+3. **`FixedUpdate` 一声不吭**。注册了，却一次都没跑——它需要时钟驱动，而裸 `App` 里没有时钟。本节稍后单独处理它。
 
 把全家列成表。每帧从上往下：
 
@@ -58,7 +58,7 @@ cargo run -p ch06-schedules --example listing-06-01
 
 > 启用 `bevy_state`（默认 features 含它）时，全家还有一位 `StateTransition`，排在 `PreUpdate` 之后，负责游戏状态机的切换——第 10 章的主角，这里先混个脸熟。
 
-这张表回答了一个第 2 章遗留的问题：**引擎自己的系统住在哪？**答案是几乎全在 `Pre`/`Post` 段位。键盘输入由 `bevy_input` 的系统在 `PreUpdate` 写进 `ButtonInput<KeyCode>` 资源，于是你在 `Update` 里读到的输入永远是本帧最新的；`Transform` 的父子传播在 `PostUpdate`，于是你在 `Update` 里挪动实体，引擎保证渲染前已结算到位。`Update` 被刻意留空给你——**你写逻辑，引擎在你之前备料、在你之后善后**，三方靠住址划清界限，互不踩脚。
+这张表回答了一个第 2 章遗留的问题：**引擎自己的系统住在哪**？答案是几乎全在 `Pre`/`Post` 段位。键盘输入由 `bevy_input` 的系统在 `PreUpdate` 写进 `ButtonInput<KeyCode>` 资源，于是你在 `Update` 里读到的输入永远是本帧最新的；`Transform` 的父子传播在 `PostUpdate`，于是你在 `Update` 里挪动实体，引擎保证渲染前已结算到位。`Update` 被刻意留空给你——**你写逻辑，引擎在你之前备料、在你之后善后**，三方靠住址划清界限，互不踩脚。
 
 > 幕后一句：`Main` 自己也是一个调度，它做的事就是按这份清单依次运行各个子调度（清单存在 `MainScheduleOrder` 资源里，可以改，本书用不到）。第 4 章的 `app.update()` "把 Main 调度完整跑一遍"，指的就是这个流程。
 
