@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="700" height="440" rx="16" fill="#f7f5f0"/>
+
+  <!-- 坐标轴 -->
+  <line x1="90" y1="60" x2="90" y2="360" stroke="#8a8275" stroke-width="2"/>
+  <line x1="90" y1="360" x2="620" y2="360" stroke="#8a8275" stroke-width="2"/>
+  <text x="60" y="56" text-anchor="middle" font-size="16" fill="#555">浓</text>
+  <text x="60" y="364" text-anchor="middle" font-size="16" fill="#555">清</text>
+  <text x="355" y="398" text-anchor="middle" font-size="18" fill="#444">离镜头的距离 →</text>
+  <text x="40" y="210" text-anchor="middle" font-size="18" fill="#444" transform="rotate(-90 40 210)">雾的浓度</text>
+  <line x1="86" y1="80" x2="620" y2="80" stroke="#d9d4c8" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <text x="640" y="85" text-anchor="end" font-size="13" fill="#999">全雾</text>
+
+  <!-- Linear：从 start 到 end 的直线斜坡 -->
+  <polyline points="90,360 210,360 470,80 620,80" fill="none" stroke="#3b7a9e" stroke-width="3.5"/>
+  <!-- Exponential：先快后缓的上凸曲线 -->
+  <path d="M90 360 C 200 150, 360 95, 620 82" fill="none" stroke="#c8772e" stroke-width="3.5"/>
+  <!-- ExponentialSquared：起步更慢、中段更陡 -->
+  <path d="M90 360 C 260 350, 380 120, 620 82" fill="none" stroke="#5a8f4e" stroke-width="3.5"/>
+
+  <!-- 图例 -->
+  <g font-size="16">
+    <line x1="380" y1="180" x2="420" y2="180" stroke="#3b7a9e" stroke-width="3.5"/>
+    <text x="428" y="185" fill="#2c2c2c">Linear（线性）</text>
+    <line x1="380" y1="212" x2="420" y2="212" stroke="#c8772e" stroke-width="3.5"/>
+    <text x="428" y="217" fill="#2c2c2c">Exponential（指数）</text>
+    <line x1="380" y1="244" x2="420" y2="244" stroke="#5a8f4e" stroke-width="3.5"/>
+    <text x="428" y="249" fill="#2c2c2c">ExponentialSquared（指数平方）</text>
+  </g>
+</svg>
