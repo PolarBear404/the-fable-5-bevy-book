@@ -2,3 +2,9 @@
 target/
 /book/book/
 __pycache__/
+
+# ch23 内嵌 demo 的 WebAssembly 生成物（由 scripts/build_ch23_wasm.py 重建）；
+# 手写的 index.html 不在此列，照常入库
+/book/src/demos/ch23/*.js
+/book/src/demos/ch23/*.wasm
+/book/src/demos/ch23/assets/

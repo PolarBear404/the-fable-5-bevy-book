@@ -7,6 +7,9 @@ src = "src"
 [output.html]
 default-theme = "rust"
 preferred-dark-theme = "navy"
+# 内嵌交互 demo（如 ch23 的 WebAssembly 木偶）的样式与懒加载脚本
+additional-css = ["theme/demo.css"]
+additional-js = ["theme/demo.js"]
 
 [output.html.fold]
 enable = true

@@ -7,9 +7,21 @@ const PUPPET: &str = "models/puppet.gltf";
 
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
+        // ANCHOR: web_window
+        // 仅 Web 生效：把渲染塞进页面里 id="bevy-ch23" 的 <canvas>，并随容器缩放。
+        // 这几个字段在桌面平台无效——同一份代码，桌面开窗口、网页进画布，两头通吃。
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                canvas: Some("#bevy-ch23".into()),
+                fit_canvas_to_parent: true,
+                ..default()
+            }),
+            ..default()
+        }))
+        // ANCHOR_END: web_window
         .insert_resource(ClearColor(Color::srgb(0.16, 0.13, 0.15)))
         .add_systems(Startup, setup)
+        .add_systems(Update, orbit_camera)
         .run();
 }
 
@@ -117,3 +129,49 @@ fn stage(
         Transform::from_xyz(0.0, 2.1, 7.5).looking_at(Vec3::new(0.0, 1.9, 0.0), Vec3::Y),
     ));
 }
+
+// ANCHOR: orbit_camera
+/// 看货摇臂：按住鼠标左键拖动，相机绕木偶（戏台中心）公转。半径不变，
+/// 只改方位角 yaw 与俯仰角 pitch——3D 模型就该转着看，这是网页比静态截图多给的东西。
+/// 用光标的逐帧位移驱动（`cursor_position` 读的是画布内绝对坐标，桌面与网页都可靠，
+/// 不碰浏览器要 pointer-lock 才给的原始位移）——同一套逻辑两头通跑。
+const ORBIT_CENTER: Vec3 = Vec3::new(0.0, 1.9, 0.0);
+const ORBIT_SPEED: f32 = 0.008;
+
+fn orbit_camera(
+    mouse: Res<ButtonInput<MouseButton>>,
+    window: Single<&Window>,
+    mut camera: Single<&mut Transform, With<Camera3d>>,
+    mut last_cursor: Local<Option<Vec2>>,
+) {
+    // 没按住左键、或光标移出画布：忘掉上一帧位置，下次重新起算（避免猛地跳一下）
+    let Some(cursor) = window.cursor_position() else {
+        *last_cursor = None;
+        return;
+    };
+    if !mouse.pressed(MouseButton::Left) {
+        *last_cursor = None;
+        return;
+    }
+    // 按住后的第一帧只记录位置、先不转；之后每帧用「这帧光标 − 上帧光标」当位移
+    let delta = match last_cursor.replace(cursor) {
+        Some(prev) => cursor - prev,
+        None => Vec2::ZERO,
+    };
+    if delta == Vec2::ZERO {
+        return;
+    }
+    // 把相机当前位置换算成绕中心的球坐标，按光标位移拨动，再换算回位置、盯回中心
+    let offset = camera.translation - ORBIT_CENTER;
+    let radius = offset.length();
+    let yaw = offset.x.atan2(offset.z) - delta.x * ORBIT_SPEED;
+    let pitch = ((offset.y / radius).asin() + delta.y * ORBIT_SPEED).clamp(-1.4, 1.4);
+    camera.translation = ORBIT_CENTER
+        + Vec3::new(
+            radius * pitch.cos() * yaw.sin(),
+            radius * pitch.sin(),
+            radius * pitch.cos() * yaw.cos(),
+        );
+    camera.look_at(ORBIT_CENTER, Vec3::Y);
+}
+// ANCHOR_END: orbit_camera

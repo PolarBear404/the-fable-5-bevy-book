@@ -28,9 +28,27 @@
 cargo run -p ch23-gltf
 ```
 
+<figure class="bevy-demo" data-src="demos/ch23/index.html" data-ratio="16 / 10">
+
 ![暖色调的小戏台上，红袍木偶阿福正原地踏步：一条胳膊前摆，攥着的黄色小旗随之扬起，脚下拖着暖光下的斜影，背景是温暖的暗红](images/ch23/fig-23-07-actor-on-stage.png)
 
-<span class="caption">Figure 23-7：角儿登场——加载的模型、按名字添的道具、放起的动画，一台戏齐活</span>
+<figcaption class="caption">Figure 23-7：角儿登场——加载的模型、按名字添的道具、放起的动画，一台戏齐活。点击可在浏览器里实时运行（按住左键拖动转视角）</figcaption>
+
+</figure>
+
+## 一份代码，台上台下通跑
+
+上面那个能拖着转的阿福，不是录屏，是这一章的 `main.rs` 当场跑出来的——只不过编到了浏览器里。秘密在 `main` 给 `DefaultPlugins` 多带的一段 `WindowPlugin`：
+
+```rust
+{{#include ../../code/ch23-gltf/src/main.rs:web_window}}
+```
+
+<span class="caption">Listing 23-6（节选四）：让同一份程序也能渲染进网页里的一块 `<canvas>`</span>
+
+`canvas`、`fit_canvas_to_parent` 这几个字段在桌面平台**没有任何效果**——加了它，`cargo run` 的桌面窗口照旧。可一旦把这个 crate 编到 `wasm32-unknown-unknown` 目标、用 `wasm-bindgen` 包装好，它就把画面渲染进网页里 `id="bevy-ch23"` 的那块 `<canvas>`，并随容器大小自适应。换句话说，**桌面与网页是同一份代码**，一行业务逻辑都没改。唯一为网页多写的，是个小小的看货摇臂 `orbit_camera`：按住鼠标左键，相机就绕着木偶转——3D 模型本就该转着看，这是网页比一张静态截图多给的东西。
+
+> 把 Bevy 程序搬上网页的全套流程（装 `wasm32` 目标与 `wasm-bindgen`、再跑本书的 `scripts/build_ch23_wasm.py` 一键脚本生成产物）属于部署话题，这里点到为止。
 
 一台戏就齐了：一份 glTF 提货单，提出场景摆上台、提出动画放起来，再按名字给角儿添了件道具。从这里到一个真正的游戏角色，缺的只是更精细的模型和更丰富的动画——而请它进门、让它动起来的路数，就是这一章这几步。
 

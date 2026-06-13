@@ -66,6 +66,29 @@
 - 概念示意图手绘 SVG：浅色卡片底（#f7f5f0 圆角矩形打底），明暗主题下均可读
 - 截图与正文输出一样受"先跑后写"铁律约束：画面与正文描述不符时，修代码或修正文，不准 P 图
 
+## 交互演示规范（2026-06-13 起，ch23 首用）
+
+- **何时加（默认不加，从严）**：仅当"交互/实时运行本身是教学点"——3D 要转着看、参数要即时拨、
+  动画手感，静态截图损失大的章（光照、材质、相机、动画、物理…）。纯逻辑章（ECS、Schedule、
+  消息…）一律不加，静态代码 + 输出已足；判断尺度同「动图克制使用」
+- **同源代码**：demo 必须是本章真实可编译的示例（`main.rs` 或某 listing），靠
+  `WindowPlugin { canvas, fit_canvas_to_parent }`（这两个字段在非 web 平台无效）做到桌面/网页跑同
+  一份，受"正文代码＝编译过的代码"铁律约束
+- **构建脚本化**：每个 demo 配一个 `scripts/build_chXX_wasm.py`（对标 `make_chXX`），一键
+  `cargo build --profile wasm-release --target wasm32-unknown-unknown` + `wasm-bindgen --target web`
+  输出到 `book/src/demos/chXX/`；`wasm-release` profile（opt-level="z" + lto + strip）压体积；
+  `wasm-bindgen-cli` 版本须对齐 `code/Cargo.lock`。产物（*.js/*.wasm/assets）gitignore、禁止手工
+  构建——版本迁移时要能一条命令重生
+- **嵌入即懒加载**：复用通用模板 `book/theme/demo.{css,js}`（`book.toml` 接 additional-css/js），
+  正文只写 `<figure class="bevy-demo" data-src="demos/chXX/index.html">` + 占位图 + figcaption；点击
+  占位图才注入 iframe（避免一进页面就下几十 MB）。占位图用该章真实截图——无 JS/打印/删掉 demo 时，
+  正文凭占位图 + 图注仍须自足（同插图规范）
+- **web 输入坑**：网页下的鼠标拖动交互禁用 `AccumulatedMouseMotion`（winit 的 raw 鼠标位移在浏览器
+  里要 pointer lock 才有数据，iframe demo 中恒为 0、桌面却正常，极易漏判）；改用
+  `Window::cursor_position()` + `Local` 存上一帧算 delta（即第 17 章的 cursor_position 手法）
+- **先跑后写**：demo 同受铁律约束——发布前必须在浏览器实跑，确认渲染/动画/交互与正文描述一致
+  （可用 Claude Preview 起本地 server + 真 GPU 验证；合成 pointer 事件能驱动 cursor_position 路径）
+
 ## 工作流
 
 - 写章节：`/write-chapter <编号>`（流程内置于命令）；交叉审阅：`/review-part <范围>`
