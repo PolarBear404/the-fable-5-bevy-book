@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 440" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="980" height="440" rx="16" fill="#f7f5f0"/>
+  <defs>
+    <marker id="b-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#c8772e"/>
+    </marker>
+    <marker id="b-ar2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M0 0 L10 5 L0 10 z" fill="#3b7a9e"/>
+    </marker>
+  </defs>
+  <line x1="490" y1="40" x2="490" y2="400" stroke="#d9d4c8" stroke-width="2"/>
+
+  <!-- 共用：灯在上方 -->
+  <text x="60" y="78" font-size="22" fill="#a23b1e">☀</text>
+  <text x="84" y="78" font-size="14" fill="#555">灯</text>
+  <g stroke="#c8772e" stroke-width="2" marker-end="url(#b-ar)" opacity="0.8">
+    <line x1="78" y1="80" x2="150" y2="150"/>
+    <line x1="78" y1="80" x2="260" y2="150"/>
+  </g>
+
+  <!-- 左：bias=0 -->
+  <text x="245" y="48" text-anchor="middle" font-size="20" font-weight="700" fill="#2c2c2c">bias = 0</text>
+  <!-- 受光斜面 -->
+  <line x1="70" y1="210" x2="430" y2="350" stroke="#8a8275" stroke-width="4"/>
+  <text x="300" y="372" font-size="14" fill="#6b6458">受光斜面</text>
+  <!-- 阴影贴图量化深度：阶梯，绕斜面上下交错 -->
+  <polyline points="70,222 130,222 130,250 190,250 190,278 250,278 250,306 310,306 310,334 370,334 370,360 430,360"
+            fill="none" stroke="#3b7a9e" stroke-width="2.5"/>
+  <text x="140" y="208" font-size="13" fill="#3b7a9e">阶梯=量化后的贴图深度</text>
+  <!-- 误判段：斜面落到阶梯下方（比记录更远）的几处 -->
+  <g stroke="#c63a2a" stroke-width="5">
+    <line x1="150" y1="241" x2="180" y2="253"/>
+    <line x1="210" y1="266" x2="240" y2="278"/>
+    <line x1="270" y1="290" x2="300" y2="302"/>
+    <line x1="330" y1="315" x2="360" y2="327"/>
+  </g>
+  <text x="245" y="392" text-anchor="middle" font-size="14" fill="#c63a2a">红处比记录更远 → 误判自阴影（acne）</text>
+
+  <!-- 右：加 bias -->
+  <text x="735" y="48" text-anchor="middle" font-size="20" font-weight="700" fill="#2c2c2c">加上 bias</text>
+  <line x1="560" y1="210" x2="920" y2="350" stroke="#8a8275" stroke-width="4"/>
+  <text x="790" y="372" font-size="14" fill="#6b6458">受光斜面</text>
+  <!-- 比对深度整体外推：阶梯下沉到斜面之下 -->
+  <polyline points="560,252 620,252 620,280 680,280 680,308 740,308 740,336 800,336 800,364 860,364 860,388 920,388"
+            fill="none" stroke="#3b7a9e" stroke-width="2.5"/>
+  <!-- bias 偏移箭头 -->
+  <line x1="600" y1="226" x2="600" y2="250" stroke="#3b7a9e" stroke-width="2" marker-end="url(#b-ar2)"/>
+  <text x="610" y="242" font-size="13" fill="#3b7a9e">bias 把比对深度外推</text>
+  <!-- 全亮：斜面整段在阶梯上方 -->
+  <line x1="560" y1="210" x2="920" y2="350" stroke="#5a8f4e" stroke-width="4" opacity="0.55"/>
+  <text x="735" y="392" text-anchor="middle" font-size="14" fill="#3f7a36">斜面整段更近 → 不再误伤，全亮</text>
+</svg>

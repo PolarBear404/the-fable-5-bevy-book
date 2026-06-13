@@ -12,15 +12,15 @@
 cargo run -p ch22-lighting --example listing-22-10
 ```
 
-![一排朝远处退去的立柱：最近的两根颜色饱满、轮廓清晰，往后一对比一对淡，到最远处几乎完全融进灰白的雾里，营造出纵深](images/ch22/fig-22-09-fog.png)
+![一排朝远处退去的立柱：最近的两根颜色饱满、轮廓清晰，往后一对比一对淡，到最远处几乎完全融进灰白的雾里，营造出纵深](images/ch22/fig-22-13-fog.png)
 
-<span class="caption">Figure 22-9：晨雾——同样一排立柱，越远越隐入雾色，纵深一下出来了</span>
+<span class="caption">Figure 22-13：晨雾——同样一排立柱，越远越隐入雾色，纵深一下出来了</span>
 
 `DistanceFog` 两个要紧字段：`color` 是雾的颜色（远处最终融成的那个色），`falloff` 是「随距离变浓的快慢」。`falloff` 是个枚举，给了几种衰减规律：
 
-![示意图：一张「浓度 vs 距离」的坐标图，画三条曲线——Linear 是从 start 到 end 的一段直线斜坡；Exponential 是一条先快后缓的上凸曲线；ExponentialSquared 起步更慢、中段更陡，最贴近真实空气的手感。三条都最终趋近「全雾」](images/ch22/fig-22-10-fog-falloff.svg)
+![示意图：一张「浓度 vs 距离」的坐标图，画三条曲线——Linear 是从 start 到 end 的一段直线斜坡；Exponential 是一条先快后缓的上凸曲线；ExponentialSquared 起步更慢、中段更陡，最贴近真实空气的手感。三条都最终趋近「全雾」](images/ch22/fig-22-14-fog-falloff.svg)
 
-<span class="caption">Figure 22-10：三种雾的衰减规律——Linear 线性、Exponential 指数、ExponentialSquared 指数平方</span>
+<span class="caption">Figure 22-14：三种雾的衰减规律——Linear 线性、Exponential 指数、ExponentialSquared 指数平方</span>
 
 - `FogFalloff::Linear { start, end }`：start 之前全清晰，end 之后全雾，中间线性过渡——最好懂，但不像真实空气；
 - `FogFalloff::Exponential { density }`：按指数变浓，`density` 越大雾越厚，近处就开始有了；

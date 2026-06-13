@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 440" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="920" height="440" rx="16" fill="#f7f5f0"/>
+  <text x="460" y="42" text-anchor="middle" font-size="20" font-weight="700" fill="#2c2c2c">级联：视锥按距离切段，每段各用一张同分辨率的贴图</text>
+
+  <!-- 相机 -->
+  <path d="M40 200 L70 182 L70 218 Z" fill="#444"/>
+  <text x="55" y="244" text-anchor="middle" font-size="14" fill="#555">相机</text>
+
+  <!-- 视锥分段（近窄远宽），各段一色 -->
+  <!-- 顶/底边 -->
+  <line x1="70" y1="200" x2="840" y2="96" stroke="#9aa3a8" stroke-width="2"/>
+  <line x1="70" y1="200" x2="840" y2="304" stroke="#9aa3a8" stroke-width="2"/>
+  <!-- 段（梯形），从近到远 -->
+  <polygon points="70,200 210,181 210,219 70,200" fill="#cfe0d6" stroke="#9aa3a8"/>
+  <polygon points="210,181 350,162 350,238 210,219" fill="#f1d9a8" stroke="#9aa3a8"/>
+  <polygon points="350,162 560,134 560,266 350,238" fill="#e6c6b0" stroke="#9aa3a8"/>
+  <polygon points="560,134 840,96 840,304 560,266" fill="#cdd3da" stroke="#9aa3a8"/>
+  <text x="140" y="205" text-anchor="middle" font-size="13" fill="#3f6b50">近</text>
+  <text x="700" y="205" text-anchor="middle" font-size="13" fill="#5a6470">远</text>
+
+  <!-- 四张同分辨率贴图：覆盖范围越来越大，格子越来越粗 -->
+  <g font-size="13" fill="#555" text-anchor="middle">
+    <!-- 近段：小范围、细 -->
+    <g transform="translate(70,344)">
+      <rect width="120" height="80" fill="#eef1ee" stroke="#7f9a88"/>
+      <g stroke="#bcd0c2" stroke-width="1">
+        <line x1="20" y1="0" x2="20" y2="80"/><line x1="40" y1="0" x2="40" y2="80"/><line x1="60" y1="0" x2="60" y2="80"/><line x1="80" y1="0" x2="80" y2="80"/><line x1="100" y1="0" x2="100" y2="80"/>
+        <line x1="0" y1="20" x2="120" y2="20"/><line x1="0" y1="40" x2="120" y2="40"/><line x1="0" y1="60" x2="120" y2="60"/>
+      </g>
+      <text x="60" y="98" fill="#3f6b50">近段：小范围 → 精细</text>
+    </g>
+    <!-- 远段：大范围、粗 -->
+    <g transform="translate(700,344)">
+      <rect width="120" height="80" fill="#eef0f3" stroke="#8a93a0"/>
+      <g stroke="#c3cad4" stroke-width="1">
+        <line x1="60" y1="0" x2="60" y2="80"/>
+        <line x1="0" y1="40" x2="120" y2="40"/>
+      </g>
+      <text x="60" y="98" fill="#5a6470">远段：大范围 → 粗</text>
+    </g>
+  </g>
+  <!-- 连线 -->
+  <line x1="140" y1="219" x2="130" y2="344" stroke="#7f9a88" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="700" y1="266" x2="760" y2="344" stroke="#8a93a0" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <text x="460" y="392" text-anchor="middle" font-size="14" fill="#555">同样的贴图分辨率，分给越来越大的范围——精度就这样集中到了镜头跟前</text>
+</svg>

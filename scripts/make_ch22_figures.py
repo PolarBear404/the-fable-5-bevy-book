@@ -156,20 +156,20 @@ def fig_03_shadow_acne() -> None:
     crop = (440, 300, 840, 640)  # 台中绣球
     save_png(
         hstack([acne.crop(crop), clean.crop(crop)], ["bias 归零：自阴影噪点", "默认 bias：光洁"]),
-        "fig-22-03-shadow-acne.png",
+        "fig-22-04-shadow-acne.png",
     )
 
 
 def fig_05_point_light() -> None:
     with Example(exe("listing-22-05"), workdir=CRATE) as ex:
         shot = logical(ex.shot(2.0))
-    save_png(shot.crop((150, 70, 1130, 700)), "fig-22-05-point-light.png")
+    save_png(shot.crop((150, 70, 1130, 700)), "fig-22-08-point-light.png")
 
 
 def fig_06_spot_light() -> None:
     with Example(exe("listing-22-06"), workdir=CRATE) as ex:
         shot = logical(ex.shot(2.0))
-    save_png(shot.crop((250, 70, 1030, 700)), "fig-22-06-spot-light.png")
+    save_png(shot.crop((250, 70, 1030, 700)), "fig-22-09-spot-light.png")
 
 
 def fig_07_ambient() -> None:
@@ -180,7 +180,7 @@ def fig_07_ambient() -> None:
     crop = (150, 90, 1130, 700)
     save_png(
         hstack([low.crop(crop), high.crop(crop)], ["默认环境光：暗部死黑", "补一层月色：暗部托起"]),
-        "fig-22-07-ambient.png",
+        "fig-22-10-ambient.png",
     )
 
 
@@ -200,14 +200,14 @@ def fig_08_metal_world() -> None:
     crop = (390, 150, 890, 650)
     save_png(
         hstack([black.crop(crop), lit.crop(crop)], ["没有环境光照：漆黑", "环境光照接管：照出暖阁"]),
-        "fig-22-08-metal-world.png",
+        "fig-22-12-metal-world.png",
     )
 
 
 def fig_09_fog() -> None:
     with Example(exe("listing-22-10"), workdir=CRATE) as ex:
         shot = logical(ex.shot(2.0))
-    save_png(shot.crop((40, 80, 1240, 690)), "fig-22-09-fog.png")
+    save_png(shot.crop((40, 80, 1240, 690)), "fig-22-13-fog.png")
 
 
 def fig_11_day_night() -> None:
@@ -223,7 +223,7 @@ def fig_11_day_night() -> None:
             frames.append(logical(ex.grab()))
     crop = (60, 60, 1220, 700)
     cells = [f.crop(crop) for f in frames]
-    save_png(grid2x2(cells, labels), "fig-22-11-day-night.png")
+    save_png(grid2x2(cells, labels), "fig-22-15-day-night.png")
 
 
 # ---------------------------------------------------------------- 主流程
