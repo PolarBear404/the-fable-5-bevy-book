@@ -26,6 +26,7 @@ members = [
     "ch23-gltf",
     "ch24-pbr-materials",
     "ch25-picking-camera-control",
+    "ch26-post-processing-aa",
 ]
 
 [workspace.package]

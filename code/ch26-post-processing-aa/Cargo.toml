@@ -1,0 +1,9 @@
+# ANCHOR: deps
+[package]
+name = "ch26-post-processing-aa"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+bevy = { workspace = true }
+# ANCHOR_END: deps
