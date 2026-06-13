@@ -35,8 +35,12 @@
 cargo run -p ch23-gltf --example listing-23-05
 ```
 
+<figure class="bevy-demo" data-src="demos/ch23/anim.html" data-ratio="16 / 10">
+
 ![三连帧：同一个红袍木偶在原地踏步——左帧右臂前摆、左腿抬起，中帧四肢回到身侧，右帧左臂前摆、右腿抬起，像一段循环的活动筋骨](images/ch23/fig-23-05-marching-strip.png)
 
-<span class="caption">Figure 23-5：`Swing` 循环播放——阿福四肢前后摆，原地踏步</span>
+<figcaption class="caption">Figure 23-5：`Swing` 循环播放——阿福四肢前后摆，原地踏步。点一下画面可在浏览器里实时运行，并就地把动画图从播放器上拔掉、再接回去：拔了它，阿福当场僵在半步、还不报错；接回去又从那一帧续着踏——正是本节那个哑巴坑，这回让你一键亲手撞。</figcaption>
+
+</figure>
 
 阿福活了，四肢前后摆着原地踏步。这段动画动的是**节点的旋转**——脚本给四条肢的 rotation 通道打了关键帧，引擎逐帧把这些旋转灌回对应实体的 `Transform`。这跟「皮肉随骨头连续变形」的**蒙皮**是两路：木偶的胳膊是硬邦邦一整块，绕着肩膀转。蒙皮更进一层，留到第 30 章。眼下记住这条最小路就够使：`from_clip` 装图 → 等场景就位 → 找到 `AnimationPlayer` → `play().repeat()` 并接上图。

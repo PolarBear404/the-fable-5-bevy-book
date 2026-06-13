@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>阿福 · 第 23 章 动画演示</title>
+<style>
+  html, body { height: 100%; margin: 0; background: #2f333b; overflow: hidden; }
+  /* Bevy 的 fit_canvas_to_parent 会把画布尺寸贴合父元素，这里让父元素铺满 iframe */
+  #bevy-ch23-anim { display: block; width: 100%; height: 100%; }
+  #loading {
+    position: absolute; inset: 0; display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: .4em;
+    color: #d8ccc0; font: 15px/1.7 system-ui, "Segoe UI", sans-serif; text-align: center;
+  }
+  #loading small { color: #9b8e82; }
+</style>
+</head>
+<body>
+  <div id="loading">
+    正在加载木偶阿福……
+    <small>首次需下载几 MB；跑起来后，点一下画面可把动画图拔掉 / 接上</small>
+  </div>
+  <canvas id="bevy-ch23-anim"></canvas>
+  <script type="module">
+    // wasm-bindgen --target web 生成的 ES module：默认导出 init()，
+    // 调用即运行 demo 的 main()。文件名与 build_ch23_wasm.py 里这个 demo 的 OUT_NAME 对应。
+    import init from "./ch23_anim.js";
+    init()
+      .then(() => document.getElementById("loading")?.remove())
+      .catch((e) => {
+        const el = document.getElementById("loading");
+        if (el) el.innerHTML = "demo 加载失败，请刷新或回看正文截图。";
+        console.error(e);
+      });
+  </script>
+</body>
+</html>

@@ -5,9 +5,21 @@ use bevy::scene::SceneInstanceReady;
 
 fn main() {
     App::new()
-        .add_plugins(DefaultPlugins)
+        // —— 下面这段 WindowPlugin、以及 Update 里的 toggle_graph_on_click，都是网页
+        //    demo 多带的料，落在正文 ANCHOR 截取区之外——ch23-05 印出来的代码不含它们。
+        //    canvas/fit_canvas_to_parent 仅 Web 生效（把画面渲进页面里 id="bevy-ch23-anim"
+        //    的 <canvas> 并随容器缩放）；桌面平台无效，`cargo run --example` 照旧开窗口。
+        .add_plugins(DefaultPlugins.set(WindowPlugin {
+            primary_window: Some(Window {
+                canvas: Some("#bevy-ch23-anim".into()),
+                fit_canvas_to_parent: true,
+                ..default()
+            }),
+            ..default()
+        }))
         .insert_resource(ClearColor(Color::srgb(0.52, 0.55, 0.62)))
         .add_systems(Startup, setup)
+        .add_systems(Update, toggle_graph_on_click)
         .run();
 }
 
@@ -103,4 +115,35 @@ fn stage(
         Camera3d::default(),
         Transform::from_xyz(0.0, 2.0, 8.0).looking_at(Vec3::new(0.0, 1.9, 0.0), Vec3::Y),
     ));
+}
+
+// —— 网页 demo 专用，正文 Listing 不取——亲手撞一回本节那个「哑巴坑」。
+// 点一下画面，就地把动画图从播放器上拔掉 / 接回去：
+// 为什么「拔了动画图」就等于「动作停住」？推进动画时间的 advance_animations、和把动画
+// 灌进 Transform 的 animate_targets，这两个系统的 Query 都**必需** &AnimationGraphHandle。
+// 一旦从这个实体上移除它，两边都不再匹配——时间不走、姿势不更，阿福连帧带姿一起冻住，
+// 还不 panic、不告警。再 insert 回去，又从冻住那一帧原样续上。这正是漏接图时的现象。
+fn toggle_graph_on_click(
+    mouse: Res<ButtonInput<MouseButton>>,
+    mut commands: Commands,
+    players: Query<(Entity, Has<AnimationGraphHandle>), With<AnimationPlayer>>,
+    to_play: Query<&AnimationToPlay>,
+) {
+    if !mouse.just_pressed(MouseButton::Left) {
+        return;
+    }
+    // 木偶只有一个 AnimationPlayer；场景还没就位时查不到，直接跳过这一帧
+    let Ok((player, connected)) = players.single() else {
+        return;
+    };
+    let Ok(anim) = to_play.single() else {
+        return;
+    };
+    if connected {
+        commands.entity(player).remove::<AnimationGraphHandle>();
+    } else {
+        commands
+            .entity(player)
+            .insert(AnimationGraphHandle(anim.graph.clone()));
+    }
 }
