@@ -6,6 +6,8 @@
 
 <span class="caption">Figure 23-3：glTF 的节点树，加载后展开成一棵实体树；节点名变成实体的 `Name`</span>
 
+这里有两层「根」，别混了。你在代码里 `spawn(SceneRoot(...))` 得到的是**实例根实体**：它代表「这一份场景实例」，可以拿来整体移动、整体挂观察者。glTF 文件里的 `Puppet`、`Torso`、`ArmRight` 这些节点，则是在场景展开后才生成的**子孙实体**。`SceneInstanceReady` 发出时，实例根已经带上了完整的子孙树；从这个根开始 `iter_descendants`，才走得到那些由 glTF 节点生成的实体。
+
 但有个时机问题：`SceneRoot` 一挂上，子实体不是**立刻**就有的——展开要等一两帧。在 `Startup` 里紧接着查 `Name`，会扑个空。Bevy 给了一支发令枪：`SceneInstanceReady`，在场景**展开完毕**的那一刻、朝 `SceneRoot` 那个实体发出。用一个观察者接住它：
 
 ```rust

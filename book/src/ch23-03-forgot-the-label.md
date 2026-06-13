@@ -28,7 +28,16 @@ note: tuple struct defined here
 
 `SceneRoot` 要的是 `Handle<Scene>`，你给的是 `Handle<Gltf>`。一份 glTF 文件不是「一个场景」，是「一箱东西」；`SceneRoot` 要的是箱子里那**一个**场景，所以非得 `Scene(0)` 点名不可。这层区分，类型系统替你顶在了脸上。
 
-还有两个变体也常撞上，但都得拖到**运行时**才翻车。其一：不写 `let gltf: Handle<Gltf>`，而是一气呵成 `SceneRoot(asset_server.load("models/puppet.gltf"))`——编译反而**过得去**，因为 `load` 的返回类型被 `SceneRoot` 反推成了 `Handle<Scene>`；可这条没贴标签的路径加载不成，运行时在控制台打出一行 `ERROR`。其二：标签**拼错**，比如把 `Scene0` 敲成 `scene0`——同样运行时报错，而且报得相当体贴，把文件里所有能用的标签都列出来给你对照：
+把几种写法摆在一处，就清楚了：
+
+| 写法 | 编译器看到的类型 | 什么时候出错 |
+|---|---|---|
+| `asset_server.load(GltfAssetLabel::Scene(0).from_asset("models/puppet.gltf"))` | `Handle<Scene>` | 标签写成 `Scene(999)` 这种不存在的编号时，运行时报「没有这个标签」 |
+| `asset_server.load("models/puppet.gltf#Scene0")` | 由上下文推断，放进 `SceneRoot` 时是 `Handle<Scene>` | 字符串拼错时运行时报错；大小写也得一字不错 |
+| `let gltf: Handle<Gltf> = asset_server.load("models/puppet.gltf")` | `Handle<Gltf>` | 直接塞进 `SceneRoot`，编译期 E0308 |
+| `SceneRoot(asset_server.load("models/puppet.gltf"))` | 被 `SceneRoot` 反推成 `Handle<Scene>` | 编译能过，但没写标签，运行时加载失败 |
+
+后两种最容易把人绕住。其一：显式写 `let gltf: Handle<Gltf>`，编译器当场知道你拿的是整份 glTF，不让它进 `SceneRoot`。其二：一气呵成 `SceneRoot(asset_server.load("models/puppet.gltf"))`，编译反而**过得去**，因为 `load` 的返回类型被 `SceneRoot` 反推成了 `Handle<Scene>`；可这条没贴标签的路径加载不成，运行时在控制台打出一行 `ERROR`。标签**拼错**也是运行时才暴露，比如把 `Scene0` 敲成 `scene0`，报错会把文件里所有能用的标签列出来给你对照：
 
 ```text
 ERROR bevy_asset::server: The file at 'models/puppet.gltf' does not contain

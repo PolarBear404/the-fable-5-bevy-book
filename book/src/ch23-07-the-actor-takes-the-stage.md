@@ -50,6 +50,8 @@ cargo run -p ch23-gltf
 3. **翻目录做菜单**：借第 02 节的 `Handle<Gltf>`，把 `named_animations` 的名字都打印出来；要是文件里有好几段动画，试着**按名字**（而非 `Animation(0)`）取一张 clip 来播。
 4. **探一个真模型**：找一个带动画的 `.glb`（官方 `Fox.glb` 就行），换掉 `PUPPET` 路径——`Scene(0)` / `Animation(0)` 多半直接能跑。先用第 02 节的办法把它的命名节点和动画翻出来，再按名字找一根骨头挂个东西。
 5. **朝向的坑**：给阿福加一段「转身朝某个方向」的逻辑，亲身体会 glTF 的 +Z 与 Bevy 的 −Z 之差；若朝向不对，查 `GltfLoaderSettings::convert_coordinates`，或自己补一个旋转。
+6. **主动看一次标签错误**：把 `GltfAssetLabel::Scene(0)` 暂时改成字符串 `"models/puppet.gltf#scene0"`，跑一次，看控制台怎样列出可用标签。看完改回带类型的写法。
+7. **主动漏掉接图**：在 `on_ready` 里暂时删掉 `insert(AnimationGraphHandle(...))`，只留下 `player.play(anim.index).repeat()`，跑一次，看阿福为什么站着不动。恢复那一句，再确认动画回来。
 
 ## 下一章
 

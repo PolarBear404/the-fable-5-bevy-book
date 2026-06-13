@@ -2,6 +2,15 @@
 
 阿福的提货单里有一段动画，叫 `Swing`。把它放起来，最小的一路是三步：装进一张图、找到播放器、按下播放。
 
+先认四个名字：
+
+| 名字 | 本章里把它当什么 |
+|---|---|
+| `AnimationClip` | 一段动画资产，比如 glTF 里的 `Swing` |
+| `AnimationGraph` | 播放器要看的动画图；本章只有一个节点，里面装一段 clip |
+| `AnimationPlayer` | 实际播放动画的组件，glTF 加载器会自动挂到某个子孙实体上 |
+| `AnimationGraphHandle` | 把播放器接到哪张动画图上的句柄组件；漏了它，`play(index)` 找不到编号属于哪张图 |
+
 先装图。哪怕只有一段动画，也得先进一张**动画图** `AnimationGraph`。`AnimationGraph::from_clip` 接一张 `Handle<AnimationClip>`（就用 `GltfAssetLabel::Animation(0)` 从文件里提），吐出一对 `(图, 这段动画在图里的编号)`；把图存进 `Assets<AnimationGraph>`：
 
 ```rust

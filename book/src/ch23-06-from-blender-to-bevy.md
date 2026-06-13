@@ -18,6 +18,14 @@
 
 5. **落地加载。** 把导出的文件丢进 crate 的 `assets/`，照第 01 节加载就行。
 
+第一次接真模型，别急着改正式代码，先做一次自检：
+
+- **文件齐不齐。** `.glb` 是单文件；`.gltf` 旁边的 `.bin` 与贴图文件必须一起放进 `assets/`，相对路径也要保持住。
+- **标签对不对。** 先用第 02 节的办法加载整份 `Gltf`，打印场景数、命名节点、命名动画、命名材质；再决定用 `Scene(0)`、`Animation(0)`，还是改用别的编号。
+- **名字过没过来。** 代码里要点名的挂点，先在打印出来的 `named_nodes` 里找；动作名看 `named_animations`，材质名看 `named_materials`。
+- **动画真的导出了吗。** Blender 里有 Action，不等于 glTF 里一定有 animation；导出选项没勾 Animation，Bevy 这边就不会有 `AnimationClip`。
+- **画面异常先分层查。** 看不见，先查路径和 `#Scene0`；不动，先查有没有 `AnimationPlayer`、有没有插 `AnimationGraphHandle`；朝向不对，再回头处理 +Z / -Z 的约定。
+
 最后说回**蒙皮**。阿福是杖头木偶——四肢硬邦邦各自绕着关节摆，那是**节点动画**（动的是节点的 `Transform`）。真人演员皮肉随骨头连续变形，那是**蒙皮**：模型里多一份 skin + joints 数据，记着「每块皮归哪几根骨头管、各占几分」。好消息是——**加载和放动画的代码一字不差**：还是 `SceneRoot` 加载、`SceneInstanceReady` 等就位、找 `AnimationPlayer`、`play().repeat()`，蒙皮数据引擎自动认。Bevy 官方的 `Fox.glb` 就是个蒙皮模型，想亲眼看真蒙皮，把官方 `animated_mesh` 示例跑一跑；它的机理留到第 30 章拆。
 
 该把这一章的三样——加载、点名、动画——并到一台戏上了。
