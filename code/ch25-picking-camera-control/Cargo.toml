@@ -1,0 +1,10 @@
+[package]
+name = "ch25-picking-camera-control"
+version = "0.1.0"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# ANCHOR: deps
+bevy = { workspace = true, features = ["free_camera"] }
+# ANCHOR_END: deps

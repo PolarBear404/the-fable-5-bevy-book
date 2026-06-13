@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="360" viewBox="0 0 960 360" role="img" aria-labelledby="title desc">
+  <title id="title">Picking pipeline</title>
+  <desc id="desc">Pointer input flows through hit testing backends, hover resolution, pointer events, and entity observers.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#48505a"/>
+    </marker>
+    <style>
+      .bg { fill: #f7f5f0; }
+      .box { fill: #ffffff; stroke: #9a9488; stroke-width: 2; }
+      .accent { fill: #dbeafe; stroke: #5271a3; }
+      .text { font: 18px system-ui, "Segoe UI", sans-serif; fill: #24272c; }
+      .small { font: 14px system-ui, "Segoe UI", sans-serif; fill: #59616d; }
+      .arrow { stroke: #48505a; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+    </style>
+  </defs>
+  <rect class="bg" x="18" y="18" width="924" height="324" rx="18"/>
+  <rect class="box accent" x="54" y="95" width="145" height="95" rx="10"/>
+  <text class="text" x="126.5" y="134" text-anchor="middle">PointerInput</text>
+  <text class="small" x="126.5" y="164" text-anchor="middle">mouse / touch / pen</text>
+  <path class="arrow" d="M199 142 L256 142"/>
+  <rect class="box" x="256" y="70" width="160" height="145" rx="10"/>
+  <text class="text" x="336" y="112" text-anchor="middle">Backends</text>
+  <text class="small" x="336" y="143" text-anchor="middle">mesh / sprite / UI</text>
+  <text class="small" x="336" y="170" text-anchor="middle">produce hits</text>
+  <path class="arrow" d="M416 142 L474 142"/>
+  <rect class="box" x="474" y="78" width="150" height="128" rx="10"/>
+  <text class="text" x="549" y="119" text-anchor="middle">HoverMap</text>
+  <text class="small" x="549" y="151" text-anchor="middle">depth + blocking</text>
+  <text class="small" x="549" y="176" text-anchor="middle">Pickable rules</text>
+  <path class="arrow" d="M624 142 L682 142"/>
+  <rect class="box" x="682" y="70" width="210" height="145" rx="10"/>
+  <text class="text" x="787" y="112" text-anchor="middle">Pointer events</text>
+  <text class="small" x="787" y="143" text-anchor="middle">Over / Click / Drag</text>
+  <text class="small" x="787" y="170" text-anchor="middle">bubble to parents</text>
+  <path class="arrow" d="M787 215 L787 270"/>
+  <rect class="box accent" x="646" y="270" width="282" height="46" rx="10"/>
+  <text class="text" x="787" y="300" text-anchor="middle">.observe(...) on entities</text>
+</svg>
