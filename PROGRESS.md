@@ -36,7 +36,7 @@
 | 18 | 时间、定时器与 FixedUpdate | ✅ | code/ch18-time（src/main.rs + examples/listing-18-01～09，其中 18-02 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 18-10；assets 全部复用 ch15/ch16，scripts/make_ch18_assets.py 一键就位）；book/src/ch18-00～06；插图 images/ch18（Figure 18-1～10，含 6 张 SVG、1 张动图，scripts/make_ch18_figures.py 用 SendInput 发真实按键一键重建） |
 | 19 | 音频 | ✅ | code/ch19-audio（src/main.rs + examples/listing-19-01～08，main.rs 即 Listing 19-9；开 bevy `wav` feature，报错环节为运行期 UnrecognizedFormat panic（19.1，真实复现）；音频资产全部由 scripts/make_ch19_assets.py 用 Python 标准库合成 WAV，字体贴图复用前章）；book/src/ch19-00～06；插图 images/ch19（Figure 19-1～7，含 3 张 SVG，scripts/make_ch19_figures.py 用 SendInput 发真实按键一键重建，波形图直接读合成 WAV 采样绘制） |
 | 20 | 项目实战 I：完整的 2D 游戏 | ✅ | code/ch20-breakout（src/ 为 main.rs + game/menu/score/audio 四插件的最终版；examples/listing-20-01～07 为分步阶段版，no-compile/listing-20-08 为编译失败示例；开 bevy `wav` feature，报错环节为 E0603 与“忘注册插件→缺资源 panic”双坑，均真实复现；音效由 scripts/make_ch20_assets.py 合成，BGM/堂鼓复用 ch19、字体复用 ch16）；book/src/ch20-00～08；插图 images/ch20（Figure 20-1～11，含 4 张 SVG、1 张动图，scripts/make_ch20_figures.py 一键重建——内置跟球 bot 发真实按键打出全部局面） |
-| 21 | 3D 入门：Mesh 与 Material | ⬜ | |
+| 21 | 3D 入门：Mesh 与 Material | ✅ | code/ch21-meshes（src/main.rs 即 Listing 21-10 + examples/listing-21-01～09，其中 21-04 在 no-compile/ 下为编译失败示例（E0308 忘 meshes.add）；另一坑为运行期静默缺陷：手搓 Mesh 忘写法线→旗面对灯失聪，零警告；班旗贴图由 scripts/make_ch21_assets.py 用 PIL 合成）；book/src/ch21-00～06；插图 images/ch21（Figure 21-1～12，含 3 张 SVG，scripts/make_ch21_figures.py 一键重建） |
 | 22 | 光照与阴影 | ⬜ | |
 | 23 | glTF 与 3D 资产 | ⬜ | |
 | 24 | PBR 材质深入 | ⬜ | |

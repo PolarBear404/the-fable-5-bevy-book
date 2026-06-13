@@ -21,6 +21,7 @@ members = [
     "ch18-time",
     "ch19-audio",
     "ch20-breakout",
+    "ch21-meshes",
 ]
 
 [workspace.package]

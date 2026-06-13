@@ -147,3 +147,13 @@
   - [锣鼓与中场](ch20-06-gongs-and-intermission.md)
   - [拆台重组：插件化](ch20-07-splitting-into-plugins.md)
   - [终场](ch20-08-finale.md)
+
+# 第四部分　三维世界
+
+- [3D 入门：Mesh 与 Material](ch21-00-meshes-and-materials.md)
+  - [亮相：箱笼、机位与一盏灯](ch21-01-mesh3d-and-a-lamp.md)
+  - [开料单：内置几何体](ch21-02-builtin-primitives.md)
+  - [上漆：StandardMaterial 初见](ch21-03-standard-material-first-look.md)
+  - [手搓坯子：顶点、索引与贴图坐标](ch21-04-hand-made-meshes.md)
+  - [法线：受光的方向](ch21-05-normals.md)
+  - [得月楼开张](ch21-06-grand-opening.md)
