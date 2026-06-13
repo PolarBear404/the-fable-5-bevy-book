@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 430" font-family="'Noto Sans SC','Microsoft YaHei',sans-serif">
+  <rect x="0" y="0" width="940" height="430" rx="16" fill="#f7f5f0"/>
+  <defs>
+    <marker id="bp-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#c8772e"/>
+    </marker>
+  </defs>
+  <text x="470" y="40" text-anchor="middle" font-size="21" font-weight="700" fill="#2c2c2c">从 Blender 到 Bevy：名字一路过得去</text>
+
+  <!-- A: Blender -->
+  <rect x="40" y="70" width="250" height="288" rx="10" fill="#fdfcf9" stroke="#b8b0a0" stroke-width="2"/>
+  <rect x="40" y="70" width="250" height="30" rx="10" fill="#d9e3ec" stroke="#b8b0a0" stroke-width="2"/>
+  <text x="56" y="91" font-size="15" font-weight="700" fill="#274055">Blender</text>
+  <text x="60" y="128" font-size="13" fill="#555">命名好的对象：</text>
+  <g font-size="13" fill="#3a2c1c">
+    <text x="74" y="152">Puppet</text>
+    <text x="90" y="174">└ Torso</text>
+    <text x="106" y="196">├ Head</text>
+    <text x="106" y="218">├ ArmRight …</text>
+  </g>
+  <rect x="60" y="236" width="200" height="30" rx="6" fill="#efe2cf" stroke="#cda85c"/>
+  <text x="160" y="256" text-anchor="middle" font-size="13" fill="#6a5220">Action：Swing</text>
+  <text x="60" y="300" font-size="12" fill="#777">起好名 = 之后能在</text>
+  <text x="60" y="320" font-size="12" fill="#777">代码里「点名取人」</text>
+
+  <!-- B: Export -->
+  <rect x="350" y="70" width="250" height="288" rx="10" fill="#fdfcf9" stroke="#b8b0a0" stroke-width="2"/>
+  <rect x="350" y="70" width="250" height="30" rx="10" fill="#e7ddca" stroke="#b8b0a0" stroke-width="2"/>
+  <text x="366" y="91" font-size="15" font-weight="700" fill="#5a2b1c">导出 glTF 2.0</text>
+  <g font-size="14">
+    <text x="372" y="132" fill="#3f7a36">✓</text><text x="392" y="132" fill="#3a3a3a">Animation（动画）</text>
+    <text x="372" y="160" fill="#3f7a36">✓</text><text x="392" y="160" fill="#3a3a3a">Skinning（蒙皮）</text>
+    <text x="372" y="188" fill="#3f7a36">✓</text><text x="392" y="188" fill="#3a3a3a">Apply Modifiers</text>
+  </g>
+  <rect x="372" y="214" width="206" height="30" rx="6" fill="#e6d3c4" stroke="#b58a6e"/>
+  <text x="475" y="234" text-anchor="middle" font-size="13" fill="#5a3b29">.glb（单文件）</text>
+  <rect x="372" y="252" width="206" height="30" rx="6" fill="#d8e3d2" stroke="#84a578"/>
+  <text x="475" y="272" text-anchor="middle" font-size="13" fill="#2f4a28">.gltf（JSON + .bin）</text>
+  <text x="372" y="312" font-size="12" fill="#777">两种容器，Bevy 加载写法一样</text>
+
+  <!-- C: Bevy -->
+  <rect x="660" y="70" width="240" height="288" rx="10" fill="#fdfcf9" stroke="#b8b0a0" stroke-width="2"/>
+  <rect x="660" y="70" width="240" height="30" rx="10" fill="#dce6dc" stroke="#b8b0a0" stroke-width="2"/>
+  <text x="676" y="91" font-size="15" font-weight="700" fill="#2f4a28">Bevy</text>
+  <rect x="678" y="118" width="204" height="64" rx="6" fill="#f1efe9" stroke="#cfc7b6"/>
+  <text x="690" y="142" font-size="12.5" fill="#2c2c2c">SceneRoot(load(</text>
+  <text x="704" y="162" font-size="12.5" fill="#a23b1e">GltfAssetLabel::Scene(0)</text>
+  <text x="690" y="178" font-size="12.5" fill="#2c2c2c">))</text>
+  <g font-size="13" fill="#3a2c1c">
+    <text x="678" y="214">· 对象名 → <tspan fill="#1c3a2c" font-weight="700">Name</tspan></text>
+    <text x="678" y="240">· 网格/材质名 → GltfMeshName /</text>
+    <text x="694" y="260">GltfMaterialName</text>
+    <text x="678" y="286">· 动作名 → 命名动画</text>
+  </g>
+
+  <!-- 箭头 -->
+  <line x1="296" y1="214" x2="346" y2="214" stroke="#c8772e" stroke-width="3" marker-end="url(#bp-ar)"/>
+  <line x1="606" y1="214" x2="656" y2="214" stroke="#c8772e" stroke-width="3" marker-end="url(#bp-ar)"/>
+
+  <text x="470" y="404" text-anchor="middle" font-size="13" fill="#a23b1e">坐标约定：glTF +Z 朝前，Bevy −Z 朝前——0.18 默认不自动旋转，需要时查 convert_coordinates</text>
+</svg>
