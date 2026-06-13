@@ -1,0 +1,10 @@
+# ANCHOR: deps
+[package]
+name = "ch20-breakout"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# 音效是脚本合成的 .wav——和第 19 章一样，把 wav 这道格式闸打开
+bevy = { workspace = true, features = ["wav"] }
+# ANCHOR_END: deps

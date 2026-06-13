@@ -1,0 +1,80 @@
+<svg viewBox="0 0 780 440" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-20sm" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr-20sm-g" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#1d6b40"/>
+    </marker>
+    <marker id="arr-20sm-o" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="780" height="440" rx="10" fill="#f7f5f0"/>
+
+  <text x="390" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">《打瓦》的状态机：GameState 三态 + IsPaused 子状态</text>
+
+  <!-- Menu -->
+  <rect x="48" y="150" width="150" height="96" rx="10" fill="#ffffff" stroke="#b8b1a4" stroke-width="2"/>
+  <text x="123" y="182" text-anchor="middle" font-size="14" fill="#4a463f" font-weight="bold">Menu</text>
+  <text x="123" y="204" text-anchor="middle" font-size="11" fill="#7a7468">后台招牌</text>
+  <text x="123" y="222" text-anchor="middle" font-size="10.5" fill="#7a7468">DespawnOnExit(Menu)</text>
+
+  <!-- Playing（含子状态机） -->
+  <rect x="276" y="92" width="240" height="212" rx="10" fill="#ffffff" stroke="#1d6b40" stroke-width="2.4"/>
+  <text x="396" y="120" text-anchor="middle" font-size="14" fill="#1d6b40" font-weight="bold">Playing</text>
+  <text x="396" y="139" text-anchor="middle" font-size="10.5" fill="#7a7468">场上一切挂 DespawnOnExit(Playing)</text>
+
+  <!-- 子状态 -->
+  <rect x="296" y="154" width="92" height="62" rx="8" fill="#eaf3ec" stroke="#1d6b40" stroke-width="1.6"/>
+  <text x="342" y="180" text-anchor="middle" font-size="12" fill="#1d6b40" font-weight="bold">Running</text>
+  <text x="342" y="198" text-anchor="middle" font-size="10" fill="#7a7468">鼓点照敲</text>
+
+  <rect x="404" y="154" width="92" height="62" rx="8" fill="#efe9dd" stroke="#b8b1a4" stroke-width="1.6"/>
+  <text x="450" y="180" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">Paused</text>
+  <text x="450" y="198" text-anchor="middle" font-size="10" fill="#7a7468">钟停、声停</text>
+
+  <path d="M388,168 L404,168" stroke="#7a7468" stroke-width="1.6" fill="none" marker-end="url(#arr-20sm)"/>
+  <path d="M404,202 L388,202" stroke="#7a7468" stroke-width="1.6" fill="none" marker-end="url(#arr-20sm)"/>
+  <text x="396" y="160" text-anchor="middle" font-size="10.5" fill="#7a7468">P</text>
+  <text x="396" y="215" text-anchor="middle" font-size="10.5" fill="#7a7468">P</text>
+
+  <text x="396" y="248" text-anchor="middle" font-size="10.5" fill="#7a7468">SubStates：随 Playing 而生灭</text>
+  <text x="396" y="266" text-anchor="middle" font-size="10.5" fill="#7a7468">每局重置回 Running</text>
+  <text x="396" y="284" text-anchor="middle" font-size="10.5" fill="#7a7468">幕布挂 DespawnOnExit(Paused)</text>
+
+  <!-- GameOver -->
+  <rect x="594" y="150" width="150" height="96" rx="10" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+  <text x="669" y="182" text-anchor="middle" font-size="14" fill="#c05a2e" font-weight="bold">GameOver</text>
+  <text x="669" y="204" text-anchor="middle" font-size="11" fill="#7a7468">满堂彩 / 绣球散尽</text>
+  <text x="669" y="222" text-anchor="middle" font-size="10.5" fill="#7a7468">DespawnOnExit(GameOver)</text>
+
+  <!-- Menu -> Playing -->
+  <path d="M198,178 L276,178" stroke="#1d6b40" stroke-width="2" fill="none" marker-end="url(#arr-20sm-g)"/>
+  <text x="237" y="166" text-anchor="middle" font-size="11" fill="#1d6b40">空格 开局</text>
+
+  <!-- Playing -> GameOver -->
+  <path d="M516,178 L594,178" stroke="#c05a2e" stroke-width="2" fill="none" marker-end="url(#arr-20sm-o)"/>
+  <text x="555" y="154" text-anchor="middle" font-size="11" fill="#c05a2e" stroke="#f7f5f0" stroke-width="3.5" paint-order="stroke">瓦尽 → Cleared</text>
+  <text x="555" y="170" text-anchor="middle" font-size="11" fill="#c05a2e" stroke="#f7f5f0" stroke-width="3.5" paint-order="stroke">球尽 → Spilled</text>
+
+  <!-- GameOver -> Playing（再来一局） -->
+  <path d="M594,236 C 560,268 520,268 506,250" stroke="#1d6b40" stroke-width="2" fill="none" marker-end="url(#arr-20sm-g)"/>
+  <text x="566" y="282" text-anchor="middle" font-size="11" fill="#1d6b40">空格 再来一局</text>
+
+  <!-- GameOver -> Menu（回后台，走底部大弧） -->
+  <path d="M669,246 C 669,356 200,356 134,250" stroke="#7a7468" stroke-width="1.8" fill="none" marker-end="url(#arr-20sm)"/>
+  <text x="400" y="348" text-anchor="middle" font-size="11" fill="#7a7468">Esc 回后台</text>
+
+  <!-- Paused -> Menu（弃局）：从 Playing 框底、Paused 一侧出发 -->
+  <path d="M450,304 C 440,344 220,338 146,248" stroke="#7a7468" stroke-width="1.6" fill="none" stroke-dasharray="5,4" marker-end="url(#arr-20sm)"/>
+  <text x="282" y="354" text-anchor="middle" font-size="11" fill="#7a7468" stroke="#f7f5f0" stroke-width="3.5" paint-order="stroke">中场里 Esc 收摊（弃局）</text>
+
+  <!-- 初始箭头 -->
+  <circle cx="32" cy="178" r="5" fill="#4a463f"/>
+  <path d="M37,178 L48,178" stroke="#4a463f" stroke-width="2" fill="none" marker-end="url(#arr-20sm)"/>
+
+  <!-- 底注 -->
+  <line x1="36" y1="384" x2="744" y2="384" stroke="#b8b1a4" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="390" y="412" text-anchor="middle" font-size="12" fill="#4a463f">每个画面在 OnEnter 搭台、靠 DespawnOnExit 自动拆台——第 10 章街机厅的骨架，原样上岗</text>
+</svg>

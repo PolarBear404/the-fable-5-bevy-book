@@ -1,0 +1,74 @@
+<svg viewBox="0 0 780 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-20bp" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="780" height="470" rx="10" fill="#f7f5f0"/>
+
+  <text x="390" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">《打瓦》的台面与规矩</text>
+
+  <!-- 记分牌一行 -->
+  <text x="78" y="72" font-size="12" fill="#4a463f" font-weight="bold">瓦 0/56</text>
+  <text x="448" y="72" text-anchor="end" font-size="12" fill="#4a463f" font-weight="bold">绣球 ×3</text>
+  <text x="263" y="72" text-anchor="middle" font-size="10.5" fill="#7a7468">A/D 推凳　空格 发球　P 中场</text>
+
+  <!-- 台面：三面墙 -->
+  <rect x="70" y="82" width="386" height="10" fill="#8a7560"/>
+  <rect x="70" y="82" width="10" height="338" fill="#8a7560"/>
+  <rect x="446" y="82" width="10" height="338" fill="#8a7560"/>
+  <rect x="80" y="92" width="366" height="328" fill="#ffffff" opacity="0.55"/>
+
+  <!-- 瓦阵 8×7：顶上两行筒瓦 -->
+  <g>
+    <!-- 筒瓦两行 -->
+    <g fill="#3f6585">
+      <rect x="92" y="104" width="38" height="11"/><rect x="135" y="104" width="38" height="11"/><rect x="178" y="104" width="38" height="11"/><rect x="221" y="104" width="38" height="11"/><rect x="264" y="104" width="38" height="11"/><rect x="307" y="104" width="38" height="11"/><rect x="350" y="104" width="38" height="11"/><rect x="393" y="104" width="38" height="11"/>
+      <rect x="92" y="119" width="38" height="11"/><rect x="135" y="119" width="38" height="11"/><rect x="178" y="119" width="38" height="11"/><rect x="221" y="119" width="38" height="11"/><rect x="264" y="119" width="38" height="11"/><rect x="307" y="119" width="38" height="11"/><rect x="350" y="119" width="38" height="11"/><rect x="393" y="119" width="38" height="11"/>
+    </g>
+    <!-- 素瓦五行 -->
+    <g fill="#8da4ad">
+      <rect x="92" y="134" width="38" height="11"/><rect x="135" y="134" width="38" height="11"/><rect x="178" y="134" width="38" height="11"/><rect x="221" y="134" width="38" height="11"/><rect x="264" y="134" width="38" height="11"/><rect x="307" y="134" width="38" height="11"/><rect x="350" y="134" width="38" height="11"/><rect x="393" y="134" width="38" height="11"/>
+      <rect x="92" y="149" width="38" height="11"/><rect x="135" y="149" width="38" height="11"/><rect x="178" y="149" width="38" height="11"/><rect x="221" y="149" width="38" height="11"/><rect x="264" y="149" width="38" height="11"/><rect x="307" y="149" width="38" height="11"/><rect x="350" y="149" width="38" height="11"/><rect x="393" y="149" width="38" height="11"/>
+      <rect x="92" y="164" width="38" height="11"/><rect x="135" y="164" width="38" height="11"/><rect x="178" y="164" width="38" height="11"/><rect x="221" y="164" width="38" height="11"/><rect x="264" y="164" width="38" height="11"/><rect x="307" y="164" width="38" height="11"/><rect x="350" y="164" width="38" height="11"/><rect x="393" y="164" width="38" height="11"/>
+      <rect x="92" y="179" width="38" height="11"/><rect x="135" y="179" width="38" height="11"/><rect x="178" y="179" width="38" height="11"/><rect x="221" y="179" width="38" height="11"/><rect x="264" y="179" width="38" height="11"/><rect x="307" y="179" width="38" height="11"/><rect x="350" y="179" width="38" height="11"/><rect x="393" y="179" width="38" height="11"/>
+      <rect x="92" y="194" width="38" height="11"/><rect x="135" y="194" width="38" height="11"/><rect x="178" y="194" width="38" height="11"/><rect x="221" y="194" width="38" height="11"/><rect x="264" y="194" width="38" height="11"/><rect x="307" y="194" width="38" height="11"/><rect x="350" y="194" width="38" height="11"/><rect x="393" y="194" width="38" height="11"/>
+    </g>
+  </g>
+
+  <!-- 球与凳 -->
+  <circle cx="263" cy="357" r="7" fill="#cb4f44"/>
+  <rect x="236" y="366" width="54" height="9" rx="2" fill="#d4a45e"/>
+
+  <!-- 沟：底边不封口 -->
+  <line x1="80" y1="420" x2="446" y2="420" stroke="#c05a2e" stroke-width="2" stroke-dasharray="6,5"/>
+
+  <!-- 右侧标注 -->
+  <path d="M512,118 L436,112" stroke="#7a7468" stroke-width="1.5" fill="none" marker-end="url(#arr-20bp)"/>
+  <text x="518" y="112" font-size="12.5" fill="#3f6585" font-weight="bold">筒瓦（顶上两行）</text>
+  <text x="518" y="130" font-size="11" fill="#7a7468">带釉，要砸两下：先掉釉再碎</text>
+
+  <path d="M512,176 L436,172" stroke="#7a7468" stroke-width="1.5" fill="none" marker-end="url(#arr-20bp)"/>
+  <text x="518" y="170" font-size="12.5" fill="#4a463f" font-weight="bold">瓦 ×56（8 列 × 7 行）</text>
+  <text x="518" y="188" font-size="11" fill="#7a7468">第 1 章那张表的“砖块”行——</text>
+  <text x="518" y="204" font-size="11" fill="#7a7468">Transform + Sprite + Health</text>
+
+  <path d="M512,254 L462,254" stroke="#7a7468" stroke-width="1.5" fill="none" marker-end="url(#arr-20bp)"/>
+  <text x="518" y="250" font-size="12.5" fill="#4a463f" font-weight="bold">三面墙</text>
+  <text x="518" y="268" font-size="11" fill="#7a7468">左右与顶；球碰墙反弹</text>
+
+  <path d="M512,330 L274,357" stroke="#7a7468" stroke-width="1.5" fill="none" marker-end="url(#arr-20bp)"/>
+  <text x="518" y="318" font-size="12.5" fill="#cb4f44" font-weight="bold">绣球</text>
+  <text x="518" y="336" font-size="11" fill="#7a7468">一局三只；碰瓦砸瓦，落沟即丢</text>
+
+  <path d="M512,378 L294,371" stroke="#7a7468" stroke-width="1.5" fill="none" marker-end="url(#arr-20bp)"/>
+  <text x="518" y="372" font-size="12.5" fill="#b07f33" font-weight="bold">条凳</text>
+  <text x="518" y="390" font-size="11" fill="#7a7468">你唯一摸得着的东西：左右推，接球</text>
+
+  <path d="M512,424 L450,420" stroke="#7a7468" stroke-width="1.5" fill="none" marker-end="url(#arr-20bp)"/>
+  <text x="518" y="420" font-size="12.5" fill="#c05a2e" font-weight="bold">沟（底边不封口）</text>
+  <text x="518" y="438" font-size="11" fill="#7a7468">球掉下去就回不来了</text>
+
+  <!-- 底注 -->
+  <text x="263" y="448" text-anchor="middle" font-size="12" fill="#4a463f">胜：56 片瓦一片不剩（满堂彩）　　败：3 只绣球都喂了沟（绣球散尽）</text>
+</svg>
