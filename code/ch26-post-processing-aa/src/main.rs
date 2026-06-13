@@ -1,4 +1,4 @@
-//! Listing 26-8：画质开关面板。
+//! 第 26 章画质开关面板示例。
 //! 桌面运行：在 code/ 工作区执行 `cargo run -p ch26-post-processing-aa`。
 
 use std::fmt::Write;
