@@ -1,9 +1,0 @@
-# ANCHOR: deps
-[package]
-name = "ch23-gltf"
-edition.workspace = true
-publish.workspace = true
-
-[dependencies]
-bevy = { workspace = true }
-# ANCHOR_END: deps
