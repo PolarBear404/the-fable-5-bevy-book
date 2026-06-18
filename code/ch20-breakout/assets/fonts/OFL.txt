@@ -2,7 +2,7 @@ Book Sans SC（本书配套字体子集）
 ========================================
 
 本字体是 Noto Sans SC 的子集化修改版（GB2312 字符集 + ASCII），
-仅为《The Bevy Book》示例代码体积考虑而裁剪，按 OFL 条款更名。
+仅为《The Fable 5 Bevy Book》示例代码体积考虑而裁剪，按 OFL 条款更名。
 
 原字体：Noto Sans SC
 Copyright 2014-2021 Adobe (http://www.adobe.com/), with Reserved Font

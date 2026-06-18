@@ -1,4 +1,4 @@
-# The Bevy Book 全书大纲（已审定）
+# The Fable 5 Bevy Book 全书大纲（已审定）
 
 > 基于 Bevy 0.18.1（vendor/bevy @ f667c28）的 55 个子 crate 与 375 个官方示例盘点而成。
 **状态：已审定（2026-06-12）。** 本文件是章节范围的唯一依据：调整章节须由用户明确发起，改动后同步 PROGRESS.md。

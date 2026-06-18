@@ -1,4 +1,4 @@
-# The Bevy Book — 项目规范
+# The Fable 5 Bevy Book — 项目规范
 
 系统性的 Bevy 引擎中文教程，体例对标 The Rust Book：mdBook 正文 + 全部经编译验证的配套代码。
 所有会话一律用中文交流和写作。
