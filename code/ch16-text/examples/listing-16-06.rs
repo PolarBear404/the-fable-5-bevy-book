@@ -8,6 +8,7 @@ const LINE: &str = "夜渡无人，秋水自横。雁背驮霜，橹声欸乃，
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
+        .insert_resource(ClearColor(Color::srgb(0.72, 0.80, 0.76)))
         .add_systems(Startup, setup)
         .run();
 }
