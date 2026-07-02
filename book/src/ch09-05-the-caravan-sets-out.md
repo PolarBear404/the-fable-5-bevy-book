@@ -6,7 +6,7 @@
 {{#include ../../code/ch09-relationships/src/main.rs}}
 ```
 
-<span class="caption">Listing 9-10：完整示例——商队启程（src/main.rs）</span>
+<span class="caption">Listing 9-11：完整示例——商队启程（src/main.rs）</span>
 
 ```console
 cargo run -p ch09-relationships
@@ -33,9 +33,9 @@ cargo run -p ch09-relationships
       货物箱
       罗兰
       护卫老蔫儿
-  随身：祖传腰刀 → 护卫老蔫儿（认主）
   随身：长戟 → 小芙（配发）
   随身：公家灯笼 → 护卫老蔫儿（配发）
+  随身：祖传腰刀 → 护卫老蔫儿（认主）
 —— 第 3 帧 ——
 罗兰：货车颠得慌，我去青篷车给小芙讲掌灯人的故事。
   商队大旗
@@ -46,9 +46,9 @@ cargo run -p ch09-relationships
     铁皮货车
       货物箱
       护卫老蔫儿
-  随身：祖传腰刀 → 护卫老蔫儿（认主）
   随身：长戟 → 小芙（配发）
   随身：公家灯笼 → 护卫老蔫儿（配发）
+  随身：祖传腰刀 → 护卫老蔫儿（认主）
 —— 第 4 帧 ——
 山道塌方！铁皮货车连人带货坠下山崖——
   商队大旗
@@ -94,11 +94,11 @@ cargo run -p ch09-relationships
 - **关系组件不可变**：`&mut ChildOf` 过不了编译；改关系=insert 新组件（reparent 与转手装备是同一个动作）
 - **遍历**：向下 `iter_descendants`（广度）/`iter_descendants_depth_first`（深度），向上 `iter_ancestors`/`root_ancestor`；引擎不查环，reparent 进自己的子树会让遍历死循环
 - **`linked_spawn` 决定级联**：开了陪葬，不开掉落；`Children` 的级联销毁正是这个开关
-- **引擎对坏关系的态度是自愈**：自指、指向不存在实体的关系会被警告并拆除
+- **引擎对坏关系的态度是自愈**：自指、指向不存在实体的关系会被警告并拆除；确有自指语义、又不用于遍历的关系，derive 时加 `allow_self_referential` 放行
 
 ## 练习
 
-1. **把灯笼也变成认主之物**：把 Listing 9-10 里 `Equipment` 的 derive 改成带 `linked_spawn`，预测六帧输出会有哪几处变化（提示：第 4 帧的“地上”和第 6 帧的“在册实体”），再运行对答案。
+1. **把灯笼也变成认主之物**：把 Listing 9-11 里 `Equipment` 的 derive 改成带 `linked_spawn`，预测六帧输出会有哪几处变化（提示：第 4 帧的“地上”和第 6 帧的“在册实体”），再运行对答案。
 2. **数叶子**：给 Listing 9-7 加一个系统，用 `iter_leaves` 列出商队大旗下的全部叶子实体。先在纸上圈出哪些算叶子（提示：老姜算，小芙不算——为什么？），再运行验证。
 3. **亲手造一个环**：把 Listing 9-6 的换乘改成 `commands.entity(qing_peng_che).insert(ChildOf(xiaofu))`——让青篷车挂到自己乘客的名下，然后在换乘后的清点里用 `iter_descendants` 从青篷车出发点名。先预测程序的命运再运行。程序会卡死不退出，这正是 9-3 节警告的环——确认现象后 Ctrl-C 收场即可。
 

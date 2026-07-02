@@ -68,9 +68,9 @@ cargo run -p ch09-relationships --example listing-09-08
 
 ```text
 == 清点 ==
-护卫老蔫儿
-祖传腰刀（认主）→ 绑定 护卫老蔫儿
 公家灯笼（配发）→ 在 护卫老蔫儿 手里
+祖传腰刀（认主）→ 绑定 护卫老蔫儿
+护卫老蔫儿
 
 【这趟跑完，老蔫儿领钱走人】
 == 清点 ==
@@ -83,6 +83,32 @@ cargo run -p ch09-relationships --example listing-09-08
 - **公家灯笼**（默认）：只是被解除关系，作为无主实体留在世界里，等下一任护卫来领。
 
 现在回头看第 9-2 节就全通了：**`Children` 的级联销毁不是父子树的特权，只是它 derive 时开了 `linked_spawn`**。坠崖的货车带走全车人，和老蔫儿带走祖传腰刀，是同一行代码生效的结果。你设计自己的关系时按语义选边：部件、子弹、特效这类“皮之不存毛将焉附”的关系开它；装备、目标、阵营这类“关系断了各自活”的关系别开。
+
+## allow_self_referential：允许自指
+
+第 9-1 节的第一桩闯祸里，引擎拆掉了“青篷车自己拉自己”，那条警告末尾预告的 `allow_self_referential` 属性，就是给自定义关系准备的。`ChildOf` 那样要递归遍历的树形关系确实容不得自指，但你的关系未必是树：给自己疗伤、瞄准自己、雇主是本人——这些关系没人拿去遍历，“指向自己”在语义上站得住脚。想放行，在**事实源**一侧的 `#[relationship(...)]` 里补上这个属性：
+
+```rust
+{{#include ../../code/ch09-relationships/examples/listing-09-10.rs:derive}}
+```
+
+<span class="caption">Listing 9-10（节选）：allow_self_referential——为自指关系解除门禁（examples/listing-09-10.rs）</span>
+
+山路颠簸，伤号不止一个，随队郎中自己也挂了彩：
+
+```rust
+{{#include ../../code/ch09-relationships/examples/listing-09-10.rs:injuries}}
+```
+
+<span class="caption">Listing 9-10（续）：郎中给自己上药——TreatedBy 指向自己</span>
+
+```text
+随队郎中 正在诊治：罗兰、随队郎中
+```
+
+这次特意挂了 `LogPlugin`，却一条警告也没有：自指的 `TreatedBy` 顺利上身，郎中安然出现在自己的病人名单里。要是去掉属性再跑一遍，下场就和青篷车一模一样——警告一声，关系当场拆除；在这条门禁上，自定义关系和 `ChildOf` 待遇相同。
+
+放行的代价是防环的责任回到你头上：遍历方法不查环的规矩（第 9-3 节）在这里照旧，拿一个允许自指的关系去 `iter_ancestors`，走到自指实体就原地打转。所以这个属性只该给“本来就不遍历”的扁平关系——像病人名单这样只读一层的，随便开。
 
 ## 关系工具箱
 

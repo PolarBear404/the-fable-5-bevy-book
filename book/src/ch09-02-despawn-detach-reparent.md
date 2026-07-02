@@ -71,7 +71,7 @@ error[E0271]: type mismatch resolving `<ChildOf as Component>::Mutability == Mut
 
 ## 换乘的正确姿势
 
-改不了字段，那就换整个组件——给乘客 `insert` 一个新的 `ChildOf`。插入会触发完整的钩子流程：先按 `Replace` 把旧关系的账清掉，再按 `Insert` 登记新关系：
+改不了字段，那就换整个组件——给乘客 `insert` 一个新的 `ChildOf`。插入会触发完整的钩子流程：先按 `Discard` 把旧关系的账清掉，再按 `Insert` 登记新关系：
 
 ```rust
 {{#include ../../code/ch09-relationships/examples/listing-09-06.rs:transfer}}
