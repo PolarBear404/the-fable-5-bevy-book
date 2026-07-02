@@ -1,8 +1,8 @@
 # The Fable 5 Bevy Book 全书大纲（已审定）
 
-> 基于 Bevy 0.19.0（vendor/bevy-0.19 @ c6f634c）的 59 个子 crate 与 420 个官方示例（`[[example]]` 条目）盘点而成。
-**状态：已审定（2026-06-12）；2026-07-02 依 0.19 迁移评估修订（migration/0.19-outline-assessment.md，P-1～P-13 全部批准）。** 本文件是章节范围的唯一依据：调整章节须由用户明确发起，改动后同步 PROGRESS.md。
-每章「覆盖」为模块级范围，精确 API 在写作时按 vendor/bevy-0.19 源码逐项核实。
+> 基于 Bevy 0.19.0（vendor/bevy @ c6f634c）的 59 个子 crate 与 420 个官方示例（`[[example]]` 条目）盘点而成。
+**状态：已审定（2026-06-12 初版；2026-07-02 修订）。** 本文件是章节范围的唯一依据：调整章节须由用户明确发起，改动后同步 PROGRESS.md。
+每章「覆盖」为模块级范围，精确 API 在写作时按 vendor/bevy 源码逐项核实。
 附录 D（第三方生态）是否纳入，留到附录动工时由用户决定。
 
 ---
@@ -33,7 +33,7 @@
 
 ### 第 5 章　Resource——全局唯一数据
 - **目标**：区分"每实体数据（Component）"与"全局数据（Resource）"
-- **覆盖**：#[derive(Resource)]、Res/ResMut、init_resource、资源的初始化顺序、资源的本质——单例实体上的组件（0.19 起），Res/ResMut 是其语法糖
+- **覆盖**：#[derive(Resource)]、Res/ResMut、init_resource、资源的初始化顺序、资源的本质——单例实体上的组件，Res/ResMut 是其语法糖
 - **示例**：计分板/游戏配置
 
 ### 第 6 章　Schedule 与执行顺序
@@ -103,7 +103,7 @@
 ### 第 20 章　项目实战 I：完整的 2D 游戏
 - **目标**：综合 3–19 章，从空目录做出带菜单、计分、音效的 Breakout（打砖块）
 - **覆盖**：综合应用 + 项目组织（插件划分模块）
-- **示例**：对标官方 showcase/breakout.rs（0.19 起 games/ 更名 showcase/）但按本书体系重构、分步成章
+- **示例**：对标官方 showcase/breakout.rs 但按本书体系重构、分步成章
 
 ## 第四部分　三维世界
 
@@ -112,11 +112,11 @@
 - **示例**：基础几何体场景
 
 ### 第 22 章　光照与阴影
-- **覆盖**：bevy_light：Directional/Point/Spot/RectLight（0.19 新增矩形面光源）、AmbientLight、阴影贴图参数与接触阴影、EnvironmentMapLight、Skybox 与 Atmosphere 大气散射（0.19 起归 bevy_light）、反射探针（含 PCCM 视差校正）与光探针混合、体积雾概述
+- **覆盖**：bevy_light：Directional/Point/Spot/RectLight 四种光源、AmbientLight、阴影贴图参数与接触阴影、EnvironmentMapLight、Skybox 与 Atmosphere 大气散射、反射探针（含 PCCM 视差校正）与光探针混合、体积雾概述
 - **示例**：昼夜光照切换台（含大气散射与天空盒）
 
 ### 第 23 章　glTF 与 3D 资产
-- **覆盖**：bevy_gltf：GltfAssetLabel、WorldAssetRoot（0.19 起 SceneRoot 更名）、GltfMaterial 与 #Material0/std 材质标签、按命名取实体、与 DCC 工具（Blender）的工作流
+- **覆盖**：bevy_gltf：GltfAssetLabel、WorldAssetRoot、GltfMaterial 与 #Material0/std 材质标签、按命名取实体、与 DCC 工具（Blender）的工作流
 - **示例**：加载带动画的角色模型
 - **0.20 前瞻**：官方已预告 glTF 加载将接入 BSN，届时本章需一次跟进
 
@@ -125,7 +125,7 @@
 - **示例**：材质球画廊
 
 ### 第 25 章　Picking 与相机控制
-- **覆盖**：bevy_picking（mesh/sprite/UI 拾取、指针事件与 Observer 集成、连击计数 Pointer&lt;Click&gt;::count）、bevy_camera_controller（现成相机控制器；PanCamera 0.19 起默认鼠标平移）
+- **覆盖**：bevy_picking（mesh/sprite/UI 拾取、指针事件与 Observer 集成、连击计数 `Pointer<Click>::count`）、bevy_camera_controller（现成相机控制器）
 - **示例**：点选/拖拽 3D 物体 + 自由视角相机
 
 ### 第 26 章　画质：后处理与抗锯齿
@@ -143,7 +143,7 @@
 - **示例**：响应式 HUD 布局
 
 ### 第 29 章　UI 交互与控件（含项目实战 II）
-- **覆盖**：Interaction、bevy_input_focus、滚动、bevy_ui_widgets（无样式控件，0.19 起默认启用）、EditableText 文本输入（光标/选区/多击/IME/多行）、bevy_settings 设置持久化（非默认 feature）、bevy_clipboard 提及、bevy_feathers（仍实验性，概述；其 BSN 写法见第 32 章）、UI 材质
+- **覆盖**：Interaction、bevy_input_focus、滚动、bevy_ui_widgets（无样式控件）、EditableText 文本输入（光标/选区/多击/IME/多行）、bevy_settings 设置持久化（非默认 feature）、bevy_clipboard 提及、bevy_feathers（实验性，概述；其 BSN 写法见第 32 章）、UI 材质
 - **示例**：完整的设置界面（音量滑条、键位重绑定、分辨率下拉、玩家名文本框）＋ 设置持久化到磁盘
 
 ## 第六部分　动画、架构与工程化
@@ -153,11 +153,11 @@
 - **示例**：角色动画状态切换（idle/walk/run 混合）
 
 ### 第 31 章　Reflect——运行时反射
-- **覆盖**：bevy_reflect：derive(Reflect)、TypeRegistry、动态读写、asset handle 的序列化（HandleSerializeProcessor）、为什么 scene/inspector/remote 都依赖它（0.19 起根模块拆分为 structs/enums 等子模块）
+- **覆盖**：bevy_reflect：derive(Reflect)、TypeRegistry、动态读写、asset handle 的序列化（HandleSerializeProcessor）、为什么 scene/inspector/remote 都依赖它
 - **示例**：通用属性查看器
 
 ### 第 32 章　BSN——场景系统的现在与未来
-- **覆盖**：bevy_scene（0.19 起即 BSN）：bsn!/bsn_list!、Scene/SceneList、patch 式组合与分层、SceneComponent、Template/FromTemplate、spawn_scene/queue_spawn_scene、on() 观察者与 #Name 实体引用；bevy_world_serialization（旧场景系统更名）：DynamicWorld、世界序列化与存档、与 Reflect 的关系
+- **覆盖**：bevy_scene（BSN）：bsn!/bsn_list!、Scene/SceneList、patch 式组合与分层、SceneComponent、Template/FromTemplate、spawn_scene/queue_spawn_scene、on() 观察者与 #Name 实体引用；bevy_world_serialization：DynamicWorld、世界序列化与存档、与 Reflect 的关系
 - **示例**：双示例——BSN 组合式场景（对标 scene/bsn.rs）＋ 关卡存档（DynamicWorld 保存当前世界→重启加载，对标 scene/world_serialization.rs）
 - **0.20 前瞻**：.bsn 资产加载器落地后本章扩一节资产工作流
 
@@ -166,7 +166,7 @@
 - **示例**：接入 BRP 用外部工具实时改组件
 
 ### 第 34 章　异步与并行
-- **覆盖**：bevy_tasks（线程池、AsyncComputeTaskPool 模式）、并行查询迭代、non-send data（0.19 起 NonSend 资源改称）、与 async 生态（reqwest 等）桥接
+- **覆盖**：bevy_tasks（线程池、AsyncComputeTaskPool 模式）、并行查询迭代、non-send data（非 Send 的全局数据）、与 async 生态（reqwest 等）桥接
 - **示例**：后台生成地形 + 异步 HTTP 请求
 
 ### 第 35 章　窗口与平台细节
@@ -178,7 +178,7 @@
 - **示例**：溶解效果材质
 
 ### 第 37 章　渲染架构导览
-- **覆盖**：bevy_render：RenderApp 与 extract/prepare/queue 各阶段、渲染 schedule（Core2d/Core3d）与作为普通 system 的渲染 pass（0.19 起取代 render graph）、RenderStartup 与管线初始化、渲染错误恢复（RenderErrorHandler）、遮挡剔除、自定义渲染管线的地图（目标：能读懂 shader_advanced 示例）
+- **覆盖**：bevy_render：RenderApp 与 extract/prepare/queue 各阶段、渲染 schedule（Core2d/Core3d）与作为普通 system 的渲染 pass、RenderStartup 与管线初始化、渲染错误恢复（RenderErrorHandler）、遮挡剔除、自定义渲染管线的地图（目标：能读懂 shader_advanced 示例）
 - **示例**：导读式，配最小自定义 pipeline
 
 ### 第 38 章　发布你的游戏
@@ -188,7 +188,7 @@
 ## 附录
 
 - **附录 A**　编译加速与安装疑难（linker、dynamic_linking、增量编译、目标盘符）
-- **附录 B**　Cargo features 完整清单（按 0.19 根 Cargo.toml 整理；0.19 起 feature 体系重构为 profile 式，default = ["2d", "3d", "ui", "audio"]）
+- **附录 B**　Cargo features 完整清单（按 0.19 根 Cargo.toml 整理；profile 式 feature 体系，default = ["2d", "3d", "ui", "audio"]）
 - **附录 C**　ECS 速查表（SystemParam、查询过滤器、调度 API 一页通）
 - **附录 D**　生态系统地图（候选：avian/bevy_rapier 物理、bevy_egui、leafwing-input-manager、tilemap 等——**是否纳入由用户决定**）
 - **附录 E**　版本迁移方法论（如何读官方迁移指南；以本书 0.18.1→0.19 迁移全程为实例）
@@ -218,7 +218,7 @@
 | bevy_audio | 19 |
 | bevy_mesh | 21, 36 |
 | bevy_pbr | 21, 22, 24 |
-| bevy_material（0.19 自 bevy_pbr/render 拆出，多为 re-export） | 24, 36 |
+| bevy_material | 24, 36 |
 | bevy_light | 22 |
 | bevy_gltf | 23 |
 | bevy_picking | 25 |
@@ -233,12 +233,12 @@
 | bevy_ui_widgets | 29 |
 | bevy_input_focus | 29 |
 | bevy_feathers | 29（实验性概述） |
-| bevy_settings（0.19 新增，非默认 feature） | 29 |
-| bevy_clipboard（0.19 新增） | 29, 35 |
+| bevy_settings（非默认 feature） | 29 |
+| bevy_clipboard | 29, 35 |
 | bevy_animation | 30 |
 | bevy_reflect | 31 |
-| bevy_scene（0.19 起即 BSN 新场景系统） | 32 |
-| bevy_world_serialization（旧 bevy_scene 更名） | 23, 32 |
+| bevy_scene（BSN） | 32 |
+| bevy_world_serialization | 23, 32 |
 | bevy_log | 33 |
 | bevy_remote | 33 |
 | bevy_tasks | 34 |
@@ -264,13 +264,13 @@
 | input | 17 |
 | time | 18 |
 | audio | 19 |
-| showcase（0.19 起 games 更名） | 20（Breakout 等） |
+| showcase | 20（Breakout 等） |
 | 3d | 21–26 |
 | gltf | 23 |
 | picking | 25 |
 | gizmos | 27 |
 | dev_tools / diagnostics | 27, 33 |
-| ui（0.19 起按 images/layout/text/widgets 等子目录组织） | 28, 29 |
+| ui（含 images/layout/text/widgets 等子目录） | 28, 29 |
 | animation | 30 |
 | reflection | 31 |
 | scene（bsn.rs + world_serialization.rs） | 32 |
@@ -282,6 +282,6 @@
 | shader_advanced | 37 |
 | wasm / mobile | 38 |
 | tools / stress_tests | 38 |
-| large_scenes（0.19 新增渲染基准场景） | 教学辅助，按需引用 |
+| large_scenes（渲染基准场景） | 教学辅助，按需引用 |
 | math | 12, 附C |
 | usage / helpers / testbed | 教学辅助，按需引用 |

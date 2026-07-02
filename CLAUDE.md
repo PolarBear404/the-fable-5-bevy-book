@@ -11,17 +11,22 @@
 
 ## 版本锁定（铁律）
 
-- 全书基于 **Bevy 0.18.1**（crates.io 精确锁定 `=0.18.1`），Rust edition 2024
+- 全书基于 **Bevy 0.19.0**（crates.io 精确锁定 `=0.19.0`），Rust edition 2024
 - 升级 Bevy 版本是只有用户才能发起的重大决定；任何会话都禁止顺手升级或放宽版本号
-- 0.19 已在 RC 阶段：正式发布后是否迁移由用户决定，届时做一次性的全书迁移 pass
+- 迁移过渡期（2026-07-02 起，`migrate/bevy-0.19` 分支）：大纲已按 0.19 审定；ch1–21 正文与
+  `code/` 仍在 0.18.1、逐章迁移中（依据 `migration/` 下评估文档）；新写内容一律以 0.19 为基础。
+  全部迁完后删除本条
+- **无痕原则**：教程正文与大纲必须读起来像原生基于 0.19 编写——禁止「0.19 起/0.19 新增/
+  由 X 更名而来」这类版本注记与迁移叙事（专讲版本迁移的附录 E 除外）
 
 ## API 事实来源（铁律）
 
-1. 写任何 Bevy API 之前，先在 `vendor/bevy/`（v0.18.1 源码）里确认它的存在与签名；
+1. 写任何 Bevy API 之前，先在 `vendor/bevy/`（v0.19.0 源码）里确认它的存在与签名；
    官方示例在 `vendor/bevy/examples/`，是每章选材的第一参考
 2. 禁止凭记忆写 Bevy API——模型记忆很可能对应旧版本；拿不准就 grep 源码
-3. `vendor/bevy/` 只读、不入 git。缺失时恢复：
-   `git clone --depth 1 --branch v0.18.1 https://github.com/bevyengine/bevy.git vendor/bevy`
+3. `vendor/` 只读、不入 git。缺失时恢复（GitHub TLS 抖动时加 `-c http.version=HTTP/1.1`）：
+   `git clone --depth 1 --branch v0.19.0 https://github.com/bevyengine/bevy.git vendor/bevy`
+4. 迁移过渡期另有 `vendor/bevy-0.18/`（v0.18.1，迁移旧章时对照用），迁移完成后删除
 
 ## 目录结构
 
