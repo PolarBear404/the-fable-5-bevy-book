@@ -1,7 +1,7 @@
 //! Listing 20-7：锣鼓与中场——音效、BGM、暂停子状态，游戏全须全尾
 //! 在 Listing 20-6 之上：IsPaused 子状态（P 中场/继续，Esc 收摊）+
 //! Knock 消息驱动的一次性音效 + 循环 BGM + GlobalVolume 总闸（-/= 调）。
-//! 这也是单文件的最后一站：560 行——下一节拆插件。
+//! 这也是单文件的最后一站：817 行——下一节拆插件。
 
 use bevy::audio::Volume;
 use bevy::math::bounding::{Aabb2d, BoundingCircle, IntersectsVolume};
