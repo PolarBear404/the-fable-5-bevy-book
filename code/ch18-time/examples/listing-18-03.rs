@@ -100,8 +100,8 @@ fn setup(
         commands.spawn((
             Text2d::new(label),
             TextFont {
-                font: regular.clone(),
-                font_size: 24.0,
+                font: regular.clone().into(),
+                font_size: FontSize::Px(24.0),
                 ..default()
             },
             TextColor(color),
@@ -134,8 +134,8 @@ fn setup(
         Hud,
         Text2d::new(""),
         TextFont {
-            font: bold,
-            font_size: 28.0,
+            font: bold.into(),
+            font_size: FontSize::Px(28.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),

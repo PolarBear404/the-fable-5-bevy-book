@@ -18,8 +18,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2d);
     let zh_font = asset_server.load("fonts/book-sans-sc-regular.otf");
     let text_font = TextFont {
-        font: zh_font.clone(),
-        font_size: 28.0,
+        font: zh_font.clone().into(),
+        font_size: FontSize::Px(28.0),
         ..default()
     };
 
@@ -57,8 +57,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         commands.spawn((
             Text2d::new(label),
             TextFont {
-                font: zh_font.clone(),
-                font_size: 18.0,
+                font: zh_font.clone().into(),
+                font_size: FontSize::Px(18.0),
                 ..default()
             },
             Transform::from_xyz(-510.0, y, 0.0),

@@ -86,8 +86,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         Hud,
         Text2d::new(""),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-bold.otf"),
-            font_size: 34.0,
+            font: asset_server.load("fonts/book-sans-sc-bold.otf").into(),
+            font_size: FontSize::Px(34.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),
@@ -96,8 +96,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("空格出招　[1] 慢板（鼓点 4 拍/秒）　[2] 拖戏（64 拍/秒 + 每帧卡 150 毫秒）"),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-            font_size: 22.0,
+            font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+            font_size: FontSize::Px(22.0),
             ..default()
         },
         TextColor(Color::srgb(0.55, 0.57, 0.62)),

@@ -25,8 +25,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         commands.spawn((
             Text2d::new(verse),
             TextFont {
-                font: zh_font.clone(),
-                font_size: 32.0,
+                font: zh_font.clone().into(),
+                font_size: FontSize::Px(32.0),
                 ..default()
             },
             line_height,
@@ -38,8 +38,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("磨边的字"),
         TextFont {
-            font: zh_font.clone(),
-            font_size: 56.0,
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(56.0),
             ..default()
         },
         Transform::from_xyz(-220.0, -220.0, 0.0),
@@ -47,8 +47,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("不磨的字"),
         TextFont {
-            font: zh_font.clone(),
-            font_size: 56.0,
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(56.0),
             font_smoothing: FontSmoothing::None,
             ..default()
         },

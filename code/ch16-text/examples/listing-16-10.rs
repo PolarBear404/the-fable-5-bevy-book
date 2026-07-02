@@ -19,8 +19,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("渡口——台上的字"),
         TextFont {
-            font: zh_font.clone(),
-            font_size: 40.0,
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(40.0),
             ..default()
         },
     ));
@@ -31,8 +31,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text::new("第二幕 · 夜战——玻璃上的字"),
         TextFont {
-            font: zh_font.clone(),
-            font_size: 22.0,
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(22.0),
             ..default()
         },
         Node {

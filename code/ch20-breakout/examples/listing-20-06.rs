@@ -375,8 +375,8 @@ fn show_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
             (
                 Text2d::new("打　瓦"),
                 TextFont {
-                    font: bold,
-                    font_size: 110.0,
+                    font: bold.into(),
+                    font_size: FontSize::Px(110.0),
                     ..default()
                 },
                 TextColor(TEXT_COLOR),
@@ -385,8 +385,8 @@ fn show_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
             (
                 Text2d::new("夜戏散场后的保留节目"),
                 TextFont {
-                    font: regular.clone(),
-                    font_size: 26.0,
+                    font: regular.clone().into(),
+                    font_size: FontSize::Px(26.0),
                     ..default()
                 },
                 TextColor(MUTED_COLOR),
@@ -395,8 +395,8 @@ fn show_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
             (
                 Text2d::new("空格 开局　　Esc 离场"),
                 TextFont {
-                    font: regular,
-                    font_size: 30.0,
+                    font: regular.into(),
+                    font_size: FontSize::Px(30.0),
                     ..default()
                 },
                 TextColor(TEXT_COLOR),
@@ -426,8 +426,8 @@ fn show_curtain(
             (
                 Text2d::new(headline),
                 TextFont {
-                    font: asset_server.load("fonts/book-sans-sc-bold.otf"),
-                    font_size: 84.0,
+                    font: asset_server.load("fonts/book-sans-sc-bold.otf").into(),
+                    font_size: FontSize::Px(84.0),
                     ..default()
                 },
                 TextColor(TEXT_COLOR),
@@ -436,8 +436,8 @@ fn show_curtain(
             (
                 Text2d::new(verdict),
                 TextFont {
-                    font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-                    font_size: 30.0,
+                    font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+                    font_size: FontSize::Px(30.0),
                     ..default()
                 },
                 TextColor(MUTED_COLOR),
@@ -446,8 +446,8 @@ fn show_curtain(
             (
                 Text2d::new("空格 再来一局　　Esc 回后台"),
                 TextFont {
-                    font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-                    font_size: 30.0,
+                    font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+                    font_size: FontSize::Px(30.0),
                     ..default()
                 },
                 TextColor(TEXT_COLOR),
@@ -564,8 +564,8 @@ fn rig_scoreboard(
         DespawnOnExit(GameState::Playing),
         Text2d::new(format!("瓦 0/{TOTAL_BRICKS}")),
         TextFont {
-            font: bold.clone(),
-            font_size: 30.0,
+            font: bold.clone().into(),
+            font_size: FontSize::Px(30.0),
             ..default()
         },
         TextColor(TEXT_COLOR),
@@ -577,8 +577,8 @@ fn rig_scoreboard(
         DespawnOnExit(GameState::Playing),
         Text2d::new(format!("绣球 ×{BALL_COUNT}")),
         TextFont {
-            font: bold,
-            font_size: 30.0,
+            font: bold.into(),
+            font_size: FontSize::Px(30.0),
             ..default()
         },
         TextColor(TEXT_COLOR),
@@ -589,8 +589,8 @@ fn rig_scoreboard(
         DespawnOnExit(GameState::Playing),
         Text2d::new("A/D 推凳　　空格 发球"),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-            font_size: 22.0,
+            font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+            font_size: FontSize::Px(22.0),
             ..default()
         },
         TextColor(MUTED_COLOR),

@@ -23,20 +23,20 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("阿燕"),
         TextFont {
-            font: bold.clone(),
-            font_size: 36.0,
+            font: bold.clone().into(),
+            font_size: FontSize::Px(36.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.72, 0.29)),
-        TextLayout::new_with_justify(Justify::Center),
+        TextLayout::justify(Justify::Center),
         // 阴影是整块字的事，加在根上
         Text2dShadow::default(),
         children![
             (
                 TextSpan::new("（提灯，望江）\n"),
                 TextFont {
-                    font: regular.clone(),
-                    font_size: 22.0,
+                    font: regular.clone().into(),
+                    font_size: FontSize::Px(22.0),
                     ..default()
                 },
                 TextColor(Color::srgb(0.55, 0.57, 0.62)),
@@ -44,8 +44,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             (
                 TextSpan::new("夜渡无人，"),
                 TextFont {
-                    font: regular.clone(),
-                    font_size: 36.0,
+                    font: regular.clone().into(),
+                    font_size: FontSize::Px(36.0),
                     ..default()
                 },
                 TextColor::WHITE,
@@ -54,8 +54,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 // 改掉的旧词：划线作废，颜色压暗
                 TextSpan::new("孤舟"),
                 TextFont {
-                    font: regular.clone(),
-                    font_size: 36.0,
+                    font: regular.clone().into(),
+                    font_size: FontSize::Px(36.0),
                     ..default()
                 },
                 TextColor(Color::srgb(0.45, 0.45, 0.48)),
@@ -65,8 +65,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
                 // 换上的新词：加粗、标红、底下画金线
                 TextSpan::new("秋水"),
                 TextFont {
-                    font: bold.clone(),
-                    font_size: 36.0,
+                    font: bold.clone().into(),
+                    font_size: FontSize::Px(36.0),
                     ..default()
                 },
                 TextColor(Color::srgb(0.86, 0.32, 0.28)),
@@ -76,8 +76,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             (
                 TextSpan::new("自横。"),
                 TextFont {
-                    font: regular.clone(),
-                    font_size: 36.0,
+                    font: regular.clone().into(),
+                    font_size: FontSize::Px(36.0),
                     ..default()
                 },
                 TextColor::WHITE,

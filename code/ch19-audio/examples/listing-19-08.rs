@@ -101,8 +101,8 @@ fn setup(
         commands.spawn((
             Text2d::new(text),
             TextFont {
-                font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-                font_size: size,
+                font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+                font_size: FontSize::Px(size),
                 ..default()
             },
             TextColor(Color::srgb(0.55, 0.57, 0.62)),
@@ -113,8 +113,8 @@ fn setup(
         Hud,
         Text2d::new(""),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-bold.otf"),
-            font_size: 26.0,
+            font: asset_server.load("fonts/book-sans-sc-bold.otf").into(),
+            font_size: FontSize::Px(26.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),

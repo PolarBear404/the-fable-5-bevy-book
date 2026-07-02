@@ -15,8 +15,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2d);
     let zh_font = asset_server.load("fonts/book-sans-sc-regular.otf");
     let text_font = TextFont {
-        font: zh_font.clone(),
-        font_size: 26.0,
+        font: zh_font.clone().into(),
+        font_size: FontSize::Px(26.0),
         ..default()
     };
     // 每个样本的 Transform 钉子位置都画一枚金色图钉作参照
@@ -38,7 +38,7 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         commands.spawn((
             Text2d::new(verse),
             text_font.clone(),
-            TextLayout::new_with_justify(justify),
+            TextLayout::justify(justify),
             Transform::from_xyz(x, 150.0, 0.0),
         ));
     }

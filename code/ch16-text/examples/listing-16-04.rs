@@ -20,8 +20,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         commands.spawn((
             Text2d::new(format!("渡口夜话 {size} 号")),
             TextFont {
-                font: zh_font.clone(),
-                font_size: size,
+                font: zh_font.clone().into(),
+                font_size: FontSize::Px(size),
                 ..default()
             },
             Transform::from_xyz(0.0, y, 0.0),
@@ -33,8 +33,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("会心"),
         TextFont {
-            font: zh_font.clone(),
-            font_size: 64.0,
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(64.0),
             ..default()
         },
         Transform::from_xyz(-160.0, -240.0, 0.0),
@@ -42,8 +42,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("会心"),
         TextFont {
-            font: zh_font.clone(),
-            font_size: 16.0,
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(16.0),
             ..default()
         },
         // 把 16 号小字模硬放大 4 倍——像把小照片拉成海报

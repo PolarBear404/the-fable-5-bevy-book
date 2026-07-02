@@ -63,7 +63,7 @@ fn take_census(
     }
 
     // get_mut 借出参数——用起来和普通系统一模一样
-    let (residents, mut commands) = counter.get_mut(world);
+    let (residents, mut commands) = counter.get_mut(world).unwrap();
     let roll: Vec<&str> = residents.iter().map(Name::as_str).collect();
     println!("  艾达点名：{}。", roll.join("、"));
     commands.spawn((Notice, Name::new("年度盘点完毕")));

@@ -1,4 +1,4 @@
-//! Listing 14-9：像素海报糊了——默认线性采样、.meta 档案与 load_with_settings
+//! Listing 14-9：像素海报糊了——默认线性采样、.meta 档案与 load_builder
 
 use bevy::image::{ImageLoaderSettings, ImageSampler};
 use bevy::prelude::*;
@@ -35,15 +35,15 @@ fn print_posters(mut commands: Commands, asset_server: Res<AssetServer>) {
         Transform::from_xyz(0.0, 0.0, 0.0),
     ));
 
-    // 右：下单时现场改设置——load_with_settings 只动要动的字段
+    // 右：下单时现场改设置——load_builder 挂上 with_settings，只动要动的字段
     commands.spawn((
         Sprite {
-            image: asset_server.load_with_settings(
-                "props/sword-16-settings.png",
-                |settings: &mut ImageLoaderSettings| {
+            image: asset_server
+                .load_builder()
+                .with_settings(|settings: &mut ImageLoaderSettings| {
                     settings.sampler = ImageSampler::nearest();
-                },
-            ),
+                })
+                .load("props/sword-16-settings.png"),
             custom_size: Some(Vec2::splat(256.0)),
             ..default()
         },

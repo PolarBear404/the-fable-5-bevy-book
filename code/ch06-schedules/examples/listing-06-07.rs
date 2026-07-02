@@ -17,8 +17,8 @@ fn main() {
             scoreboard.run_if(resource_changed::<Score>),
             // not() 取反：没动静的帧，轮到观众起哄
             heckle.run_if(not(resource_changed::<Score>)),
-            // 组合条件：.and() 要求两边都成立——刚变过 且 满 30 分，才颁奖
-            ceremony.run_if(resource_changed::<Score>.and(|score: Res<Score>| score.0 >= 30)),
+            // 组合条件：.and_then() 要求两边都成立——刚变过 且 满 30 分，才颁奖
+            ceremony.run_if(resource_changed::<Score>.and_then(|score: Res<Score>| score.0 >= 30)),
         )
             .chain(),
     );

@@ -19,8 +19,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("夜渡无人，秋水自横。"),
         TextFont {
-            font: zh_font,
-            font_size: 48.0,
+            font: zh_font.into(),
+            font_size: FontSize::Px(48.0),
             ..default()
         },
     ));

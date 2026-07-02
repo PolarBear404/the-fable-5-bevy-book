@@ -29,7 +29,7 @@ edition = "2024"
 publish = false
 
 [workspace.dependencies]
-bevy = "=0.18.1"
+bevy = "=0.19.0"
 
 # Bevy 官方推荐的开发期配置：自身代码 O1、依赖 O3，加快迭代时的编译与运行
 # ANCHOR: dev_profile

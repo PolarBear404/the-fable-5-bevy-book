@@ -19,8 +19,8 @@ fn main() {
     .add_observer(|insert: On<Insert, Flaming>, q: Query<&Flaming>| {
         println!("  [Insert]  新值写入完毕，当前威力 {}", q.get(insert.entity).unwrap().power);
     })
-    .add_observer(|replace: On<Replace, Flaming>, q: Query<&Flaming>| {
-        println!("  [Replace] 旧值即将清退，此刻还能读到威力 {}", q.get(replace.entity).unwrap().power);
+    .add_observer(|discard: On<Discard, Flaming>, q: Query<&Flaming>| {
+        println!("  [Discard] 旧值即将清退，此刻还能读到威力 {}", q.get(discard.entity).unwrap().power);
     })
     .add_observer(|remove: On<Remove, Flaming>, q: Query<&Flaming>| {
         println!("  [Remove]  附魔彻底离身，临走前威力 {}", q.get(remove.entity).unwrap().power);

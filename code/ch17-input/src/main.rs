@@ -193,8 +193,8 @@ fn setup(
         Hud,
         Text2d::new("听差："),
         TextFont {
-            font: bold.clone(),
-            font_size: 30.0,
+            font: bold.clone().into(),
+            font_size: FontSize::Px(30.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.72, 0.29)),
@@ -204,8 +204,8 @@ fn setup(
             (
                 TextSpan::new("虚位以待"),
                 TextFont {
-                    font: bold,
-                    font_size: 30.0,
+                    font: bold.into(),
+                    font_size: FontSize::Px(30.0),
                     ..default()
                 },
                 TextColor(Color::srgb(0.55, 0.57, 0.62)),
@@ -213,8 +213,8 @@ fn setup(
             (
                 TextSpan::new("　中桩 ×0"),
                 TextFont {
-                    font: regular,
-                    font_size: 20.0,
+                    font: regular.into(),
+                    font_size: FontSize::Px(20.0),
                     ..default()
                 },
                 TextColor(Color::srgb(0.55, 0.57, 0.62)),

@@ -50,8 +50,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
             // 一开始是空字符串——词都还在提词器手里
             Text2d::new(""),
             TextFont {
-                font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-                font_size: 30.0,
+                font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+                font_size: FontSize::Px(30.0),
                 ..default()
             },
             TextColor(Color::srgb(0.24, 0.16, 0.08)),
