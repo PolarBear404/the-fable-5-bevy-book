@@ -98,14 +98,14 @@ def fig_04_hot_swap() -> None:
 
 
 def fig_05_samplers() -> None:
-    """Figure 14-5：像素稿三种采样（Listing 14-9，静止场景）。
+    """Figure 14-5：像素稿三种采样（Listing 14-10，静止场景）。
 
     三把剑的逻辑位置 x = -300/0/+300、尺寸 256；按 1.25 倍 DPI 折成物理像素裁带状区。
     """
-    with Example(exe("listing-14-09"), workdir=CODE) as ex:
+    with Example(exe("listing-14-10"), workdir=CODE) as ex:
         band = ex.shot(2.5).crop((225, 250, 1375, 650))
     save_png(
-        hstack([band], ["默认：线性采样", ".meta 档案：Nearest", "load_with_settings：Nearest"]),
+        hstack([band], ["默认：线性采样", ".meta 档案：Nearest", "load_builder：Nearest"]),
         "fig-14-05-samplers.png",
     )
 
