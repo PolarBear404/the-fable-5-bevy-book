@@ -17,7 +17,7 @@ cargo run -p ch04-systems-queries --example listing-04-06
 ```
 
 ```text
-error[B0001]: Query<(Name, &mut Hunger), With<Young>> in system
+error[B0001]: Query<'_, '_, (Name, &mut Hunger), With<Young>> in system
 listing_04_06::extra_rations accesses component(s) Hunger in a way that
 conflicts with a previous system parameter. Consider using `Without<T>` to
 create disjoint Queries or merging conflicting Queries into a `ParamSet`.
@@ -59,9 +59,9 @@ cargo run -p ch04-systems-queries --example listing-04-07
 老灰（伤员）加餐
 小不点（幼崽）加餐
 === 晚间清点 ===
-卷卷  饥饿 3
 小不点  饥饿 6
 老灰  饥饿 4
+卷卷  饥饿 3
 ```
 
 小不点吃到了两餐（8 → 6）——重叠的实体被两条规则各处理一次，语义分毫不差。这正是 `Without` 给不了的结果。
