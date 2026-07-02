@@ -2,28 +2,28 @@
 
 ## 前置条件
 
-**Rust 工具链 ≥ 1.89.0**。这是 Bevy 0.18.1 声明的最低 Rust 版本，建议直接用 rustup 更新到最新 stable：
+**Rust 工具链 ≥ 1.95.0**。这是 Bevy 0.19.0 声明的最低 Rust 版本，建议直接用 rustup 更新到最新 stable：
 
 ```console
 rustup update
-rustc --version   # 确认 ≥ 1.89.0
+rustc --version   # 确认 ≥ 1.95.0
 ```
 
 各操作系统还需要少量系统依赖：
 
 - **Windows**：MSVC 工具链（Visual Studio Build Tools）。如果你装 Rust 时按默认流程走过一遍，它已经在了。
 - **macOS**：`xcode-select --install` 安装命令行工具。
-- **Linux**：需要 ALSA、udev 等开发库，各发行版的安装命令见官方文档 [linux_dependencies.md](https://github.com/bevyengine/bevy/blob/v0.18.1/docs/linux_dependencies.md)。
+- **Linux**：需要 ALSA、udev 等开发库，各发行版的安装命令见官方文档 [linux_dependencies.md](https://github.com/bevyengine/bevy/blob/v0.19.0/docs/linux_dependencies.md)。
 
 ## 创建项目
 
 ```console
 cargo new my_game
 cd my_game
-cargo add bevy@0.18.1
+cargo add bevy@0.19.0
 ```
 
-`cargo add bevy@0.18.1` 会在 `Cargo.toml` 里写入与本书一致的版本。然后验证一切就绪：
+`cargo add bevy@0.19.0` 会在 `Cargo.toml` 里写入与本书一致的版本。然后验证一切就绪：
 
 ```console
 cargo check

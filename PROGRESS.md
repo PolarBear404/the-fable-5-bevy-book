@@ -12,13 +12,13 @@
 | 全书大纲 OUTLINE.md | ✅ 2026-06-12 | 38 章 + 6 附录，用户已审定 |
 | 章节写作 | 🟡 | 进度见下表 |
 | Bevy 0.19 大纲评估与 OUTLINE 修订 | ✅ 2026-07-02 | migration/0.19-outline-assessment.md，P-1～P-13 全部批准；38 章 + 6 附录结构不变，ch1–21 编号全保 |
-| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移待启动 |
+| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移进行中（ch1 ✅ 2026-07-02） |
 
 ## 章节状态
 
 | 章 | 标题 | 状态 | 产物（crate / 正文文件，动工时填写） |
 |---|---|---|---|
-| 1 | 认识 Bevy | ✅ | book/src/ch01-00～04（本章无代码 crate；引用 code/Cargo.toml 的 dev_profile 片段） |
+| 1 | 认识 Bevy | ✅ | book/src/ch01-00～04（本章无代码 crate；引用 code/Cargo.toml 的 dev_profile 片段）；已迁 0.19 |
 | 2 | 第一个 Bevy App | ✅ | code/ch02-first-app（src/main.rs + examples/listing-02-01～06）；book/src/ch02-00～03 |
 | 3 | Entity 与 Component | ✅ | code/ch03-entities-components（src/main.rs + examples/listing-03-01～06）；book/src/ch03-00～03 |
 | 4 | System 与 Query | ✅ | code/ch04-systems-queries（src/main.rs + examples/listing-04-01～07，开 bevy `debug` feature）；book/src/ch04-00～04 |
