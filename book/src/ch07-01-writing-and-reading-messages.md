@@ -58,4 +58,4 @@ when it happens, or wrap the parameter in `If<T>` to skip the system when it hap
 
 报错里那个 `messages` 参数顺带掀开了通道的底牌：`add_message::<M>()` 注册的其实是一个叫 **`Messages<M>`** 的普通 Resource，所有在途消息都存在里面。`MessageWriter<M>` 不过是 `ResMut<Messages<M>>` 的薄封装，`MessageReader<M>` 则是 `Res<Messages<M>>` 加一个 `Local` 游标——第 4、5 章的零件，拼出了一套新机制。这个出身决定了它的并发性质和生命周期规则，本章后面每一节都会回到这里；引擎还会亲口承认一次，见 Listing 7-8。
 
-> **来自旧版本的改名**：这套机制在 Bevy 0.17 之前叫 `Event`——`EventReader`/`EventWriter`/`add_event`。网上的老教程、AI 给出的代码片段很可能还是旧名，照着写在 0.18 里编译不过，逐字替换成 `Message` 系列即可。`Event` 这个名字没有消失，它被让给了另一套即时响应机制——正是第 8 章的主角，两者的分工到时候细说。
+> **老教程里的另一个名字**：网上不少教程、AI 给出的代码片段管这套机制叫 `Event`——`EventReader`/`EventWriter`/`add_event`。那是它的曾用名，照着写编译不过，逐字替换成 `Message` 系列即可。`Event` 这个名字没有消失，它属于另一套即时响应机制——正是第 8 章的主角，两者的分工到时候细说。

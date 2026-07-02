@@ -104,12 +104,13 @@ cargo run -p ch07-messages --example listing-07-08
 
 ```text
 error[B0002]: Res<bevy_ecs::message::messages::Messages<listing_07_08::RailHit>>
-in system listing_07_08::impossible conflicts with a previous
-ResMut<bevy_ecs::message::messages::Messages<listing_07_08::RailHit>> access.
-Consider removing the duplicate access. See: https://bevy.org/learn/errors/b0002
+in system listing_07_08::impossible conflicts with a previous system parameter.
+Consider removing the duplicate access using `Without<IsResource>` to create
+disjoint Queries or merging conflicting Queries into a `ParamSet`.
+See: https://bevy.org/learn/errors/b0002
 ```
 
-剧目编号 **B0002**——和第 5 章资源冲突同款，因为消息缓冲**就是**资源。报错原文还替本章第一节的说法验明正身：冲突双方写得明明白白，`ResMut<Messages<RailHit>>`（writer）撞上了 `Res<Messages<RailHit>>`（reader）。修法也是第 4 章的老朋友 `ParamSet`，把两者错开取用；至于**不同类型**之间读写混搭（读 `RailHit` 写 `Combo`），那是消息流水线的常态，毫无问题。
+剧目编号 **B0002**——和第 5 章资源冲突同款，因为消息缓冲**就是**资源。报错原文还替本章第一节的说法验明正身：`MessageReader` 现出了 `Res<Messages<RailHit>>` 的原形；和它冲突的“previous system parameter”没有点名，但这个系统一共就两个参数——正是 `MessageWriter` 里那个 `ResMut<Messages<RailHit>>`。报错开的两张药方里，`Without<IsResource>` 治的是查询撞上资源的场合（第 5 章“资源的本质”解释过），这里没有查询、用不上；对症的是第 4 章的老朋友 `ParamSet`，把两者错开取用。至于**不同类型**之间读写混搭（读 `RailHit` 写 `Combo`），那是消息流水线的常态，毫无问题。
 
 ## 别的写入口
 
