@@ -24,7 +24,7 @@
     <text x="129" y="180" text-anchor="middle" font-size="13" fill="#7a7468">矢量轮廓 ƒ</text>
 
     <rect x="36" y="212" width="186" height="54" rx="6" fill="#ffffff" stroke="#8a8378" stroke-width="1.5"/>
-    <text x="129" y="234" text-anchor="middle" font-size="13" fill="#4a463f">TextFont.font_size: 32</text>
+    <text x="129" y="234" text-anchor="middle" font-size="13" fill="#4a463f">font_size: FontSize::Px(32.)</text>
     <text x="129" y="254" text-anchor="middle" font-size="13" fill="#7a7468">× 窗口缩放系数</text>
   </g>
 

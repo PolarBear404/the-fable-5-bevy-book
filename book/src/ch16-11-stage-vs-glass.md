@@ -5,22 +5,22 @@
 但还有一类字不属于舞台：血条边的数值、左上角的任务提示、暂停菜单。它们像写在**镜头前的玻璃**上——无论镜头怎么动，字钉在屏幕的老位置。这类字归 UI 系统管，组件叫 **`Text`**（bevy_ui 的 UI 文本）。两边摆在一起：
 
 ```rust
-{{#include ../../code/ch16-text/examples/listing-16-10.rs:setup}}
+{{#include ../../code/ch16-text/examples/listing-16-14.rs:setup}}
 ```
 
-<span class="caption">Listing 16-10：同一副字模、同一套 TextFont——一行在台上，一行在玻璃上（examples/listing-16-10.rs）</span>
+<span class="caption">Listing 16-14：同一副字模、同一套 TextFont——一行在台上，一行在玻璃上（examples/listing-16-14.rs）</span>
 
 ```console
-cargo run -p ch16-text --example listing-16-10
+cargo run -p ch16-text --example listing-16-14
 ```
 
 跑起来镜头会缓缓左右摇。台上的字跟着画面漂，玻璃上的字纹丝不动：
 
-![两帧拼图:镜头摇到不同位置时,世界文本在画面里的位置变了,而左上角的UI文本始终钉在原处](images/ch16/fig-16-11-stage-vs-glass.png)
+![两帧拼图:镜头摇到不同位置时,世界文本在画面里的位置变了,而左上角的UI文本始终钉在原处](images/ch16/fig-16-15-stage-vs-glass.png)
 
-<span class="caption">Figure 16-11：镜头摇到两个位置的同一场景——台上的字随景走，玻璃上的字钉死在屏幕左上角</span>
+<span class="caption">Figure 16-15：镜头摇到两个位置的同一场景——台上的字随景走，玻璃上的字钉死在屏幕左上角</span>
 
-读 Listing 16-10 最该注意的是**没换的东西**：`TextFont`、`TextColor`、`TextLayout`、`LineHeight`、spans 那一套（UI 文本同样用 `TextSpan` 做富文本）——样式组件原封不动，两边通用。bevy_text 是同一台排版引擎，`Text2d` 和 `Text` 只是它的两个出口。换的只有**定位方式**：
+读 Listing 16-14 最该注意的是**没换的东西**：`TextFont`、`TextColor`、`TextLayout`、`LineHeight`、`LetterSpacing`、spans 那一套（UI 文本同样用 `TextSpan` 做富文本）——样式组件原封不动，两边通用。bevy_text 是同一台排版引擎，`Text2d` 和 `Text` 只是它的两个出口。换的只有**定位方式**：
 
 | | 台上：`Text2d` | 玻璃上：`Text` |
 |---|---|---|

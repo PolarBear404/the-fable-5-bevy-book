@@ -1,7 +1,8 @@
-//! Listing 16-5：行高与磨边——LineHeight 与 FontSmoothing
+//! Listing 16-5：向系统借字模——system_font_discovery
+//! 运行要带上门票：cargo run -p ch16-text --example listing-16-05 --features system_font_discovery
 
 use bevy::prelude::*;
-use bevy::text::{FontSmoothing, LineHeight};
+use bevy::text::FontCx;
 
 fn main() {
     App::new()
@@ -11,48 +12,46 @@ fn main() {
 }
 
 // ANCHOR: setup
-fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
+fn setup(mut commands: Commands, mut font_cx: ResMut<FontCx>) {
     commands.spawn(Camera2d);
-    let zh_font = asset_server.load("fonts/book-sans-sc-regular.otf");
-    let verse = "雁背驮霜\n橹声欸乃\n一篙点破满江星";
 
-    // 三种行高：默认 1.2 倍字号 / 宽松 1.8 倍 / 用像素写死
-    for (x, line_height) in [
-        (-380.0, LineHeight::RelativeToFont(1.2)),
-        (0.0, LineHeight::RelativeToFont(1.8)),
-        (380.0, LineHeight::Px(34.0)),
+    // FontCx 是排版引擎的字体登记簿：数数系统交来了多少家族
+    let count = font_cx.collection.family_names().count();
+    println!("场记：清点库房——字体家族共 {count} 个（因机而异）。");
+    for source in [
+        FontSource::SansSerif,
+        FontSource::Serif,
+        FontSource::Monospace,
+        FontSource::FangSong,
+        FontSource::SystemUi,
     ] {
-        commands.spawn((
-            Text2d::new(verse),
-            TextFont {
-                font: zh_font.clone().into(),
-                font_size: FontSize::Px(32.0),
-                ..default()
-            },
-            line_height,
-            Transform::from_xyz(x, 110.0, 0.0),
-        ));
+        let family = font_cx.get_family(&source).unwrap_or("（无着落）").to_string();
+        println!("  {source:?} -> {family}");
     }
 
-    // 磨边对比：默认灰度抗锯齿 vs 关掉抗锯齿（像素字）
+    // 语义类别现在有了着落——三段文字，一个字体文件都没带
     commands.spawn((
-        Text2d::new("磨边的字"),
+        Text2d::new("Monospace 0123 ilI1"),
         TextFont {
-            font: zh_font.clone().into(),
-            font_size: FontSize::Px(56.0),
+            font: FontSource::Monospace,
+            font_size: FontSize::Px(40.0),
             ..default()
         },
-        Transform::from_xyz(-220.0, -220.0, 0.0),
+        Transform::from_xyz(0.0, 120.0, 0.0),
     ));
     commands.spawn((
-        Text2d::new("不磨的字"),
+        Text2d::new("仿宋体的夜渡无人"),
         TextFont {
-            font: zh_font.clone().into(),
-            font_size: FontSize::Px(56.0),
-            font_smoothing: FontSmoothing::None,
+            font: FontSource::FangSong,
+            font_size: FontSize::Px(40.0),
             ..default()
         },
-        Transform::from_xyz(220.0, -220.0, 0.0),
+    ));
+    // 第一节那行豆腐块的原班配置：默认字体 + 中文
+    commands.spawn((
+        Text2d::new("夜渡无人，秋水自横。"),
+        TextFont::from_font_size(40.0),
+        Transform::from_xyz(0.0, -120.0, 0.0),
     ));
 }
 // ANCHOR_END: setup

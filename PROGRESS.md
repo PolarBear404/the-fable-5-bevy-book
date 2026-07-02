@@ -12,7 +12,7 @@
 | 全书大纲 OUTLINE.md | ✅ 2026-06-12 | 38 章 + 6 附录，用户已审定 |
 | 章节写作 | 🟡 | 进度见下表 |
 | Bevy 0.19 大纲评估与 OUTLINE 修订 | ✅ 2026-07-02 | migration/0.19-outline-assessment.md，P-1～P-13 全部批准；38 章 + 6 附录结构不变，ch1–21 编号全保 |
-| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移进行中（ch1–11 ✅ 2026-07-02） |
+| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移进行中（ch1–16 ✅ 2026-07-03） |
 
 ## 章节状态
 
@@ -33,7 +33,7 @@
 | 13 | Camera 与视口 | ✅ | code/ch13-cameras（src/main.rs + examples/listing-13-01～11，其中 13-06 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 13-12）；book/src/ch13-00～08；插图 images/ch13（Figure 13-1～9，含 1 张动图，scripts/make_ch13_figures.py 一键重建）；已迁 0.19（代码零改；order 冲突警告改单次告警叙述、窗口实体号按实跑更新；7 张运行图重建逐图核对） |
 | 14 | Asset 系统 | ✅ | code/ch14-assets（src/main.rs + examples/listing-14-01～11，main.rs 即 Listing 14-12；开 bevy `file_watcher` feature，依赖 thiserror）；book/src/ch14-00～09；插图 images/ch14（Figure 14-1～7，scripts/make_ch14_figures.py 一键重建；美术资产由 scripts/make_ch14_assets.py 生成）；已迁 0.19（新增“白纸黑字：把资产存回磁盘”一节（ch14-07，AssetSaver/save_using_saver，配 listing-14-09，原 09/10 顺延为 10/11、细则与开机大吉顺延为 ch14-08/09）；load_builder 正文跟进；热重载三实验回归；5 张运行图重建逐图核对） |
 | 15 | 2D 渲染：Sprite 与图集 | ✅ | code/ch15-sprites（src/main.rs + examples/listing-15-01～11，main.rs 即 Listing 15-12）；book/src/ch15-00～07；插图 images/ch15（Figure 15-1～14，含 3 张 SVG、1 张动图，scripts/make_ch15_figures.py 一键重建；美术资产由 scripts/make_ch15_assets.py 生成）；已迁 0.19（代码零改；load_builder 口径跟进、border 越界 ERROR 块按实跑双条更新；11 张运行图重建逐图核对，其中 8 张与旧版逐字节一致） |
-| 16 | 文本与字体 | ✅ | code/ch16-text（src/main.rs + examples/listing-16-01～10，main.rs 即 Listing 16-11；中文字体资产为 Noto Sans SC 的 GB2312 子集，scripts/make_ch16_assets.py 下载/子集化/按 OFL 改名一键重建）；book/src/ch16-00～08；插图 images/ch16（Figure 16-1～12，含 1 张 SVG、2 张动图，scripts/make_ch16_figures.py 一键重建） |
+| 16 | 文本与字体 | ✅ | 已迁 0.19。code/ch16-text（src/main.rs + examples/listing-16-01～14，main.rs 即 Listing 16-15；listing-16-05 走 crate 转发 feature `system_font_discovery` + required-features 门控；中文字体资产为 Noto Sans SC 的 GB2312 子集，另有可变字体 MonaSans-VariableFont.ttf，scripts/make_ch16_assets.py 一键重建）；book/src/ch16-00～12（新增 16-03 字模三种叫法／16-04 向系统借字模／16-05 可变字体／16-07 会自己变的字号）；插图 images/ch16（Figure 16-1～16，含 1 张 SVG、2 张动图，scripts/make_ch16_figures.py 一键重建） |
 | 17 | 输入处理 | ✅ | code/ch17-input（src/main.rs + examples/listing-17-01～07，其中 17-02 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 17-9；assets 全部复用 ch15/ch16，scripts/make_ch17_assets.py 一键就位）；book/src/ch17-00～07；插图 images/ch17（Figure 17-1～8，含 4 张 SVG、1 张动图，scripts/make_ch17_figures.py 用 SendInput 发真实键鼠一键重建） |
 | 18 | 时间、定时器与 FixedUpdate | ✅ | code/ch18-time（src/main.rs + examples/listing-18-01～09，其中 18-02 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 18-10；assets 全部复用 ch15/ch16，scripts/make_ch18_assets.py 一键就位）；book/src/ch18-00～06；插图 images/ch18（Figure 18-1～10，含 6 张 SVG、1 张动图，scripts/make_ch18_figures.py 用 SendInput 发真实按键一键重建） |
 | 19 | 音频 | ✅ | code/ch19-audio（src/main.rs + examples/listing-19-01～08，main.rs 即 Listing 19-9；开 bevy `wav` feature，报错环节为运行期 UnrecognizedFormat panic（19.1，真实复现）；音频资产全部由 scripts/make_ch19_assets.py 用 Python 标准库合成 WAV，字体贴图复用前章）；book/src/ch19-00～06；插图 images/ch19（Figure 19-1～7，含 3 张 SVG，scripts/make_ch19_figures.py 用 SendInput 发真实按键一键重建，波形图直接读合成 WAV 采样绘制） |
