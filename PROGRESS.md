@@ -12,6 +12,7 @@
 | 全书大纲 OUTLINE.md | ✅ 2026-06-12 | 38 章 + 6 附录，用户已审定 |
 | 章节写作 | 🟡 | 进度见下表 |
 | Bevy 0.19 大纲评估与 OUTLINE 修订 | ✅ 2026-07-02 | migration/0.19-outline-assessment.md，P-1～P-13 全部批准；38 章 + 6 附录结构不变，ch1–21 编号全保 |
+| 0.19 全书迁移执行（S1–S3） | ⬜ | 计划与逐章工单见 migration/0.19-migration-plan.md |
 
 ## 章节状态
 
