@@ -8,7 +8,7 @@
 
 <span class="caption">Listing 10-9（其一）：带字段的状态值，以及从它推导出的 InAction</span>
 
-状态变体带数据完全合法（derive 的那几个 trait 满足即可），`Playing { demo: true }` 和 `Playing { demo: false }` 是两个不同的状态值。但麻烦跟着来了：战斗画面在演示局和真人局都要演，而 `in_state` 认的是**精确值**——你得写 `in_state(Playing { demo: true }).or(in_state(Playing { demo: false }))`。两个值还能忍，等状态再带上关卡号、难度，每个“不关心细节”的系统都要罗列全部组合，一处加变体处处改。
+状态变体带数据完全合法（derive 的那几个 trait 满足即可），`Playing { demo: true }` 和 `Playing { demo: false }` 是两个不同的状态值。但麻烦跟着来了：战斗画面在演示局和真人局都要演，而 `in_state` 认的是**精确值**——你得写 `in_state(Playing { demo: true }).or_else(in_state(Playing { demo: false }))`。两个值还能忍，等状态再带上关卡号、难度，每个“不关心细节”的系统都要罗列全部组合，一处加变体处处改。
 
 这就是代码里第二个类型 `InAction` 的存在理由。它实现的不是 `States` 而是 **`ComputedStates`**：声明源状态（`SourceStates = GameState`），给一个 `compute` 函数——源状态每次转换后，引擎调用它算出新值。返回 `Some` 就处在该状态，返回 `None` 则 `State<InAction>` 资源整个不存在。`matches!(source, Playing { .. })` 一行，把“画面上正在过招”从两个具体值里**提炼**了出来——模式通配，之后无论 `Playing` 长出多少字段都不用回头改。
 
@@ -63,7 +63,7 @@ cargo run -p ch10-states --example listing-10-09
 - **第 4 帧最关键：什么都没发生**。`demo: true → demo: false`，源状态实打实换了值（`GameState` 自己的 `OnExit`/`OnEnter` 跑了，本例没注册所以看不见），但 `compute` 两次算出的都是 `Some(InAction)`——风扇没有重启。推导态把“源里的小动静”挡在了门外。
 - 真正离开 `Playing { .. }` 一族时（第 6 帧后），`OnExit(InAction)` 才跑。
 
-第 4 帧的安静有个前提——代码里那行 `const ALLOW_SAME_STATE_TRANSITIONS: bool = false;`。这个常量默认是 `true`：源状态**每次**转换（包括 10-2 节那种同值转换）都会让推导态也跟着发一次同值转换、重跑自己的 `OnExit`/`OnEnter`——风扇重启、`OnEnter` 里 spawn 的东西再来一套。把它设成 `false`，含义变成“算出的结果没变，就别折腾”。推导态通常都该这么设；把这行删掉再跑一遍，第 4 帧会多出一对风扇停转/重启，是个值得亲眼看一次的对比。
+第 4 帧的安静有个前提——代码里那行 `const ALLOW_SAME_STATE_TRANSITIONS: bool = false;`。这个常量默认是 `true`：源状态**每次**转换（包括 10-2 节那种同值转换）都会让推导态也跟着发一次同值转换——重跑自己的 `OnExit`/`OnEnter`，连挂在它名下的 `DespawnOnExit` 实体也会被清掉、再由 `OnEnter` 重摆一遍：风扇重启，全场白折腾一轮。把它设成 `false`，含义变成“算出的结果没变，就别折腾”。推导态通常都该这么设；把这行删掉再跑一遍，第 4 帧会多出一对风扇停转/重启，是个值得亲眼看一次的对比。
 
 ## 推导态改不得
 

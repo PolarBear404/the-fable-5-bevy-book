@@ -1,5 +1,6 @@
 //! Listing 10-7：修复——角色挂上 DespawnOnExit(Playing)，
-//! 离开 Playing 的瞬间由引擎自动清场
+//! 离开 Playing 的瞬间由引擎自动清场；
+//! 结尾的手肘证明同值转换也清场——先收旧的一套，OnEnter 再摆新的一套
 
 use bevy::app::ScheduleRunnerPlugin;
 use bevy::prelude::*;
@@ -47,7 +48,7 @@ fn spawn_actors(mut commands: Commands) {
 }
 // ANCHOR_END: spawn
 
-/// 剧本：投币 → Game Over 回菜单 → 不服气再投币 → 打烊
+/// 剧本：投币 → Game Over 回菜单 → 不服气再投币 → 手肘撞出同值转换 → 打烊
 fn script(
     mut frame: Local<u32>,
     mut next: ResMut<NextState<GameState>>,
@@ -68,6 +69,10 @@ fn script(
             next.set(GameState::Playing);
         }
         7 => {
+            println!("  罗兰探身够汽水，手肘又撞上了开始键——又一次 set(Playing)！");
+            next.set(GameState::Playing);
+        }
+        9 => {
             println!("  老板：打烊喽。");
             exit.write(AppExit::Success);
         }
