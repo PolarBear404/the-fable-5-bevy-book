@@ -12,7 +12,7 @@
 | 全书大纲 OUTLINE.md | ✅ 2026-06-12 | 38 章 + 6 附录，用户已审定 |
 | 章节写作 | 🟡 | 进度见下表 |
 | Bevy 0.19 大纲评估与 OUTLINE 修订 | ✅ 2026-07-02 | migration/0.19-outline-assessment.md，P-1～P-13 全部批准；38 章 + 6 附录结构不变，ch1–21 编号全保 |
-| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移进行中（ch1–20 ✅ 2026-07-03） |
+| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移完成（ch1–21 全部 ✅ 2026-07-03），待 S3 收尾 |
 
 ## 章节状态
 
@@ -38,7 +38,7 @@
 | 18 | 时间、定时器与 FixedUpdate | ✅ | code/ch18-time（src/main.rs + examples/listing-18-01～10，其中 18-02 在 no-compile/ 下为编译失败示例；main.rs 即 Listing 18-11；assets 全部复用 ch15/ch16，scripts/make_ch18_assets.py 一键就位）；book/src/ch18-00～07；插图 images/ch18（Figure 18-1～11，含 7 张 SVG、1 张动图，scripts/make_ch18_figures.py 用 SendInput 发真实按键一键重建）；已迁 0.19（新增“过一会儿再办：延迟命令”一节，配 listing-18-06、Figure 18-5，原 18-4～18-6 节与 Listing/Figure 顺延；驿站听戏台钟实测入正文） |
 | 19 | 音频 | ✅ | code/ch19-audio（src/main.rs + examples/listing-19-01～08，main.rs 即 Listing 19-9；开 bevy `wav` feature，报错环节为运行期 UnrecognizedFormat panic（19.1，真实复现）；音频资产全部由 scripts/make_ch19_assets.py 用 Python 标准库合成 WAV，字体贴图复用前章）；book/src/ch19-00～06；插图 images/ch19（Figure 19-1～7，含 3 张 SVG，scripts/make_ch19_figures.py 用 SendInput 发真实按键一键重建，波形图直接读合成 WAV 采样绘制）；已迁 0.19 |
 | 20 | 项目实战 I：完整的 2D 游戏 | ✅ | code/ch20-breakout（src/ 为 main.rs + game/menu/score/audio 四插件的最终版；examples/listing-20-01～07 为分步阶段版，no-compile/listing-20-08 为编译失败示例；开 bevy `wav` feature，报错环节为 E0603 与“忘注册插件→缺资源 panic”双坑，均真实复现；音效由 scripts/make_ch20_assets.py 合成，BGM/堂鼓复用 ch19、字体复用 ch16）；book/src/ch20-00～08；插图 images/ch20（Figure 20-1～11，含 4 张 SVG、1 张动图，scripts/make_ch20_figures.py 一键重建——内置跟球 bot 发真实按键打出全部局面）；已迁 0.19（代码近零改；全流程回归双胜负路径实测；panic 块按实跑更新；官方示例路径改 showcase/；bot 几何改为按窗口宽度自动定标；7 张位图重建逐图核对） |
-| 21 | 3D 入门：Mesh 与 Material | ✅ | code/ch21-meshes（src/main.rs 即 Listing 21-10 + examples/listing-21-01～09，其中 21-04 在 no-compile/ 下为编译失败示例（E0308 忘 meshes.add）；另一坑为运行期静默缺陷：手搓 Mesh 忘写法线→旗面对灯失聪，零警告；班旗贴图由 scripts/make_ch21_assets.py 用 PIL 合成）；book/src/ch21-00～06；插图 images/ch21（Figure 21-1～12，含 3 张 SVG，scripts/make_ch21_figures.py 一键重建） |
+| 21 | 3D 入门：Mesh 与 Material | ✅ | code/ch21-meshes（src/main.rs 即 Listing 21-10 + examples/listing-21-01～09，其中 21-04 在 no-compile/ 下为编译失败示例（E0308 忘 meshes.add）；另一坑为运行期静默缺陷：手搓 Mesh 忘写法线→旗面对灯失聪，零警告；班旗贴图由 scripts/make_ch21_assets.py 用 PIL 合成）；book/src/ch21-00～06；插图 images/ch21（Figure 21-1～12，含 3 张 SVG，scripts/make_ch21_figures.py 一键重建）；已迁 0.19（代码零改；main＋8 examples 全实跑输出逐字一致，法线静默缺陷、背面剔除、空格换漆闭环全部复现；E0308 报错块按实跑更新（bevy_mesh-0.19.0 行号 102）；灯光/图元/材质点名 API 对照 vendor 全未变；9 张位图重建逐图核对） |
 | 22 | 光照与阴影 | ⬜ | |
 | 23 | glTF 与 3D 资产 | ⬜ | |
 | 24 | PBR 材质深入 | ⬜ | |
