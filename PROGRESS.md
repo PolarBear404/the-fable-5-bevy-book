@@ -12,7 +12,7 @@
 | 全书大纲 OUTLINE.md | ✅ 2026-06-12 | 38 章 + 6 附录，用户已审定 |
 | 章节写作 | 🟡 | 进度见下表 |
 | Bevy 0.19 大纲评估与 OUTLINE 修订 | ✅ 2026-07-02 | migration/0.19-outline-assessment.md，P-1～P-13 全部批准；38 章 + 6 附录结构不变，ch1–21 编号全保 |
-| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1 完成 2026-07-02（workspace 已切 0.19.0，check --all-targets 全绿零警告，8 个 no-compile 报错文案 8/8 仍与正文一致），S2 逐章迁移待启动 |
+| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移待启动 |
 
 ## 章节状态
 
