@@ -1,71 +1,58 @@
-//! Listing 8-8：组件钩子——长在 Weapon 组件上的登记规矩
+//! Listing 8-8：连锁联动——一次 insert，一串反应，全在同一帧
 
-use bevy::ecs::lifecycle::HookContext;
-use bevy::ecs::world::DeferredWorld;
 use bevy::prelude::*;
 
-/// 武器组件：钩子直接声明在组件定义上
 #[derive(Component)]
-#[component(on_add = register_weapon, on_remove = deregister_weapon)]
+struct Flaming;
+
+/// 火光：由 observer 自动补挂的"派生组件"
+#[derive(Component)]
+struct Glowing;
+
+#[derive(Component)]
 struct Weapon {
     name: &'static str,
 }
 
-/// 公会的武器登记簿
-#[derive(Resource, Default)]
-struct Ledger(Vec<&'static str>);
-
-/// 钩子：Weapon 一上身就登记。签名是固定的 fn(DeferredWorld, HookContext)
-fn register_weapon(mut world: DeferredWorld, ctx: HookContext) {
-    let name = world.get::<Weapon>(ctx.entity).unwrap().name;
-    world.resource_mut::<Ledger>().0.push(name);
-    println!("  账房（钩子）：{name} 登记入册。");
-}
-
-/// 钩子：Weapon 移除（含销毁）时注销
-fn deregister_weapon(mut world: DeferredWorld, ctx: HookContext) {
-    let name = world.get::<Weapon>(ctx.entity).unwrap().name;
-    world.resource_mut::<Ledger>().0.retain(|n| *n != name);
-    println!("  账房（钩子）：{name} 销册。");
-}
-
 fn main() {
     let mut app = App::new();
-    app.init_resource::<Ledger>()
-        // 同一对生命周期事件，再各挂一个 observer，看谁先谁后
-        .add_observer(|add: On<Add, Weapon>, q: Query<&Weapon>| {
-            println!("  巡查员（observer）：看到 {} 入库。", q.get(add.entity).unwrap().name);
-        })
-        .add_observer(|remove: On<Remove, Weapon>, q: Query<&Weapon>| {
-            println!("  巡查员（observer）：看到 {} 出库。", q.get(remove.entity).unwrap().name);
-        })
-        .add_systems(Update, workshop_script);
+    app.add_observer(attach_glow)
+        .add_observer(report_glow)
+        .add_systems(Startup, forge)
+        .add_systems(Update, (enchant, end_of_frame).chain());
 
-    for frame in 1..=2 {
-        println!("—— 第 {frame} 帧 ——");
-        app.update();
-    }
+    println!("—— 第 1 帧 ——");
+    app.update();
 }
 
-fn workshop_script(
-    weapons: Query<Entity, With<Weapon>>,
-    ledger: Res<Ledger>,
-    mut commands: Commands,
-    mut frame: Local<u32>,
-) {
-    *frame += 1;
-    match *frame {
-        1 => {
-            println!("老锤：打好两把武器。");
-            commands.spawn(Weapon { name: "铁剑" });
-            commands.spawn(Weapon { name: "长戟" });
-        }
-        2 => {
-            println!("老锤：两把都出货了。出货前在册：{:?}", ledger.0);
-            for entity in &weapons {
-                commands.entity(entity).despawn();
-            }
-        }
-        _ => {}
+fn forge(mut commands: Commands) {
+    commands.spawn(Weapon { name: "小芙的长戟" });
+}
+
+fn enchant(weapons: Query<Entity, With<Weapon>>, mut commands: Commands, mut done: Local<bool>) {
+    if *done {
+        return;
+    }
+    *done = true;
+    println!("附魔师：上火焰附魔——");
+    commands.entity(weapons.single().unwrap()).insert(Flaming);
+}
+
+/// 第一环：火焰附魔上身，立刻补挂一个"火光"组件
+fn attach_glow(add: On<Add, Flaming>, mut commands: Commands) {
+    println!("  第一环：检测到火焰附魔，给它配上火光。");
+    commands.entity(add.entity).insert(Glowing);
+}
+
+/// 第二环：火光出现，向全场报告
+fn report_glow(add: On<Add, Glowing>, weapons: Query<&Weapon>) {
+    let weapon = weapons.get(add.entity).unwrap();
+    println!("  第二环：{} 亮起来了！", weapon.name);
+}
+
+/// 排在附魔师后面的普通系统：它上场时连锁已全部结束
+fn end_of_frame(glowing: Query<&Weapon, With<Glowing>>) {
+    if let Ok(weapon) = glowing.single() {
+        println!("巡场员：本帧收工时，{} 已经在发光了。", weapon.name);
     }
 }

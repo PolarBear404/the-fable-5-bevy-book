@@ -5,13 +5,13 @@
 可是该由谁来 `trigger` 呢？谁都不用。组件的插入、移除、销毁，引擎全都看在眼里，并且替你敲锣——这就是**生命周期事件**（lifecycle events）：一组由引擎自动触发的内置 EntityEvent。盯住它们的 observer 写法和上一节别无二致：
 
 ```rust
-{{#include ../../code/ch08-events-observers/examples/listing-08-05.rs}}
+{{#include ../../code/ch08-events-observers/examples/listing-08-06.rs}}
 ```
 
-<span class="caption">Listing 8-5：生命周期事件——附魔台上，装上点火、卸下熄灭</span>
+<span class="caption">Listing 8-6：生命周期事件——附魔台上，装上点火、卸下熄灭</span>
 
 ```console
-cargo run -p ch08-events-observers --example listing-08-05
+cargo run -p ch08-events-observers --example listing-08-06
 ```
 
 ```text
@@ -35,20 +35,20 @@ cargo run -p ch08-events-observers --example listing-08-05
 |---|---|
 | `Add` | 组件加到**原本没有它**的实体上 |
 | `Insert` | 组件被写入，**不论先前有没有**（每次 `insert` 都算） |
-| `Replace` | 组件值即将被清退——被新值顶替**或**被移除都算 |
+| `Discard` | 组件值即将被清退——被新值顶替**或**被移除都算 |
 | `Remove` | 组件从实体上**彻底离身**（含实体销毁） |
 | `Despawn` | 实体销毁时，为它身上的每个组件触发 |
 
-五个名字两两配对再加一个收尾：`Add`/`Remove` 盯的是**有无**的变化，`Insert`/`Replace` 盯的是**值**的写入与清退，`Despawn` 单管销毁。表格背不住没关系，让一把长戟把五幕全演一遍：
+五个名字两两配对再加一个收尾：`Add`/`Remove` 盯的是**有无**的变化，`Insert`/`Discard` 盯的是**值**的写入与清退，`Despawn` 单管销毁。表格背不住没关系，让一把长戟把五幕全演一遍：
 
 ```rust
-{{#include ../../code/ch08-events-observers/examples/listing-08-06.rs}}
+{{#include ../../code/ch08-events-observers/examples/listing-08-07.rs}}
 ```
 
-<span class="caption">Listing 8-6：五个生命周期事件同台——一把长戟的五幕剧</span>
+<span class="caption">Listing 8-7：五个生命周期事件同台——一把长戟的五幕剧</span>
 
 ```console
-cargo run -p ch08-events-observers --example listing-08-06
+cargo run -p ch08-events-observers --example listing-08-07
 ```
 
 ```text
@@ -58,11 +58,11 @@ cargo run -p ch08-events-observers --example listing-08-06
   [Insert]  新值写入完毕，当前威力 3
 —— 第 2 帧 ——
 附魔师：重新附魔，威力升到 9。
-  [Replace] 旧值即将清退，此刻还能读到威力 3
+  [Discard] 旧值即将清退，此刻还能读到威力 3
   [Insert]  新值写入完毕，当前威力 9
 —— 第 3 帧 ——
 附魔师：把附魔拆下来。
-  [Replace] 旧值即将清退，此刻还能读到威力 9
+  [Discard] 旧值即将清退，此刻还能读到威力 9
   [Remove]  附魔彻底离身，临走前威力 9
 —— 第 4 帧 ——
 附魔师：再附一次，威力 6。
@@ -71,17 +71,17 @@ cargo run -p ch08-events-observers --example listing-08-06
 —— 第 5 帧 ——
 附魔师：这把回炉重造！
   [Despawn] 整把武器进了熔炉
-  [Replace] 旧值即将清退，此刻还能读到威力 6
+  [Discard] 旧值即将清退，此刻还能读到威力 6
   [Remove]  附魔彻底离身，临走前威力 6
 ```
 
 五幕逐一对账：
 
 - **第 1 帧（首次附魔）**：`Add` 与 `Insert` 先后响起——从无到有，两类事件都算数。
-- **第 2 帧（重新附魔）**：`Add` 沉默了，因为组件早就在身上；响的是 `Replace` + `Insert`。细看两行的威力值：`Replace` 读到的是**旧值 3**——它运行在新值写入之前，给你最后一次接触旧数据的机会；`Insert` 读到的已经是新值 9。
-- **第 3 帧（拆除）**：`Replace` 先告别旧值，`Remove` 送它彻底离身。两位 observer 此刻都还查得到组件——移除类事件全都跑在数据真正消失**之前**。
+- **第 2 帧（重新附魔）**：`Add` 沉默了，因为组件早就在身上；响的是 `Discard` + `Insert`。细看两行的威力值：`Discard` 读到的是**旧值 3**——它运行在新值写入之前，给你最后一次接触旧数据的机会；`Insert` 读到的已经是新值 9。
+- **第 3 帧（拆除）**：`Discard` 先告别旧值，`Remove` 送它彻底离身。两位 observer 此刻都还查得到组件——移除类事件全都跑在数据真正消失**之前**。
 - **第 4 帧（重新装上）**：`Add` 又响了。它和 `Remove` 是一对“有无”哨兵：彻底离身过，再上身就算初次。
-- **第 5 帧（销毁）**：销毁走另一条流水线——`Despawn` 率先响起，随后 `Replace`、`Remove` 依次跟上。对 observer 而言“销毁也是一种移除”，所以 Listing 8-5 的熄火逻辑不用为熔炉单写一份。
+- **第 5 帧（销毁）**：销毁走另一条流水线——`Despawn` 率先响起，随后 `Discard`、`Remove` 依次跟上。对 observer 而言“销毁也是一种移除”，所以 Listing 8-6 的熄火逻辑不用为熔炉单写一份。
 
 还有一幕**没有**上演，值得专门点名：通过 `Query<&mut Flaming>` 修改威力数值，五个事件**一个都不触发**。生命周期事件盯的是组件的来去与写入，不是字段的变动——“给附魔调个数”不算“重新附魔”。要捕捉值的变化，工具是第 4 章的 `Changed<T>` 过滤器。
 
@@ -92,13 +92,13 @@ cargo run -p ch08-events-observers --example listing-08-06
 生命周期事件配上“observer 也能发命令”，就解锁了大纲里写的那种玩法——**装上一个组件，即时触发一串联动**：
 
 ```rust
-{{#include ../../code/ch08-events-observers/examples/listing-08-07.rs}}
+{{#include ../../code/ch08-events-observers/examples/listing-08-08.rs}}
 ```
 
-<span class="caption">Listing 8-7：连锁联动——一次 insert，一串反应，全在同一帧</span>
+<span class="caption">Listing 8-8：连锁联动——一次 insert，一串反应，全在同一帧</span>
 
 ```console
-cargo run -p ch08-events-observers --example listing-08-07
+cargo run -p ch08-events-observers --example listing-08-08
 ```
 
 ```text
