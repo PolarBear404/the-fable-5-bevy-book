@@ -6,7 +6,7 @@
 {{#include ../../code/ch11-deep-ecs/src/main.rs}}
 ```
 
-<span class="caption">Listing 11-14：完整示例——灰岩镇的盘点日（src/main.rs）</span>
+<span class="caption">Listing 11-17：完整示例——灰岩镇的盘点日（src/main.rs）</span>
 
 ```console
 cargo run -p ch11-deep-ecs
@@ -14,31 +14,31 @@ cargo run -p ch11-deep-ecs
 
 ```text
 —— 第 1 帧 ——
-  巡逻队（3 处亮灯）：铁匠铺、老蔫儿、杂货铺老板
-  助手：预检——全镇实体 3 个，待盘点核对。
+  巡逻队（3 处亮灯）：杂货铺老板、铁匠铺、老蔫儿
+  助手：预检——全镇实体 17 个，待盘点核对。
 —— 第 2 帧 ——
-  巡逻队（3 处亮灯）：铁匠铺、老蔫儿、杂货铺老板
+  巡逻队（3 处亮灯）：杂货铺老板、铁匠铺、老蔫儿
   罗兰背着行李进镇：在杂货铺后屋搭个铺。（spawn）
   铁匠铺：入冬封炉，明春再会。（挂上 Disabled）
 —— 第 3 帧 ——
-  巡逻队（3 处亮灯）：老蔫儿、杂货铺老板、罗兰
-  助手：预检——全镇实体 4 个，待盘点核对。
+  巡逻队（3 处亮灯）：杂货铺老板、老蔫儿、罗兰
+  助手：预检——全镇实体 18 个，待盘点核对。
   艾达：盘点日，全镇静止！（接管 World）
-  艾达点名（常住）：老蔫儿、杂货铺老板。
+  艾达点名（常住）：杂货铺老板、老蔫儿。
   艾达：归档 4 户，公告牌立讫。
   喇叭：宣读总册——
-    0v0 杂货铺老板：存粮 40 袋 [Resident][Name][Stock][Shop]
-    1v0 老蔫儿：存粮 7 袋 [Resident][Name][Stock]
-    3v0 罗兰：存粮 3 袋 [Name][Stock][Lodger]
-    2v0 铁匠铺（冬歇）：存粮 2 袋 [Disabled][Name][Stock][Shop]
+    14v0 杂货铺老板：存粮 40 袋 [Resident][Name][Stock][Shop]
+    15v0 老蔫儿：存粮 7 袋 [Resident][Name][Stock]
+    17v0 罗兰：存粮 3 袋 [Name][Stock][Lodger]
+    16v0 铁匠铺（冬歇）：存粮 2 袋 [Disabled][Name][Stock][Shop]
 （run() 返回，盘点日结束了）
 ```
 
 三处值得回头多看一眼：
 
-- **第 3 帧的三个数字是三种视角**。巡逻队报“3 处亮灯”——名单换了血：罗兰进来了、铁匠铺隐身了，可总数碰巧没变，光看它你不会知道镇上发生过什么；助手报“4 个实体”——`count_spawned` 不走查询，`Disabled` 瞒不过它；总册归档 4 户——`Allow<Disabled>` 让查询也看见全部，还能逐户标注谁在冬歇。给游戏写统计或调试面板时，先想清楚要哪种视角。
+- **第 3 帧的三个数字是三种视角**。巡逻队报“3 处亮灯”——名单换了血：罗兰进来了、铁匠铺隐身了，可总数碰巧没变，光看它你不会知道镇上发生过什么；助手报“18 个实体”——`count_spawned` 不走查询，`Disabled` 瞒不过它，14 行内账（13 份引擎家底加总册资源 `TownLedger`）也一并在数，正是 11-7 节的口径；总册归档 4 户——`Allow<Disabled>` 让查询也看见冬歇的，`With<Name>` 又天然挡住了没名没姓的资源实体，一条查询同时用上了两节的划界。给游戏写统计或调试面板时，先想清楚要哪种视角。
 - **总册那四行就是一个检查器**。事先没人声明过“要读 `Lodger`”或“要读 `Shop`”，是 `inspect_entity` 临场翻档案翻出来的——连 `[Disabled]` 都自报家门。把这些行写进文件就是存档的雏形，接上 UI 就是检查器；生态里的 inspector 类插件，地基与这几行无异。剧本第 2 帧排队的两条命令（投宿、挂牌），在第 3 帧帧首的清算里落地，恰好赶上盘点——而艾达自己的公告牌不排队，立讫即见，喇叭同帧宣读。
-- **罗兰那行没有 `[Resident]`**。所以艾达点名常住时只有两人应到，总册上他照样入册——“点名”用窄查询，“归档”用全访问，一窄一宽各司其职。另外看门牌：罗兰是 `3v0`，比铁匠铺的 `2v0` 大——他是第 2 帧才 spawn 的，行号顺位领的。
+- **罗兰那行没有 `[Resident]`**。所以艾达点名常住时只有两人应到，总册上他照样入册——“点名”用窄查询，“归档”用全访问，一窄一宽各司其职。另外看门牌：罗兰是 `17v0`，比铁匠铺的 `16v0` 大——他是第 2 帧才 spawn 的，行号顺位领的。
 
 ## 钥匙的份量
 
@@ -54,6 +54,8 @@ cargo run -p ch11-deep-ecs
 - **打包三件套**：`SystemState` 在独占系统里借出参数（`Commands` 要手动 `apply`）；`#[derive(SystemParam)]` 打包参数；`#[derive(QueryData)]` 打包查询行（`mutable` 才许 `&'static mut`，`&'static` 是占位写法）
 - **变更检测**：全局 `Tick` 每系统运行加一；组件带 `added`/`changed` 两印，`&mut` 解引用即盖章；`Changed` = 印落在 `(last_run, this_run]` 窗口；`Ref<T>` 看印不过滤；`set_if_neq` 防误报，`bypass_change_detection` 绕过盖章（慎用），`changed_by()` 报案发位置（需 `track_location`）
 - **Disabled**：挂上即对“没提到它”的查询隐身（`DefaultQueryFilters` 自动补 `Without`）；`With`/`Has`/`Allow` 三种提法；World 直接访问不受影响；自定义隐身组件要在 App 启动前注册
+- **资源实体**：资源一人一行住在实体表里、随行 `IsResource`（第 5 章的模型）；窄查询天生不沾，广查询默认看得见（`IsResource` **不在** `DefaultQueryFilters` 名单上）——清点、`EntityRef` 遍历、广查询 × 资源参数的 B0002 都会撞上，`With`/`Without<IsResource>` 划界；生命周期事件、observer、钩子、`immutable` 全套组件待遇照用；别 despawn 资源实体
+- **连续访问**：`contiguous_iter`/`contiguous_iter_mut` 一次借出一张 Table 的整列切片；过滤器限 `With`/`Without`/`Or`（档案级），沾 SparseSet 的查询运行时给 `Err`；`ContiguousMut` 解引用即整表盖章，`bypass_change_detection()` 给裸切片全静默；大批量数值运算的专用钥匙
 
 ## 练习
 
@@ -61,5 +63,7 @@ cargo run -p ch11-deep-ecs
 2. **档案室寻路**：在 Listing 11-7 末尾给罗兰 `remove::<Registered>()` 再 `remove::<Flagged>()`，先预测他会落回哪一册（新开一册，还是回到 `ArchetypeId(1)`？`archetypes().len()` 会不会减少？），运行验证。再想想：这对“频繁插拔组件”的成本意味着什么。
 3. **错位的窗口**：把 Listing 11-11 的 `audit` 挪到 `script` 前面（`(banner, audit, script).chain()`），先预测每一帧账房的台词会怎么变——第 2 帧的误报还在吗，第 5 帧的入库哪一帧才被听见？运行对答案，并用“窗口 `(last_run, this_run]`”解释。
 4. **自家的隐身牌**：定义 `Hibernating` 组件并 `register_disabling_component`（提示：`App` 阶段可以拿 `app.world_mut()` 调 World 方法），给面包房挂上。验证巡逻队同样失明，再验证 `Has<Hibernating>` 的查询能不能看见**铁匠铺**（它挂的是 `Disabled`）——由此体会“每个隐身组件各自独立”的含义。
+5. **不在家的资源**：仿照 Listing 11-14 写一个只翻内账的系统（`With<IsResource>` 过滤，配 `inspect_entity` 数件数），在 `Update` 里跑。先预测：哪一行会“只有 1 件”、为什么？再想一想：你自己的资源会不会也有“不在家”的时刻——什么代码会造成它？（提示：`resource_scope`。）
+6. **切片上的印章**：修改 Listing 11-16 第 2 帧——对铺面那张表（2 行）也调用一次 `DerefMut`（比如取 `&mut stocks[..]`）但一个字都不写。先预测这一帧账房会听到谁，再运行验证，并用“解引用即整表盖章”解释结果。
 
 第二部分到此收官。从第 3 章的第一个 `#[derive(Component)]` 到今天的 `&mut World`，ECS 的地图已经画完整：数据怎么放、逻辑怎么跑、消息怎么传、世界怎么直接上手。下一章进入第三部分——给这个世界一个看得见的样子。先从最基本的问题开始：一个东西在哪儿、朝向哪儿、多大个儿——`Transform` 与坐标系统。

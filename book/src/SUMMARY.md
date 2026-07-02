@@ -69,7 +69,9 @@
   - [打包参数：SystemState、SystemParam 与 QueryData](ch11-04-custom-params.md)
   - [变更检测的发条](ch11-05-change-detection-internals.md)
   - [Disabled：隐身的实体](ch11-06-disabled-entities.md)
-  - [盘点日](ch11-07-census-day.md)
+  - [资源实体与混合查询](ch11-07-resource-entities-and-mixed-queries.md)
+  - [连续访问：把整张表借给你](ch11-08-contiguous-access.md)
+  - [盘点日](ch11-09-census-day.md)
 
 # 第三部分　画面、资产与交互
 

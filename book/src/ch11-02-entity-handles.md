@@ -59,7 +59,7 @@ cargo run -p ch11-deep-ecs --example listing-11-04
 ```text
 老蔫儿家：存粮 7 袋，私酿酒：有！
 艾达：私酿酒没收。（老蔫儿：哎——）
-再访棚屋：Entity despawned: The entity with ID 2v0 is invalid; its index now has generation 1.
+再访棚屋：Entity despawned: The entity with ID 3v0 is invalid; its index now has generation 1.
 Note that interacting with a despawned entity is the most common cause of this error but there are others
 台账：老蔫儿 存粮 4 袋（已盖章）
 台账：罗兰 存粮 5 袋
@@ -82,21 +82,21 @@ cargo run -p ch11-deep-ecs --example listing-11-05
 ```
 
 ```text
-thread 'main' (19276) panicked at C:\Users\94887\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bevy_ecs-0.18.1\src\system\system_param.rs:851:13:
-error[B0002]: ResMut<bevy_ecs::message::messages::Messages<bevy_app::app::AppExit>> in system listing_11_05::precheck conflicts with a previous Res<bevy_ecs::message::messages::Messages<bevy_app::app::AppExit>> access. Consider removing the duplicate access. See: https://bevy.org/learn/errors/b0002
+thread 'main' (11508) panicked at C:\Users\94887\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bevy_ecs-0.19.0\src\system\system_param.rs:758:9:
+error[B0002]: ResMut<bevy_ecs::message::messages::Messages<bevy_app::app::AppExit>> in system listing_11_05::precheck conflicts with a previous system parameter. Consider removing the duplicate access or using `Without<IsResource>` to create disjoint Queries or merging conflicting Queries into a `ParamSet`. See: https://bevy.org/learn/errors/b0002
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 Encountered a panic in system `bevy_app::main_schedule::Main::run_main`!
 ```
 
-第 5 章见过的 B0002，但这次两个当事参数看起来风马牛不相及。读报错：冲突的一边是 `MessageWriter` 背后的 `ResMut<Messages<AppExit>>`（写消息=写资源，第 7 章说过），另一边是个 `Res<Messages<AppExit>>` 的**读**——它从哪来的？从 `&World` 来：**`&World` 声明的是对世界上一切的读，组件、资源、消息无一例外**。它跟同系统里任何一个带写的参数都打架。`Query<EntityRef>` 同理但温和些——它声明“读全部组件”，所以容得下写资源的参数，容不下任何写组件的查询。
+第 5 章见过的 B0002。被点名的是 `MessageWriter` 背后的 `ResMut<Messages<AppExit>>`（写消息=写资源，第 7 章说过），和它冲突的“previous system parameter”是谁，报错没讲，但嫌疑人一共就两个，而且**都脱不了干系**：`&World` 声明的是对世界上一切的读——组件、资源、消息无一例外；`Query<EntityRef>` 声明“读全部组件”，而第 5 章刚讲过资源也是组件、就住在实体表里，所以它同样罩住了 `Messages<AppExit>` 那一行。两位读一切的巨人，谁都容不下旁边坐个写资源的。药方里那句 `Without<IsResource>` 正是为后者准备的——给查询划出“资源除外”的界，访问集合就和资源参数分了家（这道界怎么划、为什么灵，11-7 节细说）。至于 `&World`，没有药能收窄它。
 
-修法是老规矩，写活分出去：
+本例的修法还是老规矩，写活分出去。预检官顺便学了个乖：名册查询挂上 `Without<IsResource>`，把引擎的资源实体挡在门外——预检翻的是民户，不是引擎的账本：
 
 ```rust
 {{#include ../../code/ch11-deep-ecs/examples/listing-11-06.rs:precheck}}
 ```
 
-<span class="caption">Listing 11-6：预检修好了——只读的归预检，写的归收工</span>
+<span class="caption">Listing 11-6：预检修好了——只读的归预检，写的归收工，名册只翻民户</span>
 
 ```console
 cargo run -p ch11-deep-ecs --example listing-11-06
@@ -104,12 +104,14 @@ cargo run -p ch11-deep-ecs --example listing-11-06
 
 ```text
 预检官挨家挨户翻名册：
-  0v0 罗兰：常住，存粮 3 袋，共 3 个组件
-  1v0 老蔫儿：常住，存粮 7 袋，共 3 个组件
-  2v0 过路货郎：过路，存粮 20 袋，共 2 个组件
-合计：全镇 3 个实体；镇库 73 枚银币。
+  14v0 罗兰：常住，存粮 3 袋，共 3 个组件
+  15v0 老蔫儿：常住，存粮 7 袋，共 3 个组件
+  16v0 过路货郎：过路，存粮 20 袋，共 2 个组件
+合计：全镇 17 个实体；镇库 73 枚银币。
 ```
 
-这一版的预检官和别的只读系统照常并行。规律一句话：**句柄或参数的权限越宽，能同坐一个系统的邻居越少**——`&World` 读一切，邻居只剩纯只读；`&mut World` 写一切，邻居清零，那就是独占系统。
+名册上 3 行，合计却是 17 个——`count_spawned` 不走查询，`Without<IsResource>` 管不到它，14 份资源实体（引擎家底 13 份加你的 `TownFunds`）照数不误；连三户的门牌都是从 14v0 起步的。两个数字都没错，只是口径不同——这笔账 11-7 节盘清。
+
+这一版的预检官和别的只读系统照常并行。规律一句话：**句柄或参数的权限越宽，能同坐一个系统的邻居越少**——`&World` 读一切，邻居只剩纯只读；`Query<EntityRef>` 让出资源那片后，写资源的邻居就能落座；`&mut World` 写一切，邻居清零，那就是独占系统。
 
 预检清单里每户还报了“共几个组件”，来自 `house.archetype().component_count()`。`archetype()`——又是这个词。第 3 章说它是“组件组合相同的实体共用的子表”，搬家、行号、遍历顺序的谜底全在里面。下一节进档案室。
