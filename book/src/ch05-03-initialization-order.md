@@ -89,9 +89,11 @@ app.init_resource::<ScoreRules>() // from_world 此刻就跑——Difficulty 还
 ```
 
 ```text
-thread 'main' panicked at ch05-resources\examples\listing-05-06.rs:23:21:
+thread 'main' (29712) panicked at ch05-resources\examples\listing-05-06.rs:23:21:
 Requested resource listing_05_06::Difficulty does not exist in the `World`.
                 Did you forget to add it using `app.insert_resource` / `app.init_resource`?
+                Resources are also implicitly added via `app.add_message`,
+                and can be added by plugins.
 ```
 
 panic 的位置就在 `from_world` 里那行 `world.resource::<Difficulty>()`，时机是 `init_resource` 执行的瞬间——`app.update()` 都还没开始，连第一帧都谈不上。**资源的初始化顺序，就是 App 构建代码的书写顺序**；谁依赖谁，谁就写在后面。
@@ -104,6 +106,6 @@ panic 的位置就在 `from_world` 里那行 `world.resource::<Difficulty>()`，
 | Plugin 的 `build` 里同名调用 | 构建期，随 `add_plugins` 的顺序 |
 | `Commands::insert_resource` / `init_resource` | 运行期，下一个同步点 |
 
-第二行正是 `Res<Time>` 第 2 章就能用的原因：`add_plugins(DefaultPlugins)` 在你的系统跑起来之前，早把 `Time` 备好了。
+第二行正是 `Res<Time>` 第 2 章就能用的原因：`add_plugins(DefaultPlugins)` 在你的系统跑起来之前，早把 `Time` 备好了。（刚才报错末尾捎带的 `app.add_message` 也属于这类入口——它注册消息队列时会顺手注册一份配套资源，第 7 章见。）
 
-定义、读写、有无、初始化都齐了。最后一块拼图是资源的变更检测——第 4 章 `Changed<T>` 的资源版本。
+定义、读写、有无、初始化都齐了。是时候清算那笔从第 3 章欠到现在的账了：这些资源，到底存在 World 的什么地方？

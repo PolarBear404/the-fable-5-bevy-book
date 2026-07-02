@@ -59,11 +59,12 @@ cargo run -p ch05-resources --example listing-05-02
 
 ```text
 error[B0002]: ResMut<listing_05_02::Score> in system listing_05_02::impossible
-conflicts with a previous Res<listing_05_02::Score> access. Consider removing
-the duplicate access. See: https://bevy.org/learn/errors/b0002
+conflicts with a previous system parameter. Consider removing the duplicate
+access or using `Without<IsResource>` to create disjoint Queries or merging
+conflicting Queries into a `ParamSet`. See: https://bevy.org/learn/errors/b0002
 ```
 
-和 B0001 一样，判的是声明而不是数据，所以第一帧直接 panic。修法倒比查询冲突简单得多：查询冲突还要琢磨拆系统还是 `ParamSet`，资源冲突几乎总是冗余声明——`ResMut` 本来就能读，删掉那个 `Res` 就完了。
+和 B0001 一样，判的是声明而不是数据，所以第一帧直接 panic。报错开的方子里混进了 Query 和一个陌生名字 `IsResource`——资源和查询的关系比表面上近得多，这句话要到“资源的本质”一节才能完全读懂，先按下。就这个系统而言，修法比查询冲突简单：同一资源一读一写几乎总是冗余声明——`ResMut` 本来就能读，删掉那个 `Res` 就完了。
 
 ## `Res<Time>` 归队
 

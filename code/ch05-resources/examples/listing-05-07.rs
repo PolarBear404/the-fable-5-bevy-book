@@ -1,40 +1,46 @@
-//! Listing 5-7：资源的变更检测——is_changed、is_added 与 set_if_neq
+//! Listing 5-7：全场点名——资源实体现出真身
 
+// ANCHOR: setup
+use bevy::ecs::{component::Components, resource::IsResource};
 use bevy::prelude::*;
 
-// set_if_neq 靠 PartialEq 判断值是否真的变了
-#[derive(Resource, PartialEq)]
+/// 计分板：本章用到现在的普通资源
+#[derive(Resource)]
 struct Score(u32);
 
 fn main() {
     let mut app = App::new();
     app.insert_resource(Score(0))
-        .add_systems(Update, (shoot, scoreboard).chain());
-
-    app.update(); // 第 1 枪：命中
-    app.update(); // 第 2 枪：脱靶
-    app.update(); // 第 3 枪：命中
+        .add_systems(Startup, spawn_targets)
+        .add_systems(Update, roll_call);
+    app.update();
 }
 
-// ANCHOR: shoot
-/// 射手：第 2 枪脱靶（+0 分）；set_if_neq 让"没变"不留变更记录
-fn shoot(mut score: ResMut<Score>, mut round: Local<u32>) {
-    *round += 1;
-    let hit = if *round == 2 { 0 } else { 10 };
-    println!("第 {} 枪：{}", *round, if hit > 0 { "命中" } else { "脱靶" });
-    let new_total = score.0 + hit;
-    score.set_if_neq(Score(new_total));
+/// 生成两个普通实体，与资源实体同台对照
+fn spawn_targets(mut commands: Commands) {
+    commands.spawn(Name::new("外环"));
+    commands.spawn(Name::new("红心"));
 }
-// ANCHOR_END: shoot
+// ANCHOR_END: setup
 
-// ANCHOR: scoreboard
-/// 记分牌：开机打一次招呼，之后只在分数真的变了时刷新
-fn scoreboard(score: Res<Score>) {
-    if score.is_added() {
-        println!("记分牌通电，开始计分");
+// ANCHOR: roll_call
+/// 全场点名：不点名任何具体组件的广查询，World 里每一行都会到场
+fn roll_call(
+    everyone: Query<(Entity, Option<&IsResource>, Option<&Name>)>,
+    components: &Components,
+    score: Res<Score>,
+) {
+    let mut rows: Vec<_> = everyone.iter().collect();
+    rows.sort_by_key(|(entity, ..)| entity.index()); // 按行号排序，只为看着整齐
+    for (entity, is_resource, name) in rows {
+        if let Some(marker) = is_resource {
+            // IsResource 里记着这行装的是哪个资源，借 Components 查出类型名
+            let resource_name = components.get_name(marker.resource_component_id()).unwrap();
+            println!("{entity}  资源实体  {}", resource_name.shortname());
+        } else if let Some(name) = name {
+            println!("{entity}  普通实体  {name}");
+        }
     }
-    if score.is_changed() {
-        println!("记分牌刷新 → {} 分", score.0);
-    }
+    println!("Res<Score> 照常直达：当前 {} 分", score.0);
 }
-// ANCHOR_END: scoreboard
+// ANCHOR_END: roll_call

@@ -22,7 +22,7 @@
 | 2 | 第一个 Bevy App | ✅ | code/ch02-first-app（src/main.rs + examples/listing-02-01～06）；book/src/ch02-00～03；已迁 0.19 |
 | 3 | Entity 与 Component | ✅ | code/ch03-entities-components（src/main.rs + examples/listing-03-01～06）；book/src/ch03-00～03；已迁 0.19 |
 | 4 | System 与 Query | ✅ | code/ch04-systems-queries（src/main.rs + examples/listing-04-01～07，开 bevy `debug` feature）；book/src/ch04-00～04；已迁 0.19 |
-| 5 | Resource——全局唯一数据 | ✅ | code/ch05-resources（src/main.rs + examples/listing-05-01～07，开 bevy `debug` feature）；book/src/ch05-00～04 |
+| 5 | Resource——全局唯一数据 | ✅ | code/ch05-resources（src/main.rs + examples/listing-05-01～08，开 bevy `debug` feature）；book/src/ch05-00～05；已迁 0.19（新增“资源的本质”一节） |
 | 6 | Schedule 与执行顺序 | ✅ | code/ch06-schedules（src/main.rs + examples/listing-06-01～08，开 bevy `debug` feature）；book/src/ch06-00～05 |
 | 7 | Message——缓冲消息 | ✅ | code/ch07-messages（src/main.rs + examples/listing-07-01～08，开 bevy `debug` feature）；book/src/ch07-00～05 |
 | 8 | Event 与 Observer | ✅ | code/ch08-events-observers（src/main.rs + examples/listing-08-01～09，开 bevy `debug` feature）；book/src/ch08-00～05 |
