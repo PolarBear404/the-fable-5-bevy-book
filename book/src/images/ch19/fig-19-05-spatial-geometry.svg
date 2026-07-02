@@ -31,7 +31,7 @@
   <text x="619" y="126" text-anchor="middle" font-size="12.5" fill="#4a463f">声像系数 × min(1 / d², 1)</text>
   <line x1="508" y1="140" x2="730" y2="140" stroke="#b8b1a4" stroke-width="1" stroke-dasharray="3,3"/>
   <text x="508" y="162" font-size="11.5" fill="#7a7468">· 衰减：距离平方反比，1 单位内不衰减</text>
-  <text x="508" y="182" font-size="11.5" fill="#7a7468">· 声像：哪只耳朵近，哪边响（0.5～1）</text>
+  <text x="508" y="182" font-size="11.5" fill="#7a7468">· 声像：近耳收 0.5、远耳抬 1——防一边倒</text>
   <text x="508" y="202" font-size="11.5" fill="#7a7468">· 声源先被并成单声道再分给双耳</text>
 
   <!-- 衰减曲线小图 -->

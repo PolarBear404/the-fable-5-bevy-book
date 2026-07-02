@@ -61,7 +61,7 @@ cargo run -p ch19-audio
 
 ## 小结
 
-- **声音是资产，发声是实体**：`AudioPlayer(handle)` spawn 即播，资产没到货就等到货那刻开播。格式按 feature 开闸——默认只有 `vorbis`（.ogg），`wav`/`mp3`/`flac` 自取；没开 feature 的格式能加载（loader 按资产类型选中、只搬字节），到解码才 panic `UnrecognizedFormat`
+- **声音是资产，发声是实体**：`AudioPlayer(handle)` spawn 即播，资产没到货就等到货那刻开播。格式按 feature 开闸——默认只有 `vorbis`（.ogg），`wav`/`mp3`/`flac`/`aac`/`mp4` 自取；没开 feature 的格式能加载（loader 按资产类型选中、只搬字节），到解码才 panic `UnrecognizedFormat`
 - **`PlaybackSettings` 是开播设定单**：`AudioPlayer` 的 required component，默认 `ONCE`。四档 `PlaybackMode`——`Once` 播完留壳（不可复用，重播得拆装音频组件），`Loop` 不完，`Despawn` 连子实体拆台（一次性音效的标准答案），`Remove` 卸件留体。`speed` 快慢与音高绑定，一份素材多个音色
 - **播放中的控制走 `AudioSink`**：引擎开播时在 `PostUpdate` 经 `Commands` 插上，最早下一帧可查——查询永远备好“还不在”的退路。面板：`pause`/`play`/`toggle_playback`、`set_volume`（要 `&mut`）、`set_speed`、`position`、`stop`、`empty`、`mute` 三件套
 - **暂停游戏不等于暂停音频**：声音的供给线在声卡侧线程，`Time<Virtual>` 拧不动它。中场 = `time.pause()` 加遍历全部 sink `pause()`——两个组件类型都要遍历
