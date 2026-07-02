@@ -1,0 +1,94 @@
+<svg viewBox="0 0 760 430" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-d18p" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr-o18p" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="430" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="32" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">一单慢递的一生：排单、在途、投递——全程按戏台钟对表</text>
+
+  <!-- 排单卡 -->
+  <rect x="28" y="58" width="230" height="88" rx="10" fill="#ffffff" stroke="#b8862e" stroke-width="1.5"/>
+  <text x="143" y="82" text-anchor="middle" font-size="12.5" fill="#7a5414" font-weight="bold">排单（setup 里一瞬完成）</text>
+  <text x="143" y="103" text-anchor="middle" font-size="11" fill="#4a463f">delayed.secs(1.0 / 2.0 / 3.0)</text>
+  <text x="143" y="122" text-anchor="middle" font-size="11" fill="#4a463f">每档延迟 = 一枚信封实体</text>
+  <text x="143" y="139" text-anchor="middle" font-size="10.5" fill="#7a7468">（DelayedCommandQueue 组件）</text>
+
+  <!-- 对表卡 -->
+  <rect x="285" y="58" width="200" height="88" rx="10" fill="#ffffff" stroke="#b8862e" stroke-width="1.5"/>
+  <text x="385" y="82" text-anchor="middle" font-size="12.5" fill="#7a5414" font-weight="bold">在途：每帧对一次表</text>
+  <text x="385" y="103" text-anchor="middle" font-size="11" fill="#4a463f">PreUpdate 里拿通用钟问：</text>
+  <text x="385" y="122" text-anchor="middle" font-size="11" fill="#4a463f">elapsed 到 submit_at 没有？</text>
+  <text x="385" y="139" text-anchor="middle" font-size="10.5" fill="#7a7468">粒度是帧：到点后的第一帧才投递</text>
+
+  <!-- 投递卡 -->
+  <rect x="512" y="58" width="220" height="88" rx="10" fill="#ffffff" stroke="#1d6b40" stroke-width="1.5"/>
+  <text x="622" y="82" text-anchor="middle" font-size="12.5" fill="#1d6b40" font-weight="bold">投递：命令倒进主队列</text>
+  <text x="622" y="103" text-anchor="middle" font-size="11" fill="#4a463f">spawn / despawn / insert_resource</text>
+  <text x="622" y="122" text-anchor="middle" font-size="11" fill="#4a463f">当帧 Update 就能看见效果</text>
+  <text x="622" y="139" text-anchor="middle" font-size="10.5" fill="#7a7468">信封实体随手回收</text>
+
+  <path d="M258,102 L281,102" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr-d18p)"/>
+  <path d="M485,102 L508,102" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr-d18p)"/>
+
+  <!-- 时间轴区 -->
+  <!-- 怀表轴：0..5 秒 → x 90..690 （120 px/秒） -->
+  <text x="52" y="238" text-anchor="end" font-size="12" fill="#274a91" font-weight="bold">怀表</text>
+  <line x1="90" y1="234" x2="700" y2="234" stroke="#274a91" stroke-width="2"/>
+  <g font-size="10.5" fill="#274a91" text-anchor="middle">
+    <line x1="90" y1="229" x2="90" y2="239" stroke="#274a91"/><text x="90" y="254">0</text>
+    <line x1="210" y1="229" x2="210" y2="239" stroke="#274a91"/><text x="210" y="254">1.0</text>
+    <line x1="330" y1="229" x2="330" y2="239" stroke="#274a91"/><text x="330" y="254">2.0</text>
+    <line x1="450" y1="229" x2="450" y2="239" stroke="#274a91"/><text x="450" y="254">3.0</text>
+    <line x1="570" y1="229" x2="570" y2="239" stroke="#274a91"/><text x="570" y="254">4.0</text>
+    <line x1="690" y1="229" x2="690" y2="239" stroke="#274a91"/><text x="690" y="254">5.0</text>
+  </g>
+
+  <!-- 中场灰带：怀表 1.5~3.8 -->
+  <rect x="270" y="266" width="240" height="70" rx="6" fill="#e4e1d8"/>
+  <text x="390" y="288" text-anchor="middle" font-size="11.5" fill="#7a7468" font-weight="bold">中场（P）：戏台钟停走</text>
+  <text x="390" y="306" text-anchor="middle" font-size="10.5" fill="#7a7468">elapsed 不涨，在途的件全冻住</text>
+  <text x="390" y="324" text-anchor="middle" font-size="10.5" fill="#7a7468">怀表照走，驿站不认它</text>
+
+  <!-- 戏台钟轴：读数只在开戏段前进 -->
+  <text x="52" y="376" text-anchor="end" font-size="12" fill="#c05a2e" font-weight="bold">戏台钟</text>
+  <line x1="90" y1="372" x2="270" y2="372" stroke="#c05a2e" stroke-width="2"/>
+  <line x1="270" y1="372" x2="510" y2="372" stroke="#c05a2e" stroke-width="2" stroke-dasharray="3,4"/>
+  <line x1="510" y1="372" x2="700" y2="372" stroke="#c05a2e" stroke-width="2"/>
+  <g font-size="10.5" fill="#c05a2e" text-anchor="middle">
+    <line x1="90" y1="367" x2="90" y2="377" stroke="#c05a2e"/><text x="90" y="392">0</text>
+    <line x1="210" y1="367" x2="210" y2="377" stroke="#c05a2e"/><text x="210" y="392">1.0</text>
+    <text x="390" y="392">（停在 1.5）</text>
+    <line x1="606" y1="367" x2="606" y2="377" stroke="#c05a2e"/><text x="606" y="392">2.0</text>
+    <line x1="690" y1="367" x2="690" y2="377" stroke="#c05a2e"/><text x="690" y="392">3.0</text>
+  </g>
+
+  <!-- 三枚信封的投递点：钉在戏台钟刻度上 -->
+  <!-- 一息：戏台钟 1.0 = 怀表 1.0 (x=210) -->
+  <g>
+    <rect x="196" y="186" width="28" height="20" rx="3" fill="#f6ecdd" stroke="#b8862e" stroke-width="1.5"/>
+    <path d="M196,188 L210,199 L224,188" stroke="#b8862e" stroke-width="1.2" fill="none"/>
+    <path d="M210,206 L210,230" stroke="#c05a2e" stroke-width="1.6" fill="none" marker-end="url(#arr-o18p)"/>
+    <text x="210" y="178" text-anchor="middle" font-size="10.5" fill="#4a463f">一息：戏台钟 1.0</text>
+  </g>
+  <!-- 两息：戏台钟 2.0 = 怀表 4.0 (x=570)（被中场推后） -->
+  <g>
+    <rect x="556" y="186" width="28" height="20" rx="3" fill="#f6ecdd" stroke="#b8862e" stroke-width="1.5"/>
+    <path d="M556,188 L570,199 L584,188" stroke="#b8862e" stroke-width="1.2" fill="none"/>
+    <path d="M570,206 L570,230" stroke="#c05a2e" stroke-width="1.6" fill="none" marker-end="url(#arr-o18p)"/>
+    <text x="570" y="178" text-anchor="middle" font-size="10.5" fill="#4a463f">两息：戏台钟 2.0（怀表已 4.0）</text>
+  </g>
+  <!-- 三息：戏台钟 3.0 = 怀表 5.0 (x=690) -->
+  <g>
+    <rect x="676" y="186" width="28" height="20" rx="3" fill="#f6ecdd" stroke="#b8862e" stroke-width="1.5"/>
+    <path d="M676,188 L690,199 L704,188" stroke="#b8862e" stroke-width="1.2" fill="none"/>
+    <path d="M690,206 L690,230" stroke="#c05a2e" stroke-width="1.6" fill="none" marker-end="url(#arr-o18p)"/>
+    <text x="690" y="178" text-anchor="middle" font-size="10.5" fill="#4a463f">三息 + 放行</text>
+  </g>
+
+  <text x="380" y="418" text-anchor="middle" font-size="12" fill="#7a7468">延迟在排单时折算成“戏台钟走到几分几秒”——中场把戏台钟按住，三张单子就原地多等 2 秒</text>
+</svg>

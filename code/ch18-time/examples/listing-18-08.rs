@@ -1,80 +1,60 @@
-//! Listing 18-8：接拍——帧上收招、记在账上，鼓点上一笔结清
-//! 解法：瞬时输入由每帧必跑的系统收集成“意图”，FixedUpdate 只消费意图。
-//! 与 Listing 18-7 同两种场：[1] 慢板（丢拍场）[2] 拖戏（重复场）——这回账都两清。
+//! Listing 18-8：丢拍与重复——同一个 just_pressed，场记帧帧在看，鼓师只在鼓点上看
+//! 空格出招。[1] 慢板：鼓点 4 拍/秒，比帧率慢——丢拍；
+//! [2] 拖戏：鼓点恢复默认 64 拍/秒，但每帧人为卡 150 毫秒——一帧好几拍，重复。
 
 use std::time::Duration;
 
 use bevy::prelude::*;
 use bevy::sprite::Anchor;
 
-/// 候拍的意图：攒下的出招数。鼓点上消费，消费完清零
-#[derive(Resource, Default)]
-struct Queued {
-    strikes: u32,
-}
-
+/// 两本账：场记在 Update 记，鼓师在 FixedUpdate 记
 #[derive(Resource, Default)]
 struct Tally {
     seen: u32,
     caught: u32,
 }
 
+/// 拖戏开关：开着就每帧硬卡一阵，模拟“老机器/卡顿”
 #[derive(Resource, Default)]
 struct Dragging(bool);
 
 #[derive(Component)]
 struct Hud;
 
-// ANCHOR: app
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins.set(ImagePlugin::default_nearest()))
         .insert_resource(ClearColor(Color::srgb(0.10, 0.10, 0.14)))
+        // 开场是慢板：鼓点放慢到 4 拍/秒，丢拍丢得明明白白
         .insert_resource(Time::<Fixed>::from_hz(4.0))
-        .init_resource::<Queued>()
         .init_resource::<Tally>()
         .init_resource::<Dragging>()
         .add_systems(Startup, setup)
-        // 收招放在固定主循环之前：每帧必跑一次，鼓点再稀也漏不掉
-        .add_systems(
-            RunFixedMainLoop,
-            collect_strikes.in_set(RunFixedMainLoopSystems::BeforeFixedMainLoop),
-        )
-        .add_systems(FixedUpdate, drummer_settles)
-        .add_systems(Update, (switch_scene, drag, hud))
+        .add_systems(FixedUpdate, drummer_counts)
+        .add_systems(Update, (clerk_counts, switch_scene, drag, hud))
         .run();
 }
-// ANCHOR_END: app
 
-// ANCHOR: queue
-/// 场记收招：just_pressed 还是每帧问，但只往账上记，不当场办
-fn collect_strikes(
-    keyboard: Res<ButtonInput<KeyCode>>,
-    mut queued: ResMut<Queued>,
-    mut tally: ResMut<Tally>,
-) {
+// ANCHOR: counts
+/// 场记的账：Update 每帧跑一次，一次按下就是一招
+fn clerk_counts(keyboard: Res<ButtonInput<KeyCode>>, mut tally: ResMut<Tally>) {
     if keyboard.just_pressed(KeyCode::Space) {
-        queued.strikes += 1;
         tally.seen += 1;
-        println!("场记：记下第 {} 招，候拍。", tally.seen);
+        println!("场记：第 {} 招。", tally.seen);
     }
 }
 
-/// 鼓师结账：每拍把攒下的招一笔结清，结完清零——后头的拍子自然没账可重复
-fn drummer_settles(mut queued: ResMut<Queued>, mut tally: ResMut<Tally>) {
-    if queued.strikes == 0 {
-        return;
+/// 鼓师的账：同一句问话搬进 FixedUpdate——本帧没鼓点就看不见，一帧几拍就看几遍
+fn drummer_counts(keyboard: Res<ButtonInput<KeyCode>>, mut tally: ResMut<Tally>) {
+    if keyboard.just_pressed(KeyCode::Space) {
+        tally.caught += 1;
+        println!("鼓师：鼓点上接到第 {} 招！", tally.caught);
     }
-    tally.caught += queued.strikes;
-    println!(
-        "鼓师：这一拍结清 {} 招——共接 {} 招。",
-        queued.strikes, tally.caught
-    );
-    queued.strikes = 0;
 }
-// ANCHOR_END: queue
+// ANCHOR_END: counts
 
-/// 换场（与 Listing 18-7 同款）：两种场里账目都该两清
+// ANCHOR: scenes
+/// 换场：慢板拧鼓点，拖戏拧帧率
 fn switch_scene(
     keyboard: Res<ButtonInput<KeyCode>>,
     mut fixed: ResMut<Time<Fixed>>,
@@ -92,11 +72,13 @@ fn switch_scene(
     }
 }
 
+/// 拖戏：把一帧人为拖长，下一帧鼓师就得连补好几拍
 fn drag(dragging: Res<Dragging>) {
     if dragging.0 {
         std::thread::sleep(Duration::from_millis(150));
     }
 }
+// ANCHOR_END: scenes
 
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2d);
@@ -130,9 +112,10 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
         Anchor::BOTTOM_CENTER,
         Transform::from_xyz(0.0, -320.0, 3.0).with_scale(Vec3::splat(4.0)),
     ));
-    println!("老雷：再验一遍招——这回场记只管记账，鼓师按拍结账。");
+    println!("老雷：验招——场记帧帧盯着，鼓师只在鼓点上抬头。都按空格记账。");
 }
 
+/// 记分牌：两本账并排示众
 fn hud(
     tally: Res<Tally>,
     fixed: Res<Time<Fixed>>,

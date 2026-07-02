@@ -7,45 +7,45 @@
 
 两条规矩一碰头，病灶自现：`just_pressed` 为真的那一帧里恰好**没有鼓点**，这次按下就永远没人看见——**丢拍**；那一帧里塞了**好几拍**，每一拍读到的都是同一份“刚按下”的快照——同一招收好几遍，**重复**。
 
-![示意图：上半部慢板场景，按下的那一帧很窄，前后两个鼓点都没踩进去，标注丢拍；下半部拖戏场景，一整个长帧都是按下那一帧，五个鼓点全落在里面，标注重复](images/ch18/fig-18-07-missed-beat.svg)
+![示意图：上半部慢板场景，按下的那一帧很窄，前后两个鼓点都没踩进去，标注丢拍；下半部拖戏场景，一整个长帧都是按下那一帧，五个鼓点全落在里面，标注重复](images/ch18/fig-18-08-missed-beat.svg)
 
-<span class="caption">Figure 18-7：快照按帧翻篇，鼓点不按帧落——没踩进那一帧就丢，踩进几次就重几次</span>
+<span class="caption">Figure 18-8：快照按帧翻篇，鼓点不按帧落——没踩进那一帧就丢，踩进几次就重几次</span>
 
 ## 升堂对账
 
 推演要当庭验证。让场记和鼓师记同一本账：两个系统问的是**一字不差的同一句话**，区别只有住址——场记在 `Update`（帧帧在看），鼓师在 `FixedUpdate`（只在鼓点上抬头）：
 
 ```rust
-{{#include ../../code/ch18-time/examples/listing-18-07.rs:counts}}
+{{#include ../../code/ch18-time/examples/listing-18-08.rs:counts}}
 ```
 
-<span class="caption">Listing 18-7（其一）：同一句 `just_pressed`，两个住址两本账（examples/listing-18-07.rs）</span>
+<span class="caption">Listing 18-8（其一）：同一句 `just_pressed`，两个住址两本账（examples/listing-18-08.rs）</span>
 
 案发现场要两处：**慢板**把鼓点拧到 4 拍/秒——鼓点比帧稀，专演丢拍；**拖戏**让鼓点回到默认的 64 拍/秒，但每帧硬卡 150 毫秒——帧比鼓点稀，专演重复。拖戏不是胡闹，它模拟的是任何机器都会遇到的卡顿帧和低配机器的常态：
 
 ```rust
-{{#include ../../code/ch18-time/examples/listing-18-07.rs:scenes}}
+{{#include ../../code/ch18-time/examples/listing-18-08.rs:scenes}}
 ```
 
-<span class="caption">Listing 18-7（其二）：两个案发现场——慢板拧鼓点，拖戏拖帧</span>
+<span class="caption">Listing 18-8（其二）：两个案发现场——慢板拧鼓点，拖戏拖帧</span>
 
 ```console
-cargo run -p ch18-time --example listing-18-07
+cargo run -p ch18-time --example listing-18-08
 ```
 
 开场是慢板。攒足手速快快地点八下空格：
 
 ```text
 老雷：验招——场记帧帧盯着，鼓师只在鼓点上抬头。都按空格记账。
-鼓师：鼓点上接到第 1 招！
 场记：第 1 招。
+鼓师：鼓点上接到第 1 招！
 场记：第 2 招。
 场记：第 3 招。
 …
 场记：第 8 招。
 ```
 
-场记齐齐整整记了八招，鼓师只逮着一招——还是开场撞了运气（这一行排在场记前头不是乱序：第 6 章的调度表里固定主循环跑在 `Update` **之前**，同一帧里鼓师先开口）。能不能逮着全看按键那一瞬有没有鼓点路过：快照窗口只有一帧宽，每秒只来 4 拍，十有八九扑空——帧率越高，窗口越窄，漏得越狠。再按 2 切到拖戏，点两下：
+场记齐齐整整记了八招，鼓师只逮着一招——第一下就漏了，第二下才撞上运气。细看鼓师那行的位置：它插在第 1 招与第 2 招**之间**而不是第 2 招之后，这不是乱序——第 6 章的调度表里固定主循环跑在 `Update` **之前**，撞上鼓点的那一帧里鼓师先开口。能不能逮着全看按键那一瞬有没有鼓点路过：快照窗口只有一帧宽，每秒只来 4 拍，十有八九扑空——帧率越高，窗口越窄，漏得越狠。再按 2 切到拖戏，点两下：
 
 ```text
 老雷：拖戏——鼓点恢复 64 拍/秒，每帧硬卡 150 毫秒。
@@ -58,9 +58,9 @@ cargo run -p ch18-time --example listing-18-07
 
 一招进账，鼓师连喊十声——150 毫秒的帧攒下约十拍，十拍读到的是同一份快照。两个现场合在一起，账面荒唐：
 
-![两幅并排截图：左幅慢板下场记记了八招、鼓师接了零招；右幅拖戏下场记记了十招、鼓师接了二十招](images/ch18/fig-18-08-tally.png)
+![两幅并排截图：左幅慢板下场记记了八招、鼓师接了零招；右幅拖戏下场记记了十招、鼓师接了十九招](images/ch18/fig-18-09-tally.png)
 
-<span class="caption">Figure 18-8：同一个键，两本账——慢板几乎全漏，拖戏每招翻十倍</span>
+<span class="caption">Figure 18-9：同一个键，两本账——慢板几乎全漏，拖戏每招翻十倍</span>
 
 把出剑、跳跃、换弹这类**瞬时动作**直接写进 `FixedUpdate`，上面就是玩家的真实体验：平时偶尔吞招，一卡顿就连发。坑的形状看清了，填法也就显然了。
 
@@ -69,18 +69,18 @@ cargo run -p ch18-time --example listing-18-07
 病根在“瞬时的真假与拍子对不上号”，药方就是**别让鼓师直接看快照**：找一个每帧必跑的系统把瞬时输入收集下来、攒进一个资源，鼓师在拍子上消费这份积攒，消费完清零。攒下的账不会翻篇——鼓点再稀也漏不掉；消费即清零——一帧再多拍也重不了。第 17 章的意图层在这里严丝合缝地对上了：那时为“多设备”立的中间层，正是为“跨调度”要的缓冲。
 
 ```rust
-{{#include ../../code/ch18-time/examples/listing-18-08.rs:queue}}
+{{#include ../../code/ch18-time/examples/listing-18-09.rs:queue}}
 ```
 
-<span class="caption">Listing 18-8（其一）：收招只记账，结账一笔清（examples/listing-18-08.rs）</span>
+<span class="caption">Listing 18-9（其一）：收招只记账，结账一笔清（examples/listing-18-09.rs）</span>
 
 收招系统的住址有讲究。放 `Update` 行不行？行——但回看第 6 章的调度表：固定主循环排在 `Update` **前面**，本帧 `Update` 收的招要等**下一帧**的鼓点才被结算，平白慢一拍。官方惯用法是挂进 `RunFixedMainLoop` 调度的 **`RunFixedMainLoopSystems::BeforeFixedMainLoop`** 系统集——每帧必跑、又赶在本帧鼓点之前，输入当帧就能进账：
 
 ```rust
-{{#include ../../code/ch18-time/examples/listing-18-08.rs:app}}
+{{#include ../../code/ch18-time/examples/listing-18-09.rs:app}}
 ```
 
-<span class="caption">Listing 18-8（其二）：收招站在鼓点前——`BeforeFixedMainLoop`，每帧恰好一次</span>
+<span class="caption">Listing 18-9（其二）：收招站在鼓点前——`BeforeFixedMainLoop`，每帧恰好一次</span>
 
 同样的两个现场再验一遍：
 
