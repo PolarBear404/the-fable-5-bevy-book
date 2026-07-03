@@ -78,16 +78,17 @@ cargo run -p ch06-schedules --example listing-06-05
 ```
 
 ```text
-审计员记下库存：0
-2026-06-12T00:24:26Z  WARN bevy_ecs::schedule::schedule: Update schedule built
+2026-07-02T07:47:24Z  WARN bevy_ecs::schedule::schedule: Update schedule built
 successfully, however: 1 pairs of systems with conflicting data access have
 indeterminate execution order. Consider adding `before`, `after`, or
 `ambiguous_with` relationships between these:
  -- audit and dig
     conflict on: ["listing_06_05::Stockpile"]
+
+审计员记下库存：0
 ```
 
-调度器点名了 `audit` 和 `dig`，连冲突的数据是哪份都列了出来。注意程序输出：这次审计员数到 0——他抢在矿工前面跑了。下次、换台机器、换个 Bevy 版本，都可能变成 3。没有任何承诺，这正是警告想说的。
+警告在调度构建时发出，先于所有系统运行。调度器点名了 `audit` 和 `dig`，连冲突的数据是哪份都列了出来。再看最后那行程序输出：这次审计员数到 0——他抢在矿工前面跑了。下次、换台机器、换个 Bevy 版本，都可能变成 3。没有任何承诺，这正是警告想说的。
 
 两种处理方式：加 `before`/`after` 把顺序定死；或者确认这对冲突无害（比如两个系统只是各自累加统计量，谁先谁后结果一样），用 `.ambiguous_with(另一方)` 显式按下警告——留下一句注释说明为什么无害，这是给未来的自己写的。
 

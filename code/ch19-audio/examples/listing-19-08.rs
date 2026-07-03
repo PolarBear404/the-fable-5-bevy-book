@@ -101,8 +101,8 @@ fn setup(
         commands.spawn((
             Text2d::new(text),
             TextFont {
-                font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-                font_size: size,
+                font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+                font_size: FontSize::Px(size),
                 ..default()
             },
             TextColor(Color::srgb(0.55, 0.57, 0.62)),
@@ -113,8 +113,8 @@ fn setup(
         Hud,
         Text2d::new(""),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-bold.otf"),
-            font_size: 26.0,
+            font: asset_server.load("fonts/book-sans-sc-bold.otf").into(),
+            font_size: FontSize::Px(26.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),
@@ -152,7 +152,8 @@ fn ear_gains(emitter: Vec2, listener: &SpatialListener, origin: Vec2) -> (f32, f
     let emitter = emitter * AUDIO_SCALE;
     let (dl, dr) = (left.distance(emitter), right.distance(emitter));
     let gap = left.distance(right);
-    let pan = |near: f32, far: f32| (((near - far) / gap + 1.0) / 4.0 + 0.5).min(1.0);
+    // 声像是给远耳兜底的配重：本耳越近，系数越收向 0.5；“近处响”由下面的衰减项负责
+    let pan = |this: f32, other: f32| (((this - other) / gap + 1.0) / 4.0 + 0.5).min(1.0);
     let dist = |d: f32| (1.0 / (d * d)).min(1.0);
     (pan(dl, dr) * dist(dl), pan(dr, dl) * dist(dr))
 }

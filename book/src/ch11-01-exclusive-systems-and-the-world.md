@@ -38,17 +38,18 @@ cargo run -p ch11-deep-ecs --example listing-11-01
 —— 第 2 帧 ——
   巡逻队：在册住户 3 人，公告牌 0 块。
   艾达：盘点日。全镇静止！（接管 World）
-  艾达：全镇实体 3 个，其中在册住户 3 人。
+  艾达：全镇实体 16 个，其中在册住户 3 人。
   艾达：公告牌立讫，复核：1 块。（spawn 当场生效）
   喇叭：镇公所归档——在册住户 3 人！
 —— 第 3 帧 ——
   巡逻队：在册住户 3 人，公告牌 1 块。
 ```
 
-对账两条：
+对账三条：
 
 - **没有延迟**。`world.spawn` 不进任何队列：第 2 帧立牌，同一个函数里复核就数到了 1 块。对比第 3 章：`Commands` 是“写申请、等同步点”，World 方法是“当场动工”。归档的资源也一样——喇叭和艾达同帧，照样读到了。
 - **代价是停摆**。第 6 章说过同步点要“独占 World，所有并行中的系统先收工”——独占系统就是你亲手写的一段停摆：它运行期间，调度器不会让任何其他系统并行。低频、大权限的活（盘点、存档、初始化）用它正合适；每帧热路径上别放。
+- **16 个实体？** 镇上明明只有 3 户。多出来的 13 位是 `MinimalPlugins` 的开机家底——第 5 章讲过，资源一人一行住在实体表里，`count_spawned` 这种“不限组合”的清点自然把它们全算上。这批住户怎么盘、怎么划界，11-7 节专门处置。
 
 ## 行不通：再带一份普通参数
 
@@ -150,10 +151,10 @@ cargo run -p ch11-deep-ecs --example listing-11-03
 敲门——
   （沙盘小人探出头：谁呀？）
 ——话音未落，门里已经应了。
-再访罗兰家：Entity despawned: The entity with ID 0v0 is invalid; its index now has generation 1.
+再访罗兰家：Entity despawned: The entity with ID 1v0 is invalid; its index now has generation 1.
 Note that interacting with a despawned entity is the most common cause of this error but there are others
 ```
 
-敲门那三行的顺序就是 `trigger` 即时性的铁证——`world.trigger` 返回之前，observer 已经应完了门。最后一行的报错也有得读：`0v0` 是“索引 0、世代 0”，despawn 之后索引被回收、世代翻到 1，旧门牌从此作废——第 3 章讲过的世代机制，第一次在报错文本里亲眼见到。
+敲门那三行的顺序就是 `trigger` 即时性的铁证——`world.trigger` 返回之前，observer 已经应完了门。最后一行的报错也有得读：`1v0` 是“索引 1、世代 0”，despawn 一落，这一行的世代当场翻到 1，罗兰的旧门牌从此作废——第 3 章讲过的世代机制，第一次在报错文本里亲眼见到。还有个小疑点：罗兰是沙盘上 spawn 的第一个实体，门牌却是 1 号不是 0 号——0 号早有主了，连一张白纸般的 `World::new()` 都自带一位住户，身份到 11-7 节自会揭晓。
 
 沙盘推演顺利。但 `world.entity(roland)` 拿到的那个“句柄”究竟是什么、能干多少事，值得专开一节——明天上门盘点全指着它。

@@ -80,15 +80,19 @@ def fig_01_first_prop() -> None:
 def fig_04_hot_swap() -> None:
     """Figure 14-4：贴图热替换前后（Listing 14-8，运行中把灯笼盖到剑的文件上）。
 
-    青霜剑位于窗口正中；前后各截一帧，裁出中央 400×400（物理像素，DPI 125%）。
+    青霜剑位于窗口正中；前后各截一帧，裁出中央 320×320（逻辑像素，按截图
+    实际宽度定标 k = 宽/1280，显示器缩放 100%/125% 都不用改数）。
     本图动过资产文件，必须当场还原，否则污染后续截图。
     """
     props = CRATE / "assets" / "props"
     try:
         with Example(exe("listing-14-08"), workdir=CODE) as ex:
-            before = ex.shot(2.0).crop((600, 250, 1000, 650))
+            before = ex.shot(2.0)
+            k = before.width / 1280
+            box = tuple(round(v * k) for v in (480, 200, 800, 520))
+            before = before.crop(box)
             shutil.copyfile(props / "lantern.png", props / "qingshuang-sword.png")
-            after = ex.shot(4.5).crop((600, 250, 1000, 650))
+            after = ex.shot(4.5).crop(box)
     finally:
         restore_assets()
     save_png(
@@ -98,14 +102,17 @@ def fig_04_hot_swap() -> None:
 
 
 def fig_05_samplers() -> None:
-    """Figure 14-5：像素稿三种采样（Listing 14-9，静止场景）。
+    """Figure 14-5：像素稿三种采样（Listing 14-10，静止场景）。
 
-    三把剑的逻辑位置 x = -300/0/+300、尺寸 256；按 1.25 倍 DPI 折成物理像素裁带状区。
+    三把剑的逻辑位置 x = -300/0/+300、尺寸 256；裁剪框按逻辑像素写
+    （180..1100 × 200..520），按截图实际宽度定标折成物理像素。
     """
-    with Example(exe("listing-14-09"), workdir=CODE) as ex:
-        band = ex.shot(2.5).crop((225, 250, 1375, 650))
+    with Example(exe("listing-14-10"), workdir=CODE) as ex:
+        band = ex.shot(2.5)
+        k = band.width / 1280
+        band = band.crop(tuple(round(v * k) for v in (180, 200, 1100, 520)))
     save_png(
-        hstack([band], ["默认：线性采样", ".meta 档案：Nearest", "load_with_settings：Nearest"]),
+        hstack([band], ["默认：线性采样", ".meta 档案：Nearest", "load_builder：Nearest"]),
         "fig-14-05-samplers.png",
     )
 

@@ -1,84 +1,84 @@
-//! Listing 16-8：打字机——运行时改 Text2d，排版自动跟上
+//! Listing 16-8：行高、字距与磨边——LineHeight、LetterSpacing 与 FontSmoothing
 
 use bevy::prelude::*;
-use bevy::text::TextBounds;
-
-// ANCHOR: resource
-/// 提词器：整句台词攥在手里，按节拍一个字一个字递出去
-#[derive(Resource)]
-struct Teleprompter {
-    script: Vec<char>,
-    handed_out: usize,
-    beat: Timer,
-}
-// ANCHOR_END: resource
-
-/// 标记：字幕框里那行正在长出来的词
-#[derive(Component)]
-struct SubtitleLine;
+use bevy::text::{LetterSpacing, LineHeight};
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .insert_resource(Teleprompter {
-            script: "夜渡无人，秋水自横。客官，要渡江么？".chars().collect(),
-            handed_out: 0,
-            beat: Timer::from_seconds(0.15, TimerMode::Repeating),
-        })
         .add_systems(Startup, setup)
-        .add_systems(Update, type_out)
         .run();
 }
 
+// ANCHOR: setup
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2d);
+    let zh_font = asset_server.load("fonts/book-sans-sc-regular.otf");
+    let verse = "雁背驮霜\n橹声欸乃\n一篙点破满江星";
 
-    commands.spawn((
-        Sprite {
-            image: asset_server.load("props/scroll-panel.png"),
-            custom_size: Some(Vec2::new(720.0, 100.0)),
-            image_mode: SpriteImageMode::Sliced(TextureSlicer {
-                border: BorderRect::all(12.0),
-                max_corner_scale: 4.0,
-                ..default()
-            }),
-            ..default()
-        },
-        Transform::from_xyz(0.0, -240.0, 0.0),
-        children![(
-            SubtitleLine,
-            // 一开始是空字符串——词都还在提词器手里
-            Text2d::new(""),
+    // 三种行高：默认 1.2 倍字号 / 宽松 1.8 倍 / 用像素写死
+    for (x, line_height) in [
+        (-380.0, LineHeight::RelativeToFont(1.2)),
+        (0.0, LineHeight::RelativeToFont(1.8)),
+        (380.0, LineHeight::Px(34.0)),
+    ] {
+        commands.spawn((
+            Text2d::new(verse),
             TextFont {
-                font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-                font_size: 30.0,
+                font: zh_font.clone().into(),
+                font_size: FontSize::Px(32.0),
                 ..default()
             },
-            TextColor(Color::srgb(0.24, 0.16, 0.08)),
-            TextBounds::new_horizontal(660.0),
-            Transform::from_translation(Vec3::Z),
-        )],
+            line_height,
+            Transform::from_xyz(x, 150.0, 0.0),
+        ));
+    }
+
+    // 字距对比：同样四个字，一块匾额把字距拉开
+    for (y, label, spacing) in [
+        (-40.0, "默认字距", LetterSpacing::Px(0.0)),
+        (-110.0, "Px(16)", LetterSpacing::Px(16.0)),
+    ] {
+        commands.spawn((
+            Text2d::new(label),
+            TextFont {
+                font: zh_font.clone().into(),
+                font_size: FontSize::Px(18.0),
+                ..default()
+            },
+            Transform::from_xyz(-360.0, y, 0.0),
+        ));
+        commands.spawn((
+            Text2d::new("渡口夜话"),
+            TextFont {
+                font: zh_font.clone().into(),
+                font_size: FontSize::Px(40.0),
+                ..default()
+            },
+            spacing,
+            Transform::from_xyz(0.0, y, 0.0),
+        ));
+    }
+
+    // 磨边对比：默认灰度抗锯齿 vs 关掉抗锯齿（像素字）
+    commands.spawn((
+        Text2d::new("磨边的字"),
+        TextFont {
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(56.0),
+            ..default()
+        },
+        Transform::from_xyz(-220.0, -250.0, 0.0),
     ));
-
-    println!("场记：提词就位。一拍一个字。");
+    commands.spawn((
+        Text2d::new("不磨的字"),
+        TextFont {
+            font: zh_font.clone().into(),
+            font_size: FontSize::Px(56.0),
+            font_smoothing: FontSmoothing::None,
+            ..default()
+        },
+        Transform::from_xyz(220.0, -250.0, 0.0),
+    ));
 }
-
-// ANCHOR: type_out
-/// 节拍一到就往 Text2d 里添一个字。改组件本身，重排版引擎自己来
-fn type_out(
-    time: Res<Time>,
-    mut prompter: ResMut<Teleprompter>,
-    mut line: Single<&mut Text2d, With<SubtitleLine>>,
-) {
-    if !prompter.beat.tick(time.delta()).just_finished() {
-        return;
-    }
-    if let Some(&next) = prompter.script.get(prompter.handed_out) {
-        line.push(next);
-        prompter.handed_out += 1;
-        if prompter.handed_out == prompter.script.len() {
-            println!("场记：整句递完，{} 个字。", prompter.handed_out);
-        }
-    }
-}
-// ANCHOR_END: type_out
+// ANCHOR_END: setup

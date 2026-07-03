@@ -7,3 +7,14 @@ publish.workspace = true
 [dependencies]
 bevy = { workspace = true }
 # ANCHOR_END: deps
+
+# ANCHOR: features
+# 系统字体发现是全局开关：一开，程序里每一段缺字的文本都会去翻玩家的字体目录。
+# 本 crate 用一个同名 feature 转发，只让需要它的示例带上这扇门
+[features]
+system_font_discovery = ["bevy/system_font_discovery"]
+
+[[example]]
+name = "listing-16-05"
+required-features = ["system_font_discovery"]
+# ANCHOR_END: features

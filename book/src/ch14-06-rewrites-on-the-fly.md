@@ -52,7 +52,7 @@ cargo run -p ch14-assets --example listing-14-08
 
 ```text
 ERROR bevy_asset::server: Failed to load asset 'scripts\opening.script' with asset loader
-'listing_14_08::ScriptLoader': 第 11 行不是“角色：台词”的格式："这一行忘了写角色名"
+'listing_14_08::ScriptLoader': 第 10 行不是“角色：台词”的格式："这一行忘了写角色名"
 ```
 
 要紧的是**没发生**的事：游戏没崩，台上没冷场——重载失败时，货架上的旧货原样保留，`Modified` 也不广播。演员继续念二稿，秋白看着报错改文件。这张安全网让“边跑边改”敢放开手脚：改坏了，最多是改动不生效。
@@ -73,4 +73,4 @@ Copy-Item assets/props/lantern.png assets/props/qingshuang-sword.png
 
 > 看完实验记得收拾现场：`git checkout -- code/ch14-assets/assets` 或重跑 `py -3.11 scripts/make_ch14_assets.py`，把剑请回来。
 >
-> 另外两个实诚的注脚：其一，编辑器存盘动作可能触发两次文件事件，于是偶尔会看到连报两条 ERROR 或连念两遍——这是文件系统的脾气，不是 bug；其二，嵌入资产（14.7 节）默认不受监视，要热重载它们得另开 `embedded_watcher` feature。
+> 另外两个实诚的注脚：其一，编辑器存盘动作可能触发两次文件事件，于是偶尔会看到连报两条 ERROR 或连念两遍——这是文件系统的脾气，不是 bug；其二，嵌入资产（14.8 节）默认不受监视，要热重载它们得另开 `embedded_watcher` feature。

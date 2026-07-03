@@ -2,28 +2,28 @@
 
 ## 前置条件
 
-**Rust 工具链 ≥ 1.89.0**。这是 Bevy 0.18.1 声明的最低 Rust 版本，建议直接用 rustup 更新到最新 stable：
+**Rust 工具链 ≥ 1.95.0**。这是 Bevy 0.19.0 声明的最低 Rust 版本，建议直接用 rustup 更新到最新 stable：
 
 ```console
 rustup update
-rustc --version   # 确认 ≥ 1.89.0
+rustc --version   # 确认 ≥ 1.95.0
 ```
 
 各操作系统还需要少量系统依赖：
 
 - **Windows**：MSVC 工具链（Visual Studio Build Tools）。如果你装 Rust 时按默认流程走过一遍，它已经在了。
 - **macOS**：`xcode-select --install` 安装命令行工具。
-- **Linux**：需要 ALSA、udev 等开发库，各发行版的安装命令见官方文档 [linux_dependencies.md](https://github.com/bevyengine/bevy/blob/v0.18.1/docs/linux_dependencies.md)。
+- **Linux**：需要 ALSA、udev 等开发库，各发行版的安装命令见官方文档 [linux_dependencies.md](https://github.com/bevyengine/bevy/blob/v0.19.0/docs/linux_dependencies.md)。
 
 ## 创建项目
 
 ```console
 cargo new my_game
 cd my_game
-cargo add bevy@0.18.1
+cargo add bevy@0.19.0
 ```
 
-`cargo add bevy@0.18.1` 会在 `Cargo.toml` 里写入与本书一致的版本。然后验证一切就绪：
+`cargo add bevy@0.19.0` 会在 `Cargo.toml` 里写入与本书一致的版本。然后验证一切就绪：
 
 ```console
 cargo check
@@ -40,6 +40,8 @@ cargo check
 ```
 
 它的含义是：开发模式下，**你自己的代码**用低优化（编译快），**所有依赖**用高优化（只编译一次，值得）。游戏的运行性能大头在引擎代码里，所以这样配置后，开发期的游戏跑起来依然流畅，而你每次改代码的重编译却很快。
+
+`debug = false` 关掉的是**依赖的调试信息**，省的是磁盘：你自己的代码仍带完整调试信息，断点、单步都不受影响；但引擎那几百个依赖 crate 的调试符号你几乎用不上，保留它们会让每个编译出的可执行文件都背上一份 GB 级的符号文件，`target` 目录动辄膨胀到几十甚至上百 GB。
 
 另一个常用手段是 `dynamic_linking`——把 Bevy 链接成动态库，跳过大部分链接时间：
 

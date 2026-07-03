@@ -81,7 +81,7 @@ fn main() {
                 battle.run_if(in_state(IsPaused::Running)),
                 scoring.run_if(
                     in_state(GameState::Playing { demo: false })
-                        .and(in_state(IsPaused::Running)),
+                        .and_then(in_state(IsPaused::Running)),
                 ),
                 paused_screen.run_if(in_state(IsPaused::Paused)),
             )

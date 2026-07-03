@@ -329,7 +329,7 @@ fn breathe_lantern(
     let dim = Color::srgba(1.0, 0.62, 0.20, 0.06);
     let warm = Color::srgba(1.0, 0.68, 0.24, 0.18);
     let breath = 0.5 + 0.5 * (time.elapsed_secs() * 2.1).sin();
-    if let Some(material) = materials.get_mut(&glow.0) {
+    if let Some(mut material) = materials.get_mut(&glow.0) {
         material.color = dim.mix(&warm, breath);
     }
 }

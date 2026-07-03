@@ -152,20 +152,27 @@ def _is_wall(r, g, b):  # 戏台木框
 
 
 class Bot:
-    """凭像素打球：找到球和凳，预测落点站好位；球趴凳上就按空格发球。"""
+    """凭像素打球：找到球和凳，预测落点站好位；球趴凳上就按空格发球。
 
-    # 物理像素几何（125% 缩放）：墙内沿 ±423 世界单位、球半径 11、凳面世界 y −271
-    X_MIN = (640 - 423 + 11) * 1.25
-    X_MAX = (640 + 423 - 11) * 1.25
-    CATCH_Y = (360 + 271 - 11) * 1.25  # 球心到这条线就该被凳接住
+    几何常量一律按逻辑像素（1280×720 窗口坐标系）写，首帧按窗口实际
+    物理宽度定标 k = 宽/1280——显示器缩放 100%/125% 都不用改数。
+    """
 
     def __init__(self, hwnd: int):
         self.hwnd = hwnd
+        self.k = 0.0  # 物理/逻辑定标，首帧算
         self.held: str | None = None
         self.last_serve = 0.0
         self.prev: tuple[float, float, float] | None = None  # (t, x, y)
         self.descents = 0  # 球第几次回落——用来轮换接球偏移
         self.prev_vy = 0.0
+
+    def _calibrate(self, width: int) -> None:
+        self.k = width / 1280.0
+        # 墙内沿 ±423 世界单位、球半径 11、凳面世界 y −271
+        self.X_MIN = (640 - 423 + 11) * self.k
+        self.X_MAX = (640 + 423 - 11) * self.k
+        self.CATCH_Y = (360 + 271 - 11) * self.k  # 球心到这条线就该被凳接住
 
     def _hold(self, key: str | None) -> None:
         if self.held == key:
@@ -197,24 +204,27 @@ class Bot:
             except RuntimeError:
                 return True  # 夺不回来就这步歇着，下一步再试——别把整局崩掉
         w, h = img.size
+        if not self.k:
+            self._calibrate(w)
+        k = self.k
         px = img.load()
-        # 顶墙在物理 y≈129..146（世界 y 250±7 → 逻辑 103..117 → ×1.25）；
+        # 顶墙横带：世界 y 250±7 → 逻辑 103..117，两侧各留 1 像素余量；
         # 只扫横向中段（避开两侧立柱），结算屏一出（墙没了）立刻知道
-        if not _centroid(px, w * 2 // 3, h, 128, 148, _is_wall, step=6, x0=w // 3):
+        if not _centroid(px, w * 2 // 3, h, int(102 * k), int(118 * k), _is_wall, step=6, x0=w // 3):
             self._hold(None)
             return False
         now = time.time()
-        ball = _centroid(px, w, h, 120, h, _is_ball, step=8)
-        # 条凳在物理 y≈789..811（世界 y −280±9）
-        paddle = _centroid(px, w, h, 770, 835, _is_paddle)
+        ball = _centroid(px, w, h, int(96 * k), h, _is_ball, step=8)
+        # 条凳横带：世界 y −280±9 → 逻辑 631..649，上下再放宽些
+        paddle = _centroid(px, w, h, int(616 * k), int(668 * k), _is_paddle)
         if not (ball and paddle):
             self._hold(None)
             return True
         bx, by = ball[0], ball[1]
         pad_x = paddle[0]
 
-        # 球趴在凳上（粘球高度 ≈772）：发球
-        if by > 760 and abs(bx - pad_x) < 90 and now - self.last_serve > 0.8:
+        # 球趴在凳上（粘球高度：逻辑 y≈618）：发球
+        if by > 608 * k and abs(bx - pad_x) < 72 * k and now - self.last_serve > 0.8:
             _send(_key("SPACE", False))
             time.sleep(0.04)
             _send(_key("SPACE", True))
@@ -223,23 +233,24 @@ class Bot:
         # 速度估计 → 落点预测；球上行或速度未知时回到球的正下方待命。
         # 接球点轮换三档偏移：球没有“击点改角”，全靠换接球位置扫开上行走廊
         target = bx
+        falling = 32.0 * k  # “在掉”的 vy 阈值（像素/秒）
         if self.prev:
             t0, x0, y0 = self.prev
             dt = now - t0
             if 0.01 < dt < 0.5:
                 vx, vy = (bx - x0) / dt, (by - y0) / dt
-                if vy > 40.0 >= self.prev_vy:  # 由升转降：换一档接球偏移
+                if vy > falling >= self.prev_vy:  # 由升转降：换一档接球偏移
                     self.descents += 1
-                if vy > 40.0:  # 物理 y 向下为正：在掉
+                if vy > falling:  # 像素 y 向下为正：在掉
                     target = self._landing_x(bx, by, vx, vy)
-                    if by < 500:  # 球还高：用三档接球偏移扫开走廊；进入低空就纯接球
-                        target += (-26.0, 0.0, 26.0)[self.descents % 3]
+                    if by < 400 * k:  # 球还高：用三档接球偏移扫开走廊；进入低空就纯接球
+                        target += (-21.0 * k, 0.0, 21.0 * k)[self.descents % 3]
                 self.prev_vy = vy
         self.prev = (now, bx, by)
 
-        if target - pad_x > 16:
+        if target - pad_x > 13 * k:
             self._hold("D")
-        elif target - pad_x < -16:
+        elif target - pad_x < -13 * k:
             self._hold("A")
         else:
             self._hold(None)
@@ -269,8 +280,8 @@ def bot_play(ex: Example, secs: float, on_frame=None) -> bool:
                 if misses >= 3:
                     curtain = True
                     break
-            # 球在低空时进入急速模式：不睡，全速追帧
-            if not (bot.prev and bot.prev[2] > 560):
+            # 球在低空（逻辑 y>448）时进入急速模式：不睡，全速追帧
+            if not (bot.prev and bot.k and bot.prev[2] > 448 * bot.k):
                 time.sleep(0.03)
     finally:
         bot.release()
@@ -361,6 +372,27 @@ def ball_world(img: Image.Image):
     return hit[0] - w / 2, h / 2 - hit[1]
 
 
+def _is_tile_px(r, g, b):  # 素瓦 (133,158,168)
+    return 118 <= r <= 148 and 143 <= g <= 173 and 153 <= b <= 183
+
+
+def _is_glazed_px(r, g, b):  # 筒瓦釉色 (69,110,143)
+    return 54 <= r <= 84 and 95 <= g <= 125 and 128 <= b <= 158
+
+
+def bricks_left(img: Image.Image) -> int:
+    """在逻辑帧里按瓦色面积估算场上还剩几片瓦（一片 92×26）。"""
+    px = img.convert("RGB").load()
+    w, h = img.size
+    n = 0
+    for y in range(96, 380, 3):
+        for x in range(0, w, 3):
+            r, g, b = px[x, y]
+            if _is_tile_px(r, g, b) or _is_glazed_px(r, g, b):
+                n += 1
+    return round(n / (92 * 26 / 9))
+
+
 # 球场的常用裁切（逻辑像素）：场地连同记分牌一行
 ARENA = (170, 20, 1110, 720)
 
@@ -448,8 +480,9 @@ def fig_05_tile_wall() -> None:
 def fig_06_scoreboard() -> None:
     """Figure 20-6：记分牌与瓦阵对账——缺了几片，牌上就记几片。
 
-    bot 陪打 25 秒、顺手收帧；取“球还活着”的最后一帧（20-5 还没有补球，
-    球一掉分数就冻结，那一帧正是战况最厚的一帧）。
+    bot 陪打 25 秒、顺手收帧；从帧序列里挑“恰好碎了 3 片、球还活着”
+    的第一帧——缺口少，读者一眼数得过来，正文的对账才轻省（bot 手气
+    太顺时最后一帧能碎十几片，数不过来）。
     """
     frames: list[Image.Image] = []
     last = [0.0]
@@ -465,7 +498,9 @@ def fig_06_scoreboard() -> None:
         ex.wait_until(0.3)  # 球出生就在飞，第一落点要从头追
         bot_play(ex, 25.0, on_frame=collect)
     alive = [f for f in frames if ball_world(f)]
-    pick = alive[-1] if alive else frames[-1]
+    pick = next((f for f in alive if bricks_left(f) == 53), None)  # 恰碎 3 片
+    if pick is None:  # 0.5s 一帧偶尔跳过 3：放宽到 3~5 片，正文对账仍数得清
+        pick = next((f for f in alive if 51 <= bricks_left(f) <= 53), alive[-1] if alive else frames[-1])
     save_png(pick.crop((170, 24, 1110, 500)), "fig-20-06-scoreboard.png")
 
 

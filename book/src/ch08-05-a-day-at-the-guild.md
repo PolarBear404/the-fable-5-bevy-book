@@ -6,7 +6,7 @@
 {{#include ../../code/ch08-events-observers/src/main.rs}}
 ```
 
-<span class="caption">Listing 8-10：完整示例——公会的一天（src/main.rs）</span>
+<span class="caption">Listing 8-11：完整示例——公会的一天（src/main.rs）</span>
 
 ```console
 cargo run -p ch08-events-observers
@@ -60,15 +60,16 @@ cargo run -p ch08-events-observers
 
 - **Event 是即时事件**：`#[derive(Event)]` 定义、无需注册，`commands.trigger` 走命令队列，应用的那一刻所有匹配 observer 当场同步跑完；没有缓冲、没有游标，错过即不存在
 - **Observer 是头号参数为 `On<E>` 的系统**：其余参数随意声明；同一事件可挂任意多个，但相互顺序无保证；observer 的真身是挂着 `Observer` 组件的实体
+- **`run_if` 同样适用**：`add_observer(系统.run_if(条件))`，条件在每次触发、该 observer 运行前评估；拦下的是这一个 observer，事件本身照常送达其他听众
 - **EntityEvent 带准星**：`entity` 字段（或 `#[event_target]`）锁定目标，全局 observer 与 `.observe()` 挂的专属 observer 都会运行；目标可能已销毁，`get` + `let-else` 防御
-- **生命周期事件五件套**：`Add`/`Insert` 管上身（首次/每次），`Replace`/`Remove` 管清退（值/有无），`Despawn` 管销毁；移除类事件运行在数据消失之前；纯改值不触发任何一个
+- **生命周期事件五件套**：`Add`/`Insert` 管上身（首次/每次），`Discard`/`Remove` 管清退（值/有无），`Despawn` 管销毁；移除类事件运行在数据消失之前；纯改值不触发任何一个
 - **observer 触发链在同一个同步点内递归跑完**：联动零延迟，但引擎不查环，无限连锁会栈溢出
 - **组件钩子是组件的构造/析构函数**：`fn(DeferredWorld, HookContext)` 固定签名，每组件每种至多一个；添加时钩子先于 observer，移除时 observer 先于钩子
 
 ## 练习
 
-1. **零改动加戏**：给 Listing 8-3 的诅咒之剑再挂第二个专属 observer（比如“诅咒之剑：还有完没完！”），同时给铁剑也配一句专属台词。运行验证：同一实体可以叠多个专属 observer，且原有代码一行不动。
-2. **顺序侦探**：把 Listing 8-6 剧本里的第 3 帧（拆附魔）整段删掉，先在纸上预测第 4、5 帧各会打出哪几行、顺序如何，再运行对答案。提示：第 4 帧的 `Add` 还响吗？
-3. **环为什么没爆**：在 Listing 8-7 的 `report_glow` 里加一行 `commands.entity(add.entity).insert(Flaming);`——表面看这构成了 `Flaming → Glowing → Flaming` 的死循环。先预测程序的命运，再运行验证，然后解释它为什么活了下来。想清楚之后再回答追问：如果 `attach_glow` 监听的不是 `On<Add, Flaming>` 而是 `On<Insert, Flaming>`，结局如何？（不必真跑——答案是无限递归直到栈溢出，引擎不会替你检测环路。）
+1. **零改动加戏**：给 Listing 8-4 的诅咒之剑再挂第二个专属 observer（比如“诅咒之剑：还有完没完！”），同时给铁剑也配一句专属台词。运行验证：同一实体可以叠多个专属 observer，且原有代码一行不动。
+2. **顺序侦探**：把 Listing 8-7 剧本里的第 3 帧（拆附魔）整段删掉，先在纸上预测第 4、5 帧各会打出哪几行、顺序如何，再运行对答案。提示：第 4 帧的 `Add` 还响吗？
+3. **环为什么没爆**：在 Listing 8-8 的 `report_glow` 里加一行 `commands.entity(add.entity).insert(Flaming);`——表面看这构成了 `Flaming → Glowing → Flaming` 的死循环。先预测程序的命运，再运行验证，然后解释它为什么活了下来。想清楚之后再回答追问：如果 `attach_glow` 监听的不是 `On<Add, Flaming>` 而是 `On<Insert, Flaming>`，结局如何？（不必真跑——答案是无限递归直到栈溢出，引擎不会替你检测环路。）
 
 下一章把目光从单个实体放大到实体**之间**：长戟属于小芙，小芙和坐骑同进退——`ChildOf`/`Children` 父子树、自定义关系、级联销毁。你在本章见过的钩子和生命周期事件，正是那套机制的地基。

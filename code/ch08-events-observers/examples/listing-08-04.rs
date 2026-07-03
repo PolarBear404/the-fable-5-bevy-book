@@ -1,7 +1,8 @@
-//! Listing 8-4：鉴定单追进了熔炉——事件送达时，目标可能已经没了
+//! Listing 8-4：EntityEvent——鉴定室里指名道姓
 
 use bevy::prelude::*;
 
+/// 实体事件：某件物品被鉴定了——entity 字段就是事件的目标
 #[derive(EntityEvent)]
 struct Identified {
     entity: Entity,
@@ -15,25 +16,32 @@ struct Item {
 fn main() {
     let mut app = App::new();
     app.add_observer(record)
-        .add_systems(Update, melt_then_identify);
+        .add_systems(Startup, stock_items)
+        .add_systems(Update, identify_all);
 
     println!("—— 第 1 帧 ——");
     app.update();
 }
 
-/// 学徒：先把剑丢进熔炉，再递交对它的鉴定单
-fn melt_then_identify(mut commands: Commands) {
-    let sword = commands.spawn(Item { name: "铁剑" }).id();
-    commands.entity(sword).despawn();
-    println!("学徒：剑已经熔了，但鉴定单还是递了上去……");
-    commands.trigger(Identified { entity: sword });
+fn stock_items(mut commands: Commands) {
+    commands.spawn(Item { name: "铁剑" });
+    // 给这把剑挂一个只属于它的 observer
+    commands
+        .spawn(Item { name: "诅咒之剑" })
+        .observe(|_identified: On<Identified>| {
+            println!("诅咒之剑：（剑身震颤）谁准你看穿我的底细！");
+        });
 }
 
-/// 鉴定师：查不到目标就退单，而不是 unwrap
+/// 鉴定师：把架上的物品挨个鉴定一遍
+fn identify_all(items: Query<Entity, With<Item>>, mut commands: Commands) {
+    for entity in &items {
+        commands.trigger(Identified { entity });
+    }
+}
+
+/// 全局 observer：每一次鉴定都记录在案，不论目标是谁
 fn record(identified: On<Identified>, items: Query<&Item>) {
-    let Ok(item) = items.get(identified.entity) else {
-        println!("鉴定师：单子上的 {} 已经不在了，退单。", identified.entity);
-        return;
-    };
-    println!("鉴定师：{} 鉴定完毕。", item.name);
+    let item = items.get(identified.entity).unwrap();
+    println!("鉴定师：{} 鉴定完毕，记录在案。", item.name);
 }

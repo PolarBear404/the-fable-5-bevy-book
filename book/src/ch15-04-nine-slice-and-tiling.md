@@ -74,10 +74,11 @@ cargo run -p ch15-sprites --example listing-15-09
 小棠：边框留宽点总没错吧——咦，框呢？
 ```
 
-控制台里多了一行红色的 ERROR——这次引擎开口了：
+控制台里多了红色的 ERROR——这次引擎开口了：
 
 ```text
 ERROR bevy_sprite::texture_slice::slicer: TextureSlicer::border has out of bounds values. No slicing will be applied
+ERROR bevy_sprite::texture_slice::slicer: TextureSlicer::border has out of bounds values. No slicing will be applied
 ```
 
-跟上一节那场无声的图集事故不同，这次有日志可循：切片器发现 `border` 越界，宣布“不切了”，整张图退回 `Auto` 式硬拉——画面上是一个角花变形的框（跟 Figure 15-11 的一号框同款），控制台里是一行明白话。**border 的上限是图宽（高）的一半**；想要更厚的框，改画稿尺寸，别硬掰裁线。
+同一句话连报两声不是回音——图片就绪的当帧和资产事件送达的次帧各触发了一轮切片计算，两轮撞上的是同一个越界。跟上一节那场无声的图集事故不同，这次有日志可循：切片器发现 `border` 越界，宣布“不切了”，整张图退回 `Auto` 式硬拉——画面上是一个角花变形的框（跟 Figure 15-11 的一号框同款），控制台里是明白话。**border 的上限是图宽（高）的一半**；想要更厚的框，改画稿尺寸，别硬掰裁线。

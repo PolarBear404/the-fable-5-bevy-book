@@ -104,8 +104,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("袖箭"),
         TextFont {
-            font: regular,
-            font_size: 26.0,
+            font: regular.into(),
+            font_size: FontSize::Px(26.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),

@@ -12,6 +12,7 @@
 - **开机进度条**——整本戏的家当一起装货，配上第 10 章的 States，全齐才开机；
 - **剧本也是资产**——`#[derive(Asset)]` 加自定义 `AssetLoader`，教库房认识我们自己发明的 `.script` 文本格式；
 - **现场改词**——`file_watcher` 热重载：编剧存盘，台上立刻换词，连图片都能运行中偷天换日；
+- **白纸黑字**——`AssetSaver` 与 `save_using_saver`：台上改定的剧本，运行中存回磁盘，再由装载器原样读回；
 - **库房的细则**——加载设置与 `.meta` 档案、嵌进可执行文件的 embedded 资产、发布期的 asset processing 概述。
 
 这些类型住在 `bevy_asset` 这个 crate 里；图片资产的具体类型 `Image` 则来自 `bevy_image`（它的渲染细节是下一章的事）。

@@ -1,77 +1,62 @@
-//! Listing 8-6：五个生命周期事件同台——一把长戟的五幕剧
+//! Listing 8-6：生命周期事件——附魔台上，装上点火、卸下熄灭
 
 use bevy::prelude::*;
 
-/// 火焰附魔，这回带上了威力数值
+/// 火焰附魔。它只是个普通组件——没有为它写任何 trigger
 #[derive(Component)]
-struct Flaming {
-    power: u32,
-}
+struct Flaming;
 
 #[derive(Component)]
-struct Weapon;
+struct Weapon {
+    name: &'static str,
+}
 
 fn main() {
     let mut app = App::new();
-    app.add_observer(|add: On<Add, Flaming>, q: Query<&Flaming>| {
-        println!("  [Add]     附魔初次上身，威力 {}", q.get(add.entity).unwrap().power);
-    })
-    .add_observer(|insert: On<Insert, Flaming>, q: Query<&Flaming>| {
-        println!("  [Insert]  新值写入完毕，当前威力 {}", q.get(insert.entity).unwrap().power);
-    })
-    .add_observer(|replace: On<Replace, Flaming>, q: Query<&Flaming>| {
-        println!("  [Replace] 旧值即将清退，此刻还能读到威力 {}", q.get(replace.entity).unwrap().power);
-    })
-    .add_observer(|remove: On<Remove, Flaming>, q: Query<&Flaming>| {
-        println!("  [Remove]  附魔彻底离身，临走前威力 {}", q.get(remove.entity).unwrap().power);
-    })
-    .add_observer(|_despawn: On<Despawn, Flaming>| {
-        println!("  [Despawn] 整把武器进了熔炉");
-    })
-    .add_systems(Startup, forge)
-    .add_systems(Update, enchant_script);
+    app.add_observer(ignite)
+        .add_observer(extinguish)
+        .add_systems(Startup, forge)
+        .add_systems(Update, enchant_script);
 
-    for frame in 1..=5 {
+    for frame in 1..=2 {
         println!("—— 第 {frame} 帧 ——");
         app.update();
     }
 }
 
 fn forge(mut commands: Commands) {
-    commands.spawn(Weapon);
+    commands.spawn(Weapon { name: "小芙的长戟" });
 }
 
-/// 附魔师的五天日程
+/// 附魔师的工作日程：第 1 帧装上火焰附魔，第 2 帧卸下来
 fn enchant_script(
     weapons: Query<Entity, With<Weapon>>,
     mut commands: Commands,
     mut frame: Local<u32>,
 ) {
     *frame += 1;
-    let Ok(weapon) = weapons.single() else {
-        return;
-    };
+    let weapon = weapons.single().unwrap();
     match *frame {
         1 => {
-            println!("附魔师：第一次附魔，威力 3。");
-            commands.entity(weapon).insert(Flaming { power: 3 });
+            println!("附魔师：上火焰附魔——");
+            commands.entity(weapon).insert(Flaming);
         }
         2 => {
-            println!("附魔师：重新附魔，威力升到 9。");
-            commands.entity(weapon).insert(Flaming { power: 9 });
-        }
-        3 => {
-            println!("附魔师：把附魔拆下来。");
+            println!("附魔师：拆掉附魔——");
             commands.entity(weapon).remove::<Flaming>();
-        }
-        4 => {
-            println!("附魔师：再附一次，威力 6。");
-            commands.entity(weapon).insert(Flaming { power: 6 });
-        }
-        5 => {
-            println!("附魔师：这把回炉重造！");
-            commands.entity(weapon).despawn();
         }
         _ => {}
     }
+}
+
+/// Flaming 组件装上的瞬间触发
+fn ignite(add: On<Add, Flaming>, weapons: Query<&Weapon>) {
+    let weapon = weapons.get(add.entity).unwrap();
+    println!("{} 轰地烧了起来！", weapon.name);
+}
+
+/// Flaming 组件卸下的瞬间触发
+fn extinguish(remove: On<Remove, Flaming>, weapons: Query<&Weapon>) {
+    let weapon = weapons.get(remove.entity).unwrap();
+    println!("{} 上的火光熄灭了。", weapon.name);
 }

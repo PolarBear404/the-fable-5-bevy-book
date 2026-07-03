@@ -12,11 +12,11 @@
 cargo run -p ch13-cameras --example listing-13-08
 ```
 
-窗口照常打开，画面看上去也“正常”——但控制台立刻开始抗议，**每帧一条**，几秒钟刷出上百行：
+窗口照常打开，画面看上去也“正常”——但控制台立刻抗议了一声：
 
 ```text
 WARN bevy_render::camera: Camera order ambiguities detected for active cameras with
-the following priorities: {(0, Some(Window(NormalizedWindowRef(0v0))))}. To fix this,
+the following priorities: {(0, Some(Window(NormalizedWindowRef(65v0))))}. To fix this,
 ensure there is exactly one Camera entity spawned with a given order for a given
 RenderTarget. Ambiguities should be resolved because either (1) multiple active
 cameras were spawned accidentally, which will result in rendering multiple instances
@@ -24,7 +24,7 @@ of the scene or (2) for cases where multiple active cameras is intentional,
 ambiguities could result in unpredictable render results.
 ```
 
-引擎的意思翻译过来：两台启用的相机往**同一个渲染目标**（主窗口）画画，可它们的 `order` 都是默认的 `0`——谁先画谁后画，没有说法。后画的会整幅压住先画的（包括清屏那一下），于是你看到的“正常画面”其实只是其中一台的产出，**至于是哪台，引擎不保证**。这是那种“今天看着对、改天换台机器就闪烁”的隐患，所以警告每帧追着你喊。
+引擎的意思翻译过来：两台启用的相机往**同一个渲染目标**（主窗口）画画，可它们的 `order` 都是默认的 `0`——谁先画谁后画，没有说法。后画的会整幅压住先画的（包括清屏那一下），于是你看到的“正常画面”其实只是其中一台的产出，**至于是哪台，引擎不保证**。这是那种“今天看着对、改天换台机器就闪烁”的隐患。警告只报这一声就归于安静——它混在启动日志里一眼扫过去很容易漏掉，而安静不等于没事。
 
 两味药对症：
 

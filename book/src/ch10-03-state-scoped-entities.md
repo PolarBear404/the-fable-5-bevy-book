@@ -59,7 +59,7 @@ cargo run -p ch10-states --example listing-10-06
 
 <span class="caption">Listing 10-7：挂上 DespawnOnExit，离开 Playing 时引擎自动清场</span>
 
-`DespawnOnExit(state)` 是个普通组件，意思是：**世界离开 `state` 的那一刻，把我连同子树一起 despawn**。再跑一遍同样的剧本：
+`DespawnOnExit(state)` 是个普通组件，意思是：**世界离开 `state` 的那一刻，把我连同子树一起 despawn**。同样的剧本再跑一遍，结尾添了一场戏——上一节撞过开始键的那只手肘，这回落在挂好了 `DespawnOnExit` 的场子上：
 
 ```console
 cargo run -p ch10-states --example listing-10-07
@@ -84,15 +84,22 @@ cargo run -p ch10-states --example listing-10-07
 —— 第 6 帧 ——
   画面（Playing）上站着 2 个角色：勇者、史莱姆
 —— 第 7 帧 ——
+  罗兰探身够汽水，手肘又撞上了开始键——又一次 set(Playing)！
+  画面（Playing）上站着 2 个角色：勇者、史莱姆
+  [OnEnter(Playing)] 勇者与史莱姆登场
+—— 第 8 帧 ——
+  画面（Playing）上站着 2 个角色：勇者、史莱姆
+—— 第 9 帧 ——
   老板：打烊喽。
   画面（Playing）上站着 2 个角色：勇者、史莱姆
 ```
 
-第 4 帧空无一人，第 6 帧恰好一套。几条边界，把这个组件用稳：
+第 4 帧空无一人，第 6 帧恰好一套——两处病灶都好了。第 7 帧的手肘另有看头：又一次同值 `set(Playing)`，`OnEnter` 照例重跑、又生成了一套角色，可第 8 帧清点仍是 2 个，不是 Listing 10-6 那种越攒越多。差就差在**同值转换也是一次不折不扣的转换，清场照做**：旧的一套在转换里先被收走，`OnEnter` 再摆上新的一套——一肘子换来一场干净的重开。上一节说“重开本关就是再 `set` 一次当前关卡”，兑现的正是这个效果；反过来，不想被手滑重开，`set_if_neq` 拦下的同值转换连清场带搭台一起拦掉。
+
+几条边界，把这个组件用稳：
 
 - **清场发生在转换期间**，与 `OnExit(Playing)` 同一阶段、且保证在 `OnEnter(新状态)` 运行之前落地——新状态的搭台系统看到的一定是清过的场子。
 - **despawn 是第 9 章的那个 despawn**：带 `Children` 等 `linked_spawn` 关系的，整棵子树一起走。给“局内场景”的根实体挂一个 `DespawnOnExit`，整棵树就托管了。
-- **同值转换不清场**。上一节手肘撞出的 `Playing → Playing` 会重跑 `OnExit`/`OnEnter`，但 `DespawnOnExit` 按兵不动——于是 `OnEnter` 里的 spawn 会**再来一套**。要让“重开本关”干净利落，用不同的状态值绕一圈，或者别依赖同值转换重开。
 - 还有个反向的兄弟 **`DespawnOnEnter(state)`**：进入某状态时清。常见用法是挂在“游戏结束”画面的遗留物上——进入 `Menu` 就扫掉。
 
 **“OnEnter 搭台 + DespawnOnExit 挂牌”就是 Bevy 管理阶段性实体的标准搭配**：生成处声明归属，退场全自动，加多少种局内实体都不用维护清单。第 20 章的 Breakout 会原样复用这套搭配。

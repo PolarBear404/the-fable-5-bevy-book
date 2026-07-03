@@ -29,15 +29,18 @@ edition = "2024"
 publish = false
 
 [workspace.dependencies]
-bevy = "=0.18.1"
+bevy = "=0.19.0"
 
-# Bevy 官方推荐的开发期配置：自身代码 O1、依赖 O3，加快迭代时的编译与运行
+# Bevy 官方推荐的开发期配置：自身代码 O1、依赖 O3，加快迭代时的编译与运行。
+# 依赖不生成调试信息：否则每个可执行文件都要背上整个依赖树的调试符号，
+# 单个 .pdb 可达 GB 级，本 workspace 数百个 example 会把 target 撑到数百 GB
 # ANCHOR: dev_profile
 [profile.dev]
 opt-level = 1
 
 [profile.dev.package."*"]
 opt-level = 3
+debug = false
 # ANCHOR_END: dev_profile
 
 # 编 wasm 网页 demo 专用：在 release 基础上死压体积。不依赖外部 wasm-opt，

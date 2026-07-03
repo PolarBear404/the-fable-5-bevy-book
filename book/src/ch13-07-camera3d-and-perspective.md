@@ -2,7 +2,7 @@
 
 正交投影“远近一样大”的脾气，在 2D 里是美德——图层本来就不该有近大远小。可一进三维就成了灾难：没有纵深，走廊是一面墙，深渊是一块地板。三维世界的取景器需要另一条换算规则：**透视投影**（perspective projection）——离相机越近的东西占画面越大，平行的街道在远方收束于一点，跟人眼和真实摄影机一个原理。
 
-Bevy 里这条规则就是 `Projection` 的另一个变体 `Perspective(PerspectiveProjection)`，而 `Camera3d` 默认带的正是它。`PerspectiveProjection` 四个字段：
+Bevy 里这条规则就是 `Projection` 的另一个变体 `Perspective(PerspectiveProjection)`，而 `Camera3d` 默认带的正是它。`PerspectiveProjection` 的核心字段有四个：
 
 | 字段 | 含义 | 默认 |
 |---|---|---|
@@ -10,6 +10,8 @@ Bevy 里这条规则就是 `Projection` 的另一个变体 `Perspective(Perspect
 | `aspect_ratio` | 画面宽高比，引擎随视口自动维护 | 1.0 |
 | `near` | 近裁剪面：比这更近的不画 | 0.1 |
 | `far` | 远裁剪面：比这更远的不画 | 1000.0 |
+
+（第五个字段 `near_clip_plane` 能把近裁剪面斜着摆，默认就贴在 `near` 平面上——那是镜面、传送门一类特效的后门，本书不展开。）
 
 跟正交的取景“框”不同，透视的取景体是一个**锥台**（frustum，视锥）：从相机出发张开 `fov` 角度、被 `near` 和 `far` 两刀截断的四棱台。`fov` 就是变焦环——调大是广角（视野宽、边缘畸变），调小是长焦（视野窄、画面压缩）；`near = 0.1` 也解释了和 2D 的一个分别：三维相机**身后和贴脸的东西不入镜**，这正是第 4 节 `default_3d()` 把 `near` 设为 0 而 2D 版本设为 −1000 的道理。
 

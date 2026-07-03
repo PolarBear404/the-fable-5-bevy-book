@@ -25,7 +25,7 @@ cargo run -p ch04-systems-queries --example listing-04-04
 ```
 
 ```text
-过夜的住户：阿黄、小黑、卷卷、小白
+过夜的住户：小黑、卷卷、阿黄、小白
 没铃铛的羊：小黑、卷卷
 没铃铛的住户：小黑、卷卷
 ```

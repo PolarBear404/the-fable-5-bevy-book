@@ -272,8 +272,8 @@ fn rig_scoreboard(mut commands: Commands, asset_server: Res<AssetServer>) {
         ScoreBoard,
         Text2d::new(format!("瓦 0/{TOTAL_BRICKS}")),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-bold.otf"),
-            font_size: 30.0,
+            font: asset_server.load("fonts/book-sans-sc-bold.otf").into(),
+            font_size: FontSize::Px(30.0),
             ..default()
         },
         TextColor(TEXT_COLOR),

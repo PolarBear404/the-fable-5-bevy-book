@@ -236,9 +236,9 @@ def fig_04_cooldown() -> None:
     )
 
 
-def fig_08_tally() -> None:
-    """Figure 18-8：两本账对不上——慢板丢拍 vs 拖戏重复（Listing 18-7）。"""
-    with Example(exe("listing-18-07"), workdir=CODE) as ex:
+def fig_09_tally() -> None:
+    """Figure 18-9：两本账对不上——慢板丢拍 vs 拖戏重复（Listing 18-8）。"""
+    with Example(exe("listing-18-08"), workdir=CODE) as ex:
         force_foreground(ex.hwnd)
         ex.wait_until(2.5)
         for _ in range(8):  # 慢板下快速点按八下
@@ -258,18 +258,18 @@ def fig_08_tally() -> None:
             [slow.crop(crop), dragged.crop(crop)],
             ["慢板点八下：鼓师几乎全漏", "拖戏再点两下：每招被收近十遍"],
         ),
-        "fig-18-08-tally.png",
+        "fig-18-09-tally.png",
     )
 
 
-def fig_10_ghost_vs_glide() -> None:
-    """Figure 18-10：《赶月》——替身一顿一顿，阿燕每帧都在走（main）。"""
+def fig_11_ghost_vs_glide() -> None:
+    """Figure 18-11：《赶月》——替身一顿一顿，阿燕每帧都在走（main）。"""
     with Example(exe("main"), workdir=CODE) as ex:
         force_foreground(ex.hwnd)
         frames = ex.record(start=2.5, dur=5.0, fps=12)
     crop = (0, 150, 1280, 700)
     frames = [logical(f).crop(crop).resize((768, 330), Image.LANCZOS) for f in frames]
-    save_webp(frames, "fig-18-10-ghost-vs-glide.webp", fps=12, quality=68)
+    save_webp(frames, "fig-18-11-ghost-vs-glide.webp", fps=12, quality=68)
 
 
 # ---------------------------------------------------------------- 主流程
@@ -277,8 +277,8 @@ def fig_10_ghost_vs_glide() -> None:
 ALL = [
     fig_02_two_clocks,
     fig_04_cooldown,
-    fig_08_tally,
-    fig_10_ghost_vs_glide,
+    fig_09_tally,
+    fig_11_ghost_vs_glide,
 ]
 
 

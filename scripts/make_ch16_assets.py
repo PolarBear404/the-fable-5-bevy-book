@@ -39,6 +39,16 @@ FONTS = [
     ("NotoSansSC-Bold.otf", "book-sans-sc-bold.otf", "Book Sans SC Bold"),
 ]
 
+# Mona Sans（SIL OFL 1.1）：可变字体（wght 200–900、wdth 75–125），
+# 16.5 节的可变字体演示用。原样分发、不子集化，无需改名。
+# 与 Bevy 官方示例同一份文件；vendor/ 在场就直接复制，否则从 bevy 仓库下载。
+MONA_NAME = "MonaSans-VariableFont.ttf"
+MONA_URL = (
+    "https://raw.githubusercontent.com/bevyengine/bevy/v0.19.0/assets/fonts/"
+    + MONA_NAME
+)
+MONA_VENDOR = ROOT / "vendor" / "bevy" / "assets" / "fonts" / MONA_NAME
+
 OFL_NOTICE = """Book Sans SC（本书配套字体子集）
 ========================================
 
@@ -54,6 +64,15 @@ Name 'Source'. Copyright 2021 Google LLC, with Reserved Font Name
 完整许可证文本：https://openfontlicense.org
 原始字体仓库：https://github.com/notofonts/noto-cjk
 子集化脚本：scripts/make_ch16_assets.py
+
+----------------------------------------
+
+MonaSans-VariableFont.ttf（可变字体演示用，未作任何修改）
+
+Mona Sans
+Copyright (c) 2022 GitHub, Inc.
+以 SIL Open Font License, Version 1.1 原样分发。
+原始仓库：https://github.com/github/mona-sans
 """
 
 
@@ -150,6 +169,15 @@ def make_fonts() -> None:
         out.parent.mkdir(parents=True, exist_ok=True)
         subset.save_font(font, str(out), options)
         print(f"  assets/fonts/{out_name}  {out.stat().st_size // 1024} KB")
+
+    # Mona Sans：原样落位（vendor 优先，缺了再下载）
+    mona_out = ASSETS / "fonts" / MONA_NAME
+    if MONA_VENDOR.exists():
+        shutil.copyfile(MONA_VENDOR, mona_out)
+        print(f"  assets/fonts/{MONA_NAME}（复制自 vendor/bevy）")
+    else:
+        download(MONA_URL, mona_out)
+        print(f"  assets/fonts/{MONA_NAME}")
 
     (ASSETS / "fonts" / "OFL.txt").write_text(OFL_NOTICE, encoding="utf-8")
     print("  assets/fonts/OFL.txt")

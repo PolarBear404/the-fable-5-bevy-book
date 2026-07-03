@@ -24,8 +24,8 @@ fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text2d::new("《长风渡》序曲 · 循环中"),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-bold.otf"),
-            font_size: 36.0,
+            font: asset_server.load("fonts/book-sans-sc-bold.otf").into(),
+            font_size: FontSize::Px(36.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),

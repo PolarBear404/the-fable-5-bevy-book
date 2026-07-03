@@ -1,14 +1,11 @@
-//! Listing 16-6：把词排进字幕框——TextBounds 与 LineBreak
+//! Listing 16-6：可变字体——一副字模，千般字重
 
 use bevy::prelude::*;
-use bevy::text::TextBounds;
-
-const LINE: &str = "夜渡无人，秋水自横。雁背驮霜，橹声欸乃，一篙点破满江星。";
+use bevy::text::{FontVariationTag, FontVariations};
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .insert_resource(ClearColor(Color::srgb(0.72, 0.80, 0.76)))
         .add_systems(Startup, setup)
         .run();
 }
@@ -16,53 +13,68 @@ fn main() {
 // ANCHOR: setup
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2d);
-    let zh_font = asset_server.load("fonts/book-sans-sc-regular.otf");
-    let text_font = TextFont {
-        font: zh_font.clone(),
-        font_size: 28.0,
-        ..default()
-    };
+    // Mona Sans：可变字体，带 wght（200~900）与 wdth（75~125）两根轴
+    let mona: Handle<Font> = asset_server.load("fonts/MonaSans-VariableFont.ttf");
 
-    // 三只一模一样的字幕框，三种排版规矩
-    let cases = [
-        (220.0, "给宽度，自动换行", TextBounds::new_horizontal(560.0), LineBreak::WordBoundary),
-        (0.0, "不许换行", TextBounds::new_horizontal(560.0), LineBreak::NoWrap),
-        (-220.0, "宽高都给，装不下就裁", TextBounds::new(560.0, 30.0), LineBreak::WordBoundary),
-    ];
-    for (y, label, bounds, linebreak) in cases {
-        // 字幕框：ch15 的九宫格画框
+    // 左列：字重阶梯——同一个文件，weight 拨到哪儿就是哪儿
+    for (i, w) in [200u16, 400, 550, 700, 900].into_iter().enumerate() {
         commands.spawn((
-            Sprite {
-                image: asset_server.load("props/scroll-panel.png"),
-                custom_size: Some(Vec2::new(620.0, 110.0)),
-                image_mode: SpriteImageMode::Sliced(TextureSlicer {
-                    border: BorderRect::all(12.0),
-                    max_corner_scale: 4.0,
-                    ..default()
-                }),
+            Text2d::new(format!("NIGHT FERRY {w}")),
+            TextFont {
+                font: mona.clone().into(),
+                font_size: FontSize::Px(40.0),
+                weight: FontWeight(w),
                 ..default()
             },
-            Transform::from_xyz(80.0, y, 0.0),
-            // 词是框的子实体：跟着框走，画在框上面一层
-            children![(
-                Text2d::new(LINE),
-                text_font.clone(),
-                TextColor(Color::srgb(0.24, 0.16, 0.08)),
-                bounds,
-                TextLayout::new(Justify::Left, linebreak),
-                Transform::from_translation(Vec3::Z),
-            )],
+            Transform::from_xyz(-280.0, 240.0 - 80.0 * i as f32, 0.0),
         ));
-        // 旁注小签
+    }
+
+    // 右列上：字宽两档——压扁与撑开也是同一个文件
+    for (i, (label, width)) in [
+        ("Condensed", FontWidth::CONDENSED),
+        ("Expanded", FontWidth::EXPANDED),
+    ]
+    .into_iter()
+    .enumerate()
+    {
         commands.spawn((
             Text2d::new(label),
             TextFont {
-                font: zh_font.clone(),
-                font_size: 18.0,
+                font: mona.clone().into(),
+                font_size: FontSize::Px(40.0),
+                width,
                 ..default()
             },
-            Transform::from_xyz(-510.0, y, 0.0),
+            Transform::from_xyz(300.0, 240.0 - 80.0 * i as f32, 0.0),
         ));
     }
+
+    // 右列下：FontVariations 直接报轴名拨轴，weight/width 字段是它的省写
+    commands.spawn((
+        Text2d::new("wght 850, wdth 80"),
+        TextFont {
+            font: mona.clone().into(),
+            font_size: FontSize::Px(40.0),
+            font_variations: FontVariations::builder()
+                .set(FontVariationTag::WEIGHT, 850.0)
+                .set(FontVariationTag::WIDTH, 80.0)
+                .build(),
+            ..default()
+        },
+        Transform::from_xyz(300.0, 0.0, 0.0),
+    ));
+
+    // 对照：静态字体给 weight 拨轴——没轴可拨，纹丝不动
+    commands.spawn((
+        Text2d::new("静态字模拨字重 550"),
+        TextFont {
+            font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+            font_size: FontSize::Px(40.0),
+            weight: FontWeight(550),
+            ..default()
+        },
+        Transform::from_xyz(0.0, -260.0, 0.0),
+    ));
 }
 // ANCHOR_END: setup

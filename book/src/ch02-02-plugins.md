@@ -40,26 +40,27 @@ cargo run -p ch02-first-app --example listing-02-04
 这次**一个窗口打开了**（标题是可执行文件名——`Window` 的默认标题策略；首次运行前会停顿几秒，初始化显卡）。控制台里出现两类输出：先是几行 INFO 日志——`LogPlugin` 在记录系统信息和显卡型号——然后是刷屏的问候：
 
 ```text
-2026-06-11T17:00:21Z  INFO bevy_diagnostic::…: SystemInfo { os: "Windows 11 Home China", cpu: "13th Gen Intel(R) Core(TM) i7-13700H", … }
-2026-06-11T17:00:28Z  INFO bevy_render::renderer: AdapterInfo { name: "NVIDIA GeForce RTX 4070 Laptop GPU", backend: Vulkan, … }
+2026-07-02T06:06:44Z  INFO bevy_diagnostic::…: SystemInfo { os: "Windows 11 Home China", …, cpu: "13th Gen Intel(R) Core(TM) i7-13700H", … }
+2026-07-02T06:06:48Z  INFO bevy_render::renderer: AdapterInfo { name: "NVIDIA GeForce RTX 4070 Laptop GPU", …, backend: Vulkan, … }
+（略去几行 INFO：GPU 能力自检、窗口创建）
 Hello, Bevy!
 Hello, Bevy!
 （每帧一行，停不下来）
 ```
 
-`Update` 现在真的每帧跑一次——在写作本书的机器上，窗口开着的十来秒里刷了一万两千多行。眼下帧率之所以毫无节制，是因为这个 App 连相机都没有、无画可渲染，循环不受显示器刷新节奏的约束；画面与帧率的节奏控制在第 13、18 章展开。
+`Update` 现在真的每帧跑一次——在写作本书的机器上，窗口开着的十来秒里刷了一万六千多行。眼下帧率之所以毫无节制，是因为这个 App 连相机都没有、无画可渲染，循环不受显示器刷新节奏的约束；画面与帧率的节奏控制在第 13、18 章展开。
 
 **点击窗口的关闭按钮，程序退出**。这个行为来自 `WindowPlugin` 的默认退出条件：“所有窗口关闭即退出”。
 
 驱动这个循环的是 `WinitPlugin`——Bevy 与操作系统窗口体系的桥梁，基于 Rust 生态的跨平台窗口库 [winit](https://github.com/rust-windowing/winit)。它把 runner 替换成**操作系统的事件循环**：移动窗口、缩放、键鼠输入这些事件由系统推送给程序，程序每帧执行一轮调度并渲染。从此主循环不再是你代码里的某个 `loop`，而是操作系统、winit 与 Bevy 协作的产物——这也是 `run()` 之后的代码不该指望被执行的原因：在一些平台上，事件循环一结束进程就直接终止了。
 
-`DefaultPlugins` 按默认 feature 算有三十多个成员，本书后面的章节会逐个见到它们，这里只需要一个印象：
+`DefaultPlugins` 按默认 feature 算有四十多个成员，本书后面的章节会逐个见到它们，这里只需要一个印象：
 
 - **基础设施**：日志、时间、诊断、线程池
-- **窗口与输入**：`WindowPlugin`、`WinitPlugin`、`InputPlugin`、无障碍支持
-- **资产与场景**：`AssetPlugin`、`ScenePlugin`
-- **渲染一族**：渲染器、相机、灯光、Sprite、文本、UI、PBR、glTF、Gizmos
-- **其他**：音频、手柄、动画、状态机、拾取
+- **窗口与输入**：`WindowPlugin`、`WinitPlugin`、`InputPlugin`、输入焦点、剪贴板、无障碍支持
+- **资产与场景**：`AssetPlugin`、`ScenePlugin`、World 序列化
+- **渲染一族**：渲染器、相机、灯光、Sprite、文本、UI、PBR、glTF、Gizmos、后处理与抗锯齿
+- **其他**：音频、手柄、动画、状态机、拾取、UI 控件
 
 整组随 Cargo feature 裁剪（附录 B 有完整清单）；组内成员可以 `.set()` 定制，也可以 `.disable::<T>()` 禁用。何时用哪个组：做游戏用 `DefaultPlugins`，无头程序用 `MinimalPlugins`。
 
@@ -73,7 +74,7 @@ Hello, Bevy!
 
 <span class="caption">Listing 2-5：通过 .set() 配置 WindowPlugin</span>
 
-`Window` 是个普通结构体：`title` 是标题，`resolution` 是分辨率（单位为物理像素，`(800, 600).into()` 把元组转换过去）。它的字段很多，`..default()` 让其余一切保持默认——这个写法在 Bevy 代码里无处不在，之后不再解释。运行后，窗口标题变成“我的第一个 Bevy 窗口”，尺寸 800×600。
+`Window` 是个普通结构体：`title` 是标题，`resolution` 是分辨率（单位为逻辑像素，`(800, 600).into()` 把元组转换过去）。它的字段很多，`..default()` 让其余一切保持默认——这个写法在 Bevy 代码里无处不在，之后不再解释。运行后，窗口标题变成“我的第一个 Bevy 窗口”，尺寸 800×600——若系统开着显示缩放（Windows 上常见的 125%），窗口实际占用的物理像素会等比更多，这层换算 Bevy 自动打理，第 13 章会正面区分这两种像素。
 
 一个此刻可以不在意、但值得记一笔的事实：`Window` 本身是一个 Component，这个窗口就是 World 里的一个实体。在 Bevy 里连窗口都长在那张“表”上——第 35 章会用查询来操控多窗口。
 

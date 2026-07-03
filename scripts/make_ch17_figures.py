@@ -77,6 +77,8 @@ class INPUT(ctypes.Structure):
 INPUT_MOUSE, INPUT_KEYBOARD = 0, 1
 KEYEVENTF_KEYUP, KEYEVENTF_SCANCODE = 0x2, 0x8
 MOUSEEVENTF_MOVE = 0x0001
+# 连续注入的相对位移会被系统合并（coalesce）而丢量，加此标志逐条保真
+MOUSEEVENTF_MOVE_NOCOALESCE = 0x2000
 MOUSEEVENTF_LEFTDOWN, MOUSEEVENTF_LEFTUP = 0x0002, 0x0004
 MOUSEEVENTF_RIGHTDOWN, MOUSEEVENTF_RIGHTUP = 0x0008, 0x0010
 MOUSEEVENTF_WHEEL = 0x0800
@@ -167,13 +169,24 @@ def park_cursor(hwnd: int, fx: float, fy: float) -> None:
 
 
 def drag_right_button(dx: int, dy: int, steps: int = 12) -> None:
-    """按住右键做相对位移拖动（喂 MouseMotion）。"""
+    """按住右键做相对位移拖动（喂 MouseMotion）。
+
+    首尾都留足几帧余量：位移只在“右键按住”的帧里生效，若 DOWN/UP 与
+    某批位移挤进同一帧折叠（截图等卡顿时会发生），该帧 pressed 为 false、
+    整帧位移作废——拉开间隔保证 DOWN/UP 各自独立成帧，位移才全量到账。
+    """
     _send(_mouse(flags=MOUSEEVENTF_RIGHTDOWN))
-    time.sleep(0.05)
+    time.sleep(0.5)
     for _ in range(steps):
-        _send(_mouse(dx=dx // steps, dy=dy // steps, flags=MOUSEEVENTF_MOVE))
-        time.sleep(0.02)
-    time.sleep(0.05)
+        _send(
+            _mouse(
+                dx=dx // steps,
+                dy=dy // steps,
+                flags=MOUSEEVENTF_MOVE | MOUSEEVENTF_MOVE_NOCOALESCE,
+            )
+        )
+        time.sleep(0.05)
+    time.sleep(0.5)
     _send(_mouse(flags=MOUSEEVENTF_RIGHTUP))
 
 

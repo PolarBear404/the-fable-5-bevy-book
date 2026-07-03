@@ -1,4 +1,4 @@
-//! Listing 16-11：《夜战》练功房——伤害飘字
+//! Listing 16-15：《夜战》练功房——伤害飘字
 //! 阿燕按节拍劈木人桩：每记一击触发一个 Event（第 8 章），Observer 当场
 //! 铸一条会上飘、会淡出的 Text2d；会心一击换大字号、金色与"会心！"小签。
 //! 连击牌用 Text2dWriter 改 TextSpan 的数字。
@@ -133,8 +133,8 @@ fn setup(
         ComboBoard,
         Text2d::new("连击 ×"),
         TextFont {
-            font: bold.clone(),
-            font_size: 30.0,
+            font: bold.clone().into(),
+            font_size: FontSize::Px(30.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.72, 0.29)),
@@ -144,8 +144,8 @@ fn setup(
             (
                 TextSpan::new("0"),
                 TextFont {
-                    font: bold.clone(),
-                    font_size: 30.0,
+                    font: bold.clone().into(),
+                    font_size: FontSize::Px(30.0),
                     ..default()
                 },
                 TextColor::WHITE,
@@ -153,8 +153,8 @@ fn setup(
             (
                 TextSpan::new("　最高 ×0"),
                 TextFont {
-                    font: regular.clone(),
-                    font_size: 20.0,
+                    font: regular.clone().into(),
+                    font_size: FontSize::Px(20.0),
                     ..default()
                 },
                 TextColor(Color::srgb(0.55, 0.57, 0.62)),
@@ -179,8 +179,8 @@ fn setup(
         children![(
             Text2d::new("第二幕《夜战》排练——木人桩上见真章"),
             TextFont {
-                font: regular.clone(),
-                font_size: 26.0,
+                font: regular.clone().into(),
+                font_size: FontSize::Px(26.0),
                 ..default()
             },
             TextColor(Color::srgb(0.24, 0.16, 0.08)),
@@ -282,8 +282,8 @@ fn on_strike(
         commands.spawn((
             Text2d::new(strike.damage.to_string()),
             TextFont {
-                font: bold.clone(),
-                font_size: 46.0,
+                font: bold.clone().into(),
+                font_size: FontSize::Px(46.0),
                 ..default()
             },
             TextColor(Color::srgb(0.95, 0.78, 0.22)),
@@ -296,8 +296,8 @@ fn on_strike(
             children![(
                 TextSpan::new(" 会心！"),
                 TextFont {
-                    font: bold,
-                    font_size: 28.0,
+                    font: bold.into(),
+                    font_size: FontSize::Px(28.0),
                     ..default()
                 },
                 TextColor(Color::srgb(0.86, 0.32, 0.28)),
@@ -311,8 +311,8 @@ fn on_strike(
         commands.spawn((
             Text2d::new(strike.damage.to_string()),
             TextFont {
-                font: bold,
-                font_size: 30.0,
+                font: bold.into(),
+                font_size: FontSize::Px(30.0),
                 ..default()
             },
             TextColor(Color::srgb(0.92, 0.93, 0.96)),

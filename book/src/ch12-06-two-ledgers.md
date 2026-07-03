@@ -16,7 +16,7 @@
 
 <span class="caption">Figure 12-9：两本账的分工——你写各级局部小账，引擎在 PostUpdate 沿树相乘出世界账</span>
 
-`GlobalTransform` 没有公开字段，也不该手改——你写进去的值会在下一轮传播里被冲掉。它内部存的不是“平移、旋转、缩放”三件套，而是一个仿射矩阵（`Affine3A`），读取要走方法：`translation()`、`rotation()`、`scale()`，或者一次性拆成三件套的 `compute_transform()`。
+`GlobalTransform` 没有公开字段，也不该手改——它是传播的**产物**：树上的 `Transform` 一有改动，引擎就沿树重算世界账，你手写进去的值随即被冲掉。它内部存的不是“平移、旋转、缩放”三件套，而是一个仿射矩阵（`Affine3A`），读取要走方法：`translation()`、`rotation()`、`scale()`，或者一次性拆成三件套的 `compute_transform()`。
 
 ## 传播的时刻表
 
@@ -77,12 +77,12 @@ cargo run -p ch12-transforms --example listing-12-10
 cargo run -p ch12-transforms --example listing-12-11
 ```
 
-窗口照常打开，控制台先递上两条警告（`Name` 组件让警告直接点名，调试父子关系时强烈建议给关键实体起名）：
+窗口照常打开，控制台先递上两条警告——两条继承链各查各的，谁先开口不一定（`Name` 组件让警告直接点名，调试父子关系时强烈建议给关键实体起名）：
 
 ```text
-WARN bevy_ecs::hierarchy: warning[B0004]: The 行星甲 entity with the GlobalTransform component has a parent (the 转盘A entity) without GlobalTransform.
+WARN bevy_app::hierarchy: warning[B0004]: The 行星乙 entity with the InheritedVisibility component has a parent (the 转盘B entity) without InheritedVisibility.
 This will cause inconsistent behaviors! See: https://bevy.org/learn/errors/b0004
-WARN bevy_ecs::hierarchy: warning[B0004]: The 行星乙 entity with the InheritedVisibility component has a parent (the 转盘B entity) without InheritedVisibility.
+WARN bevy_app::hierarchy: warning[B0004]: The 行星甲 entity with the GlobalTransform component has a parent (the 转盘A entity) without GlobalTransform.
 This will cause inconsistent behaviors! See: https://bevy.org/learn/errors/b0004
 ```
 

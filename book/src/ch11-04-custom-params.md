@@ -12,7 +12,7 @@
 
 <span class="caption">Listing 11-8：SystemState——独占系统里借出 Query 和 Commands</span>
 
-`get_mut(world)` 借出参数包，解构出来的 `residents` 和 `commands` 与普通系统里的同名参数用法**完全一致**。但有一处必须自己上心，运行：
+`get_mut(world)` 借出参数包，解构出来的 `residents` 和 `commands` 与普通系统里的同名参数用法**完全一致**。留意它给的是 `Result`：借出之前有一道参数校验——普通系统跑不起来时替你把关的正是同一道（第 4 章 `Single` 的“不多不少”、缺货资源的报错，都出自它）——校验不过给 `Err`。名册查询加 `Commands` 这种组合不会失败，`unwrap` 即可；柜台里坐着 `Single` 这类挑剔参数时，这个 `Result` 要认真接。另有一处必须自己上心，运行：
 
 ```console
 cargo run -p ch11-deep-ecs --example listing-11-08
@@ -94,9 +94,9 @@ cargo run -p ch11-deep-ecs --example listing-11-10
 
 ```text
 盘点表：
-  2v0 杂货铺老板：存粮 40 袋（未盖章）
-  1v0 老蔫儿：存粮 7 袋（已盖章）
-  0v0 罗兰：存粮 3 袋，借宿于杂货铺老板家（未盖章）
+  15v0 杂货铺老板：存粮 40 袋（未盖章）
+  14v0 老蔫儿：存粮 7 袋（已盖章）
+  13v0 罗兰：存粮 3 袋，借宿于杂货铺老板家（未盖章）
 收税：杂货铺老板缴 1 袋，余 39 袋
 收税：老蔫儿缴 1 袋，余 6 袋
 收税：罗兰缴 1 袋，余 2 袋

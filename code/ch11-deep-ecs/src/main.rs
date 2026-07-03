@@ -108,7 +108,7 @@ fn census_day(
     println!("  艾达：盘点日，全镇静止！（接管 World）");
 
     // 柜台姿势没丢：SystemState 借出常住名册
-    let residents = desk.get(world);
+    let residents = desk.get(world).unwrap();
     let roll: Vec<&str> = residents.iter().map(Name::as_str).collect();
     println!("  艾达点名（常住）：{}。", roll.join("、"));
 

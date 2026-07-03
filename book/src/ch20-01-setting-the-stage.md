@@ -34,7 +34,7 @@
 
 `Intent` 眼下只有一项 `steer`，每帧由 `collect_intent` 清账重写（第 17 章说的“瞬时意图”寿命规矩）。键盘贡献 ±1 的数字量，手柄的摇杆把模拟量原样递交（死区照第 17 章的账自己留），最后 `clamp` 进 [-1, 1]——家里有手柄的读者，此刻已经可以用摇杆推凳了，这就是意图层“加设备是纯增量”的甜头。
 
-`collect_intent` 的住址有讲究。推凳是要参与碰撞的物理运动，第 18 章的口诀说它该住 `FixedUpdate`；而输入收集必须每帧跑、还得赶在本帧鼓点之前——第 18.5 节给过现成答案：`RunFixedMainLoopSystems::BeforeFixedMainLoop`。骨架立对了，等 20.5 节发球键（一个真正的瞬时输入）加进来时，一行缓冲代码都不用补。
+`collect_intent` 的住址有讲究。推凳是要参与碰撞的物理运动，第 18 章的口诀说它该住 `FixedUpdate`；而输入收集必须每帧跑、还得赶在本帧鼓点之前——第 18.6 节给过现成答案：`RunFixedMainLoopSystems::BeforeFixedMainLoop`。骨架立对了，等 20.5 节发球键（一个真正的瞬时输入）加进来时，一行缓冲代码都不用补。
 
 ## 推凳
 
@@ -44,7 +44,7 @@
 
 <span class="caption">Listing 20-1（其四）：move_paddle——速度乘固定步长，两头让墙拦住</span>
 
-`Single`（第 4 章）拿到唯一的条凳；`Res<Time>` 在 `FixedUpdate` 里自动照出固定钟（第 18.4 节的镜子），每拍恰好一个步长。`reach` 的算式值得读一遍：右墙中心线，减半个墙厚，减半个凳长，再留 `PADDLE_MARGIN` 的缝——凳子最远只能贴到墙根，`clamp` 一行钉死。
+`Single`（第 4 章）拿到唯一的条凳；`Res<Time>` 在 `FixedUpdate` 里自动照出固定钟（第 18.5 节的镜子），每拍恰好一个步长。`reach` 的算式值得读一遍：右墙中心线，减半个墙厚，减半个凳长，再留 `PADDLE_MARGIN` 的缝——凳子最远只能贴到墙根，`clamp` 一行钉死。
 
 ## 装配与开张
 

@@ -1,97 +1,57 @@
-//! Listing 16-9：秋白的改词手稿——TextSpan 富文本与装饰
+//! Listing 16-9：会自己变的字号——FontSize 的 Vw/Vh 与 Rem
 
 use bevy::prelude::*;
-use bevy::sprite::Text2dShadow;
-use bevy::text::TextBackgroundColor;
+use bevy::text::RemSize;
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-        .insert_resource(ClearColor(Color::srgb(0.13, 0.14, 0.18)))
         .add_systems(Startup, setup)
+        .add_systems(Update, stage_hands)
         .run();
 }
 
 // ANCHOR: setup
 fn setup(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn(Camera2d);
-    let regular = asset_server.load("fonts/book-sans-sc-regular.otf");
-    let bold = asset_server.load("fonts/book-sans-sc-bold.otf");
-
-    // 一块文本 = 根 Text2d + 一串 TextSpan 子实体。
-    // 排版按整块算，但每一段各管各的字体、字号、颜色、装饰
-    commands.spawn((
-        Text2d::new("阿燕"),
-        TextFont {
-            font: bold.clone(),
-            font_size: 36.0,
-            ..default()
-        },
-        TextColor(Color::srgb(0.91, 0.72, 0.29)),
-        TextLayout::new_with_justify(Justify::Center),
-        // 阴影是整块字的事，加在根上
-        Text2dShadow::default(),
-        children![
-            (
-                TextSpan::new("（提灯，望江）\n"),
-                TextFont {
-                    font: regular.clone(),
-                    font_size: 22.0,
-                    ..default()
-                },
-                TextColor(Color::srgb(0.55, 0.57, 0.62)),
-            ),
-            (
-                TextSpan::new("夜渡无人，"),
-                TextFont {
-                    font: regular.clone(),
-                    font_size: 36.0,
-                    ..default()
-                },
-                TextColor::WHITE,
-            ),
-            (
-                // 改掉的旧词：划线作废，颜色压暗
-                TextSpan::new("孤舟"),
-                TextFont {
-                    font: regular.clone(),
-                    font_size: 36.0,
-                    ..default()
-                },
-                TextColor(Color::srgb(0.45, 0.45, 0.48)),
-                Strikethrough,
-            ),
-            (
-                // 换上的新词：加粗、标红、底下画金线
-                TextSpan::new("秋水"),
-                TextFont {
-                    font: bold.clone(),
-                    font_size: 36.0,
-                    ..default()
-                },
-                TextColor(Color::srgb(0.86, 0.32, 0.28)),
-                Underline,
-                UnderlineColor(Color::srgb(0.91, 0.72, 0.29)),
-            ),
-            (
-                TextSpan::new("自横。"),
-                TextFont {
-                    font: regular.clone(),
-                    font_size: 36.0,
-                    ..default()
-                },
-                TextColor::WHITE,
-            ),
-            (
-                // 落款用默认字体（ASCII 够用），加一块底色当签条
-                TextSpan::new("\nACT II - draft 3"),
-                TextFont::from_font_size(18.0),
-                TextColor(Color::srgb(0.75, 0.86, 0.92)),
-                TextBackgroundColor(Color::srgba(0.0, 0.0, 0.0, 0.55)),
-            ),
-        ],
-    ));
-
-    println!("秋白：‘孤舟’划了，换‘秋水’——水比船有戏。");
+    let zh = asset_server.load("fonts/book-sans-sc-regular.otf");
+    let rows = [
+        (180.0, "Px(28)：铁打的二十八", FontSize::Px(28.0)),
+        (60.0, "Vw(4)：窗宽的百分之四", FontSize::Vw(4.0)),
+        (-60.0, "Vh(6)：窗高的百分之六", FontSize::Vh(6.0)),
+        (-180.0, "Rem(1.4)：基准尺的一点四倍", FontSize::Rem(1.4)),
+    ];
+    for (y, text, size) in rows {
+        commands.spawn((
+            Text2d::new(text),
+            TextFont {
+                font: zh.clone().into(),
+                font_size: size,
+                ..default()
+            },
+            Transform::from_xyz(0.0, y, 0.0),
+        ));
+    }
 }
 // ANCHOR_END: setup
+
+// ANCHOR: stage_hands
+/// 检场：三秒时把窗户收窄，六秒时把 RemSize 基准尺从 20 拨到 30
+fn stage_hands(
+    time: Res<Time>,
+    mut window: Single<&mut Window>,
+    mut rem: ResMut<RemSize>,
+    mut acted: Local<(bool, bool)>,
+) {
+    if time.elapsed_secs() > 3.0 && !acted.0 {
+        acted.0 = true;
+        window.resolution.set(880.0, 720.0);
+        println!("检场：窗户收窄到 880——看 Vw 那行。");
+    }
+    if time.elapsed_secs() > 6.0 && !acted.1 {
+        acted.1 = true;
+        rem.0 = 30.0;
+        println!("检场：基准尺 20 拨到 30——看 Rem 那行。");
+    }
+}
+// ANCHOR_END: stage_hands

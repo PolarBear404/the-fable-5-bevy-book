@@ -55,8 +55,8 @@ fn rig_scoreboard(
         DespawnOnExit(GameState::Playing),
         Text2d::new(format!("瓦 0/{TOTAL_BRICKS}")),
         TextFont {
-            font: bold.clone(),
-            font_size: 30.0,
+            font: bold.clone().into(),
+            font_size: FontSize::Px(30.0),
             ..default()
         },
         TextColor(TEXT_COLOR),
@@ -68,8 +68,8 @@ fn rig_scoreboard(
         DespawnOnExit(GameState::Playing),
         Text2d::new(format!("绣球 ×{BALL_COUNT}")),
         TextFont {
-            font: bold,
-            font_size: 30.0,
+            font: bold.into(),
+            font_size: FontSize::Px(30.0),
             ..default()
         },
         TextColor(TEXT_COLOR),
@@ -80,8 +80,8 @@ fn rig_scoreboard(
         DespawnOnExit(GameState::Playing),
         Text2d::new("A/D 推凳　　空格 发球　　P 中场"),
         TextFont {
-            font: asset_server.load(FONT_REGULAR),
-            font_size: 22.0,
+            font: asset_server.load(FONT_REGULAR).into(),
+            font_size: FontSize::Px(22.0),
             ..default()
         },
         TextColor(MUTED_COLOR),

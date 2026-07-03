@@ -12,7 +12,7 @@
 
 ## 一记闷棍：UnrecognizedFormat
 
-先别急着跑。如果你在自己的工程里照抄这段代码，而 `Cargo.toml` 写的是裸的 `bevy = "=0.18.1"`，第一声不会是音乐：
+先别急着跑。如果你在自己的工程里照抄这段代码，而 `Cargo.toml` 写的是裸的 `bevy = "=0.19.0"`，第一声不会是音乐：
 
 ```console
 cargo run -p ch19-audio --example listing-19-01
@@ -21,14 +21,14 @@ cargo run -p ch19-audio --example listing-19-01
 ```text
 琴师：曲谱递上去了——《长风渡》序曲，奏一遍。
 
-thread 'Compute Task Pool (8)' (24284) panicked at C:\Users\94887\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bevy_audio-0.18.1\src\audio_source.rs:102:56:
+thread 'Compute Task Pool (8)' (27020) panicked at C:\Users\94887\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bevy_audio-0.19.0\src\audio_source.rs:97:56:
 called `Result::unwrap()` on an `Err` value: UnrecognizedFormat
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 Encountered a panic in system `<Enable the debug feature to see the name>`!
 Encountered a panic in system `<Enable the debug feature to see the name>`!
 ```
 
-`UnrecognizedFormat`——解码器不认识这个格式。Bevy 内置四种音频格式的解码：`.ogg`（feature 名 `vorbis`）、`.wav`、`.mp3`、`.flac`，但**默认特性里只开了 `vorbis`**。我们的 `.wav` 要过解码这一关，得在依赖上把闸打开——这就是本章 `Cargo.toml` 里那行 feature 的来历：
+`UnrecognizedFormat`——解码器不认识这个格式。Bevy 内置六种音频格式的解码：`.ogg`（feature 名 `vorbis`）、`.wav`、`.mp3`、`.flac`、`.aac`、`.mp4`，但**默认特性里只开了 `vorbis`**。我们的 `.wav` 要过解码这一关，得在依赖上把闸打开——这就是本章 `Cargo.toml` 里那行 feature 的来历：
 
 ```toml
 bevy = { workspace = true, features = ["wav"] }

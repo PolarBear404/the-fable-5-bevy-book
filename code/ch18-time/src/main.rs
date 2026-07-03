@@ -1,4 +1,4 @@
-//! Listing 18-10：《赶月》——同一套鼓点结算，替身直写 Transform，阿燕在两拍之间插值
+//! Listing 18-11：《赶月》——同一套鼓点结算，替身直写 Transform，阿燕在两拍之间插值
 //! 空格中场/开戏，↑↓ 给戏台钟换挡（慢放时替身顿得更凶，阿燕照样丝滑）。
 
 use std::time::Duration;
@@ -189,8 +189,8 @@ fn setup(
         commands.spawn((
             Text2d::new(label),
             TextFont {
-                font: bold.clone(),
-                font_size: 26.0,
+                font: bold.clone().into(),
+                font_size: FontSize::Px(26.0),
                 ..default()
             },
             TextColor(color),
@@ -202,8 +202,8 @@ fn setup(
         Hud,
         Text2d::new(""),
         TextFont {
-            font: bold,
-            font_size: 28.0,
+            font: bold.into(),
+            font_size: FontSize::Px(28.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),
@@ -212,8 +212,8 @@ fn setup(
     commands.spawn((
         Text2d::new("空格 中场/开戏　　↑↓ 换挡　　鼓点 4 拍/秒"),
         TextFont {
-            font: regular,
-            font_size: 22.0,
+            font: regular.into(),
+            font_size: FontSize::Px(22.0),
             ..default()
         },
         TextColor(Color::srgb(0.55, 0.57, 0.62)),

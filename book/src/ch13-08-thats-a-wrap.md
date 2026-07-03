@@ -40,7 +40,7 @@ cargo run -p ch13-cameras
 - **`Projection`** 一个枚举两大流派：正交（远近等大，2D 默认）与透视（近大远小，3D 默认）。`OrthographicProjection` 故意不实现 `Default`，构造用 `..default_2d()`（near = −1000）或 `..default_3d()`（near = 0）打底；`area` 字段是以相机为原点的真取景框，平移到相机位置即实拍范围
 - **世界↔视口换算**：视口坐标原点在左上、y 朝下。`viewport_to_world_2d` 把视口点（如鼠标）反算成世界坐标，`world_to_viewport` 走反向（血条、标签定位）
 - **推拉与适配**：`scale` 乘在取景框上——越大看得越多、物体越小；`ScalingMode` 决定窗口拉伸时的对策，游戏常用 `FixedVertical`/`AutoMin` 锁视野，默认 `WindowSize` 是一比一
-- **多相机**：同一渲染目标上每台相机的 `order` 必须独一无二，否则每帧警告、绘制次序不可预测；`Viewport` 用**物理像素**划地盘（左上原点），配 `MessageReader<WindowResized>` 维护——开窗也算一次 resize，初始化捎带办了
+- **多相机**：同一渲染目标上每台相机的 `order` 必须独一无二，否则引擎报警、绘制次序不可预测；`Viewport` 用**物理像素**划地盘（左上原点），配 `MessageReader<WindowResized>` 维护——开窗也算一次 resize，初始化捎带办了
 - **`RenderLayers`**：实体与相机各持层号集合，有交集才入画；不挂组件 = 第 0 层，空集合 = 隐形，**不沿父子层级继承**。引入路径 `bevy::camera::visibility::RenderLayers`
 - **透视投影**：`fov` 纵向视场角（默认 45°），`near`/`far` 截出视锥；贴脸与身后不入镜。`Camera3d` 配正交照样合法——等距游戏的标准操作
 

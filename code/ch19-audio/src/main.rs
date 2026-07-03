@@ -145,8 +145,8 @@ fn setup(
         Hud,
         Text2d::new(""),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-bold.otf"),
-            font_size: 28.0,
+            font: asset_server.load("fonts/book-sans-sc-bold.otf").into(),
+            font_size: FontSize::Px(28.0),
             ..default()
         },
         TextColor(Color::srgb(0.91, 0.88, 0.80)),
@@ -155,8 +155,8 @@ fn setup(
     commands.spawn((
         Text2d::new("空格 中场/开戏　　J 剑花　　+/- 曲子音量"),
         TextFont {
-            font: asset_server.load("fonts/book-sans-sc-regular.otf"),
-            font_size: 22.0,
+            font: asset_server.load("fonts/book-sans-sc-regular.otf").into(),
+            font_size: FontSize::Px(22.0),
             ..default()
         },
         TextColor(Color::srgb(0.55, 0.57, 0.62)),

@@ -5,13 +5,13 @@
 这就是**组件钩子**（component hooks）的定位：声明在组件定义上的生命周期回调，相当于组件的构造函数与析构函数：
 
 ```rust
-{{#include ../../code/ch08-events-observers/examples/listing-08-08.rs}}
+{{#include ../../code/ch08-events-observers/examples/listing-08-09.rs}}
 ```
 
-<span class="caption">Listing 8-8：组件钩子——长在 Weapon 组件上的登记规矩</span>
+<span class="caption">Listing 8-9：组件钩子——长在 Weapon 组件上的登记规矩</span>
 
 ```console
-cargo run -p ch08-events-observers --example listing-08-08
+cargo run -p ch08-events-observers --example listing-08-09
 ```
 
 ```text
@@ -31,7 +31,7 @@ cargo run -p ch08-events-observers --example listing-08-08
 
 先对账写法，再看输出里藏的那条铁律。
 
-- **声明**：`#[component(on_add = 函数名, on_remove = 函数名)]` 直接挂在 `derive(Component)` 旁边。五个钩子位与上一节的五个事件一一对应：`on_add`、`on_insert`、`on_replace`、`on_remove`、`on_despawn`，触发时机也完全相同。
+- **声明**：`#[component(on_add = 函数名, on_remove = 函数名)]` 直接挂在 `derive(Component)` 旁边。五个钩子位与上一节的五个事件一一对应：`on_add`、`on_insert`、`on_discard`、`on_remove`、`on_despawn`，触发时机也完全相同。
 - **签名是死的**：`fn(DeferredWorld, HookContext)`——一个普通函数指针。钩子不是系统，没有资格声明 `Query`、`Res` 那一套参数，也不能用捕获环境的闭包。
 - **`DeferredWorld`**：受限版的世界访问。读写现成的组件和资源没问题（`world.get`、`world.resource_mut`），但结构性改动——增删组件、生成销毁实体——必须经 `world.commands()` 排队。毕竟钩子运行在世界变更的半道上，不能再当场大兴土木。
 - **`HookContext`**：告诉你这次触发涉及哪个实体（`ctx.entity`）、哪个组件。
@@ -43,17 +43,17 @@ cargo run -p ch08-events-observers --example listing-08-08
 钩子与 observer 的另一处分野：同一个组件的同一种钩子**只能有一个**。observer 爱挂几个挂几个，钩子的坑位是独占的——再塞一个，引擎当场翻脸：
 
 ```rust
-{{#include ../../code/ch08-events-observers/examples/listing-08-09.rs}}
+{{#include ../../code/ch08-events-observers/examples/listing-08-10.rs}}
 ```
 
-<span class="caption">Listing 8-9：一个组件、同种钩子只能有一个</span>
+<span class="caption">Listing 8-10：一个组件、同种钩子只能有一个</span>
 
 ```console
-cargo run -p ch08-events-observers --example listing-08-09
+cargo run -p ch08-events-observers --example listing-08-10
 ```
 
 ```text
-thread 'main' panicked at ...\bevy_ecs-0.18.1\src\lifecycle.rs:187:14:
+thread 'main' (9880) panicked at ...\bevy_ecs-0.19.0\src\lifecycle.rs:187:14:
 Component already has an on_add hook
 ```
 

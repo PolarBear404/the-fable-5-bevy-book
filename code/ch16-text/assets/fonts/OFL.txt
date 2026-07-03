@@ -13,3 +13,12 @@ Name 'Source'. Copyright 2021 Google LLC, with Reserved Font Name
 完整许可证文本：https://openfontlicense.org
 原始字体仓库：https://github.com/notofonts/noto-cjk
 子集化脚本：scripts/make_ch16_assets.py
+
+----------------------------------------
+
+MonaSans-VariableFont.ttf（可变字体演示用，未作任何修改）
+
+Mona Sans
+Copyright (c) 2022 GitHub, Inc.
+以 SIL Open Font License, Version 1.1 原样分发。
+原始仓库：https://github.com/github/mona-sans

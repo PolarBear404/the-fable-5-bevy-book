@@ -94,13 +94,16 @@ cargo run -p ch09-relationships --example listing-09-01
 这次运行多挂了一个 `LogPlugin`——引擎的警告走日志系统，不挂它就什么都看不见：
 
 ```text
-WARN bevy_ecs::relationship: The bevy_ecs::hierarchy::ChildOf(0v0) relationship on entity 0v0 points to itself. The invalid bevy_ecs::hierarchy::ChildOf relationship has been removed.
-WARN bevy_ecs::relationship: The bevy_ecs::hierarchy::ChildOf(1v0) relationship on entity 2v0 relates to an entity that does not exist. The invalid bevy_ecs::hierarchy::ChildOf relationship has been removed.
+WARN bevy_ecs::relationship: The bevy_ecs::hierarchy::ChildOf(7v0) relationship on entity 7v0 points to itself. The invalid bevy_ecs::hierarchy::ChildOf relationship has been removed.
+If this is intended behavior self-referential relations can be enabled with the allow_self_referential attribute: #[relationship(allow_self_referential)]
+WARN bevy_ecs::relationship: The bevy_ecs::hierarchy::ChildOf(8v0) relationship on entity 9v0 relates to an entity that does not exist. The invalid bevy_ecs::hierarchy::ChildOf relationship has been removed.
 == 事后清点 ==
 青篷车：不挂在任何东西下面
 倒霉旅人：不挂在任何东西下面
 ```
 
 两条 `WARN` 各对应一桩祸：指向自己、指向不存在的实体。处置方式一样——**警告一声，把非法的 `ChildOf` 当场拆掉**，程序继续跑。事后清点也证实：两位当事实体都还活着，只是身上的关系组件没了。这是 Bevy 关系机制的一贯姿态：宁可拆掉关系自愈，也不让一笔坏账留在世界里。
+
+第一条警告末尾还附赠了一句：若自指是有意为之，可以用 `allow_self_referential` 属性放行。`ChildOf` 永远用不上它——父子树生来就是要递归遍历的，自指等于死循环；但“指向自己”并不是处处荒谬，第 9-4 节定义你自己的关系时，会见到它名正言顺的场合。
 
 但引擎只拦这两种明牌错误。A 当 B 的父亲、B 再当 A 的父亲这种**绕圈**它不查——环上的遍历会无限循环，这是下下节的注意事项。

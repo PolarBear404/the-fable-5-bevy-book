@@ -66,20 +66,20 @@ cargo run -p ch21-meshes --example listing-21-03
 
 ```text
 error[E0308]: mismatched types
-  --> ch21-meshes\no-compile\listing-21-04.rs:21:16
-   |
-21 |         Mesh3d(Cuboid::new(2.0, 1.0, 1.0)),
-   |         ------ ^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Handle<Mesh>`, found `Cuboid`
-   |         |
-   |         arguments to this struct are incorrect
-   |
-   = note: expected enum `bevy::prelude::Handle<bevy::prelude::Mesh>`
-            found struct `bevy::prelude::Cuboid`
+   --> ch21-meshes\no-compile\listing-21-04.rs:21:16
+    |
+ 21 |         Mesh3d(Cuboid::new(2.0, 1.0, 1.0)),
+    |         ------ ^^^^^^^^^^^^^^^^^^^^^^^^^^ expected `Handle<Mesh>`, found `Cuboid`
+    |         |
+    |         arguments to this struct are incorrect
+    |
+    = note: expected enum `bevy::prelude::Handle<bevy::prelude::Mesh>`
+             found struct `bevy::prelude::Cuboid`
 note: tuple struct defined here
-  --> bevy_mesh-0.18.1\src\components.rs:98:12
-   |
-98 | pub struct Mesh3d(pub Handle<Mesh>);
-   |            ^^^^^^
+   --> bevy_mesh-0.19.0\src\components.rs:102:12
+    |
+102 | pub struct Mesh3d(pub Handle<Mesh>);
+    |            ^^^^^^
 ```
 
 编译器把规矩写得明白：`Mesh3d` 里装的是 `Handle<Mesh>`——**提货单，不是货**。第 14 章的库房纪律在渲染资产上一寸不让：网格数据本体住 `Assets<Mesh>` 货架，组件上只挂轻飘飘的提货单，这才有“十四颗星共用一份网格”的省钱诀窍。`meshes.add(Cuboid::new(...))` 一句里其实发生了两件事：`Cuboid` 先经 `From` 铸成 `Mesh`（`add` 收的是 `impl Into<Mesh>`），再入库换一张提货单出来。

@@ -1,6 +1,7 @@
 //! Listing 11-6：预检修好了——写参数搬去自己的系统
 
 use bevy::app::ScheduleRunnerPlugin;
+use bevy::ecs::resource::IsResource;
 use bevy::prelude::*;
 use std::time::Duration;
 
@@ -34,8 +35,9 @@ fn settle_in(mut commands: Commands) {
 }
 
 // ANCHOR: precheck
-/// 预检：EntityRef 逐户翻看，&World 看全局——这回真的全是只读
-fn precheck(houses: Query<(Entity, EntityRef)>, world: &World) {
+/// 预检：EntityRef 逐户翻看，&World 看全局——这回真的全是只读。
+/// 名册只翻民户：Without<IsResource> 把引擎的资源实体挡在门外
+fn precheck(houses: Query<(Entity, EntityRef), Without<IsResource>>, world: &World) {
     println!("预检官挨家挨户翻名册：");
     for (id, house) in &houses {
         let name = house.get::<Name>().map(Name::as_str).unwrap_or("无名");

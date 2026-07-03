@@ -103,7 +103,7 @@ note: the struct `Score` is defined here
 打完这一局，结算屏该落下来的瞬间，沉默变成了巨响：
 
 ```text
-thread 'main' (27608) panicked at C:\Users\94887\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bevy_ecs-0.18.1\src\error\handler.rs:125:1:
+thread 'Compute Task Pool (11)' (1252) panicked at C:\Users\94887\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\bevy_ecs-0.19.0\src\error\handler.rs:130:1:
 Encountered an error in system `<Enable the debug feature to see the name>`: Parameter `<Enable the debug feature to see the name>` failed validation: Resource does not exist
 If this is an expected state, wrap the parameter in `Option<T>` and handle `None` when it happens, or wrap the parameter in `If<T>` to skip the system when it happens.
 ```

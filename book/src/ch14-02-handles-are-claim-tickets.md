@@ -17,7 +17,7 @@ cargo run -p ch14-assets --example listing-14-02
 ```text
 老顾：灯笼的单子开了两回，是同一张单吗？——true
 老顾：复印一份给布景组，指的还是那盏灯吗？——true
-老顾：货号——AssetId<bevy_image::image::Image>{ index: 7, generation: 0}
+老顾：货号——AssetId<bevy_image::image::Image>{ index: 8, generation: 0}
 老顾：货址——Some(props/lantern.png)
 ```
 
@@ -32,7 +32,7 @@ cargo run -p ch14-assets --example listing-14-02
 
 ## 货架也是 Resource
 
-`Assets<Image>` 没有任何神秘之处：它就是个 Resource，泛型参数区分货架——`Assets<Image>` 摆图片，以后还会见到 `Assets<Mesh>`（网格）、`Assets<StandardMaterial>`（材质）。常用的架上操作一共四个：`get(&handle)` 取货、`get_mut(&handle)` 改货（会触发资产的变更广播，14.6 节见）、`add(asset)` 不经库房直接上架、`remove(&handle)` 下架。
+`Assets<Image>` 没有任何神秘之处：它就是个 Resource，泛型参数区分货架——`Assets<Image>` 摆图片，以后还会见到 `Assets<Mesh>`（网格）、`Assets<StandardMaterial>`（材质）。常用的架上操作一共四个：`get(&handle)` 取货、`get_mut(&handle)` 改货（会触发资产的变更广播，14.7 节有实战）、`add(asset)` 不经库房直接上架、`remove(&handle)` 下架。
 
 货架上还住着一位常驻房客。`Handle` 实现了 `Default`，而默认单子指向一件引擎自带的货：
 
