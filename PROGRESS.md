@@ -12,7 +12,7 @@
 | 全书大纲 OUTLINE.md | ✅ 2026-06-12 | 38 章 + 6 附录，用户已审定 |
 | 章节写作 | 🟡 | 进度见下表 |
 | Bevy 0.19 大纲评估与 OUTLINE 修订 | ✅ 2026-07-02 | migration/0.19-outline-assessment.md，P-1～P-13 全部批准；38 章 + 6 附录结构不变，ch1–21 编号全保 |
-| 0.19 全书迁移执行（S1–S3） | ✅ 2026-07-03 | 计划、逐章工单与实测数据存档于 migration/0.19-migration-plan.md。S1＋检查点 C1/C2（2026-07-02）→ S2 逐章 ch1–21（2026-07-03）→ S3 收尾（2026-07-03）：cargo check 全绿零警告、mdbook build 绿；无痕检查全书 grep 逐条判读——introduction.md 残留「0.18.1」口径漏网已订正，ch04/ch08/ch12 三处零星复查点落实，引擎史实叙述（SpriteBundle/KeyCode::A/Event 曾用名）判读为读者服务、统一保留；make_ch14_figures.py 裁剪改按截图宽自动定标（125% 下与旧产物逐字节回归）；vendor/bevy-0.18 已删、CLAUDE.md 过渡期条目移除。是否并回 main 由用户决定 |
+| 0.19 全书迁移执行（S1–S3） | ✅ 2026-07-03 | 计划、逐章工单与实测数据存档于 migration/0.19-migration-plan.md。S1＋检查点 C1/C2（2026-07-02）→ S2 逐章 ch1–21（2026-07-03）→ S3 收尾（2026-07-03）：cargo check 全绿零警告、mdbook build 绿；无痕检查全书 grep 逐条判读——introduction.md 残留「0.18.1」口径漏网已订正，ch04/ch08/ch12 三处零星复查点落实，引擎史实叙述（SpriteBundle/KeyCode::A/Event 曾用名）判读为读者服务、统一保留；make_ch14_figures.py 裁剪改按截图宽自动定标（125% 下与旧产物逐字节回归）；vendor/bevy-0.18 已删、CLAUDE.md 过渡期条目移除。2026-07-03 经用户批准并回 main（merge commit cb5bdce），main 即 0.19 基线 |
 
 ## 章节状态
 
