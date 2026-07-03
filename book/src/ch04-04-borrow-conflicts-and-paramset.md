@@ -138,4 +138,4 @@ cargo run -p ch04-systems-queries
 2. **变更检测**：给 Listing 4-8 加一个 `health_watch` 系统（排在 `nightfall` 之前），用 `Changed<Health>` 报告当天生命值有变动的动物。先预测三天各报告谁，再运行验证——第 1 天和第 3 天的名单都值得想清楚。
 3. **化解冲突**：把 Listing 4-7 的 `extra_rations` 拆成 `feed_wounded` 和 `feed_young` 两个系统（用 `.chain()` 保持顺序），确认输出与 `ParamSet` 版完全一致。体会一下为什么“拆系统”排在三板斧的第一位。
 
-下一章解决本章 `Local` 留下的缺口：多个系统要共享的全局数据放哪里？比分、难度设置、随机数种子——它们不属于任何实体，World 里为它们留了另一种住所：**Resource**。第 2 章那个 `Res<Time>` 也将正式归队。
+下一章解决本章 `Local` 留下的缺口：多个系统要共享的全局数据放哪里？比分、难度设置、随机数种子——它们不挂在任何游戏对象名下，World 里为它们留了另一种住所：**Resource**。第 2 章那个 `Res<Time>` 也将正式归队。

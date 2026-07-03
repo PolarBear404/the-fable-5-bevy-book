@@ -7,12 +7,12 @@
 | 阶段 | 状态 | 说明 |
 |---|---|---|
 | 脚手架 | ✅ 2026-06-12 | 目录结构、mdBook、Cargo workspace、规范、斜杠命令 |
-| vendor/bevy 源码就位 | ✅ 2026-06-12 | v0.18.1 @ f667c28，55 crate / 375 示例 |
+| vendor/bevy 源码就位 | ✅ 2026-06-12（2026-07-02 换 0.19.0） | v0.19.0 @ c6f634c，59 crate |
 | Bevy 0.18.1 编译验证 | ✅ 2026-06-12 | `cargo check -p smoke` 通过 |
 | 全书大纲 OUTLINE.md | ✅ 2026-06-12 | 38 章 + 6 附录，用户已审定 |
 | 章节写作 | 🟡 | 进度见下表 |
 | Bevy 0.19 大纲评估与 OUTLINE 修订 | ✅ 2026-07-02 | migration/0.19-outline-assessment.md，P-1～P-13 全部批准；38 章 + 6 附录结构不变，ch1–21 编号全保 |
-| 0.19 全书迁移执行（S1–S3） | 🟡 | 计划与逐章工单见 migration/0.19-migration-plan.md；S1＋前置检查点 C1/C2 完成 2026-07-02（workspace 切 0.19.0 全绿零警告；C1：字体方案不换，ICU4X 警告与裁切变化记入 ch16 工单；C2：资源实体占低位索引、count_spawned 计入、广查询可见——实测数据见计划文件），S2 逐章迁移完成（ch1–21 全部 ✅ 2026-07-03），待 S3 收尾 |
+| 0.19 全书迁移执行（S1–S3） | ✅ 2026-07-03 | 计划、逐章工单与实测数据存档于 migration/0.19-migration-plan.md。S1＋检查点 C1/C2（2026-07-02）→ S2 逐章 ch1–21（2026-07-03）→ S3 收尾（2026-07-03）：cargo check 全绿零警告、mdbook build 绿；无痕检查全书 grep 逐条判读——introduction.md 残留「0.18.1」口径漏网已订正，ch04/ch08/ch12 三处零星复查点落实，引擎史实叙述（SpriteBundle/KeyCode::A/Event 曾用名）判读为读者服务、统一保留；make_ch14_figures.py 裁剪改按截图宽自动定标（125% 下与旧产物逐字节回归）；vendor/bevy-0.18 已删、CLAUDE.md 过渡期条目移除。是否并回 main 由用户决定 |
 
 ## 章节状态
 

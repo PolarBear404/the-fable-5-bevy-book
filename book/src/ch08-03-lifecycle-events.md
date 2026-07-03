@@ -89,7 +89,7 @@ cargo run -p ch08-events-observers --example listing-08-07
 
 ## 联动：一次 insert，一串反应
 
-生命周期事件配上“observer 也能发命令”，就解锁了大纲里写的那种玩法——**装上一个组件，即时触发一串联动**：
+生命周期事件配上“observer 也能发命令”，就解锁了开篇火焰附魔要的那种玩法——**装上一个组件，即时触发一串联动**：
 
 ```rust
 {{#include ../../code/ch08-events-observers/examples/listing-08-08.rs}}
