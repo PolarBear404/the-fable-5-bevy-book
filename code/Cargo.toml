@@ -22,6 +22,7 @@ members = [
     "ch19-audio",
     "ch20-breakout",
     "ch21-meshes",
+    "ch22-lighting",
 ]
 
 [workspace.package]
@@ -45,7 +46,7 @@ debug = false
 
 # 编 wasm 网页 demo 专用：在 release 基础上死压体积。不依赖外部 wasm-opt，
 # 靠 opt-level="z" + 全程 LTO + strip 去符号。只有 `--profile wasm-release` 时才生效，
-# 不影响其它 crate 的常规构建。见 scripts/build_ch23_wasm.py。
+# 不影响其它 crate 的常规构建。见 scripts/build_ch20_wasm.py。
 [profile.wasm-release]
 inherits = "release"
 opt-level = "z"

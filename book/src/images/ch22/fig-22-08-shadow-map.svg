@@ -1,0 +1,60 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-s22" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c8922a"/>
+    </marker>
+    <marker id="arr-s22b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#3b6ed9"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="760" height="400" rx="10" fill="#f7f5f0"/>
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">影子贴图：先替灯拍一张“谁离我最近”，再逐点对账</text>
+
+  <!-- 灯（左上） -->
+  <circle cx="120" cy="90" r="10" fill="#c8922a"/>
+  <text x="120" y="68" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">灯位</text>
+
+  <!-- 深度贴图（斜置的小画框） -->
+  <path d="M168,96 L204,78 L204,150 L168,168 z" fill="#efece4" stroke="#8a5a1a" stroke-width="2"/>
+  <text x="186" y="188" text-anchor="middle" font-size="11" fill="#8a5a1a">影子贴图</text>
+  <text x="186" y="204" text-anchor="middle" font-size="10" fill="#7a7468">每格记：这条方向上</text>
+  <text x="186" y="218" text-anchor="middle" font-size="10" fill="#7a7468">最近的东西有多远</text>
+
+  <!-- 灯的视线：越过贴图射向场景 -->
+  <g stroke="#c8922a" stroke-width="2" marker-end="url(#arr-s22)">
+    <line x1="132" y1="96" x2="392" y2="180"/>
+    <line x1="132" y1="102" x2="352" y2="262"/>
+  </g>
+  <!-- 被旗杆挡住的那条视线：画到旗杆为止，再虚线延长 -->
+  <line x1="392" y1="180" x2="560" y2="236" stroke="#b8b1a4" stroke-width="2" stroke-dasharray="5 4"/>
+
+  <!-- 场景：台面、旗杆、绣球 -->
+  <line x1="240" y1="330" x2="720" y2="330" stroke="#b8b1a4" stroke-width="3"/>
+  <rect x="386" y="150" width="12" height="180" rx="3" fill="#9a6a3a"/>
+  <text x="392" y="138" text-anchor="middle" font-size="11" fill="#4a463f">旗杆</text>
+  <circle cx="560" cy="300" r="30" fill="#d8cbb2" stroke="#b8b1a4" stroke-width="1.5"/>
+  <text x="560" y="268" text-anchor="middle" font-size="11" fill="#4a463f">绣球</text>
+
+  <!-- 影子区 -->
+  <path d="M398,330 L560,330 L618,330 L575,318 Z" fill="#5a544a" opacity="0.55"/>
+  <text x="500" y="352" font-size="11" fill="#5a544a" font-weight="bold">影子</text>
+
+  <!-- 相机（右上）与对账 -->
+  <rect x="636" y="70" width="44" height="30" rx="5" fill="#3b6ed9"/>
+  <path d="M636,79 L620,74 L620,96 L636,91 z" fill="#3b6ed9"/>
+  <text x="658" y="60" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">相机</text>
+  <g stroke="#3b6ed9" stroke-width="2" marker-end="url(#arr-s22b)">
+    <line x1="632" y1="102" x2="504" y2="326"/>
+  </g>
+  <text x="608" y="196" font-size="11" fill="#3b6ed9">画这一点前先问：</text>
+  <text x="608" y="212" font-size="11" fill="#3b6ed9">离灯的距离，比贴图里</text>
+  <text x="608" y="228" font-size="11" fill="#3b6ed9">记的远吗？</text>
+
+  <!-- 对账结论 -->
+  <rect x="60" y="252" width="252" height="112" rx="8" fill="#efece4"/>
+  <text x="76" y="278" font-size="12" fill="#4a463f" font-weight="bold">逐像素对账</text>
+  <text x="76" y="300" font-size="11.5" fill="#1d6b40">≈ 贴图记的距离 → 灯看得见，照亮</text>
+  <text x="76" y="322" font-size="11.5" fill="#c05a2e">&gt; 贴图记的距离 → 被谁挡了，在影里</text>
+  <text x="76" y="348" font-size="10.5" fill="#7a7468">平行光拍正交、聚光拍透视、点光拍六面</text>
+</svg>

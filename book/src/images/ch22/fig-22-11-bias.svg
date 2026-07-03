@@ -1,0 +1,58 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <rect x="0" y="0" width="760" height="400" rx="10" fill="#f7f5f0"/>
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">偏置的两难：贴图是马赛克，台面是斜坡</text>
+
+  <!-- ============ 左：没偏置 → 粉刺 ============ -->
+  <g>
+    <rect x="28" y="56" width="224" height="290" rx="8" fill="#efece4"/>
+    <text x="140" y="82" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">偏置全关：粉刺</text>
+    <!-- 贴图记下的深度：阶梯 -->
+    <path d="M48,190 L88,190 L88,206 L128,206 L128,222 L168,222 L168,238 L208,238 L208,254 L232,254"
+          fill="none" stroke="#8a5a1a" stroke-width="3"/>
+    <text x="60" y="176" font-size="10.5" fill="#8a5a1a">贴图记的深度（一格一个值）</text>
+    <!-- 真实斜面：斜线穿过阶梯 -->
+    <line x1="48" y1="184" x2="232" y2="262" stroke="#3b6ed9" stroke-width="2.5"/>
+    <text x="120" y="292" font-size="10.5" fill="#3b6ed9">真实台面（斜坡）</text>
+    <!-- 高出阶梯的半截被误判 -->
+    <g fill="#c05a2e">
+      <circle cx="106" cy="208.5" r="4"/>
+      <circle cx="148" cy="226.3" r="4"/>
+      <circle cx="188" cy="243.2" r="4"/>
+    </g>
+    <text x="140" y="322" text-anchor="middle" font-size="10.5" fill="#c05a2e">半格里台面比“记录”深一点</text>
+    <text x="140" y="338" text-anchor="middle" font-size="10.5" fill="#c05a2e">→ 自己给自己投影，一身条纹</text>
+  </g>
+
+  <!-- ============ 中：合适 ============ -->
+  <g>
+    <rect x="268" y="56" width="224" height="290" rx="8" fill="#efece4"/>
+    <text x="380" y="82" text-anchor="middle" font-size="13" fill="#1d6b40" font-weight="bold">偏置合适</text>
+    <path d="M288,190 L328,190 L328,206 L368,206 L368,222 L408,222 L408,238 L448,238 L448,254 L472,254"
+          fill="none" stroke="#8a5a1a" stroke-width="3"/>
+    <!-- 比较线被往深处推了一点：虚线阶梯 -->
+    <path d="M288,202 L328,202 L328,218 L368,218 L368,234 L408,234 L408,250 L448,250 L448,266 L472,266"
+          fill="none" stroke="#1d6b40" stroke-width="2" stroke-dasharray="5 3"/>
+    <line x1="288" y1="184" x2="472" y2="262" stroke="#3b6ed9" stroke-width="2.5"/>
+    <text x="330" y="170" font-size="10.5" fill="#1d6b40">对账前先让一小步（bias）</text>
+    <text x="380" y="322" text-anchor="middle" font-size="10.5" fill="#1d6b40">台面处处“不比记录深”</text>
+    <text x="380" y="338" text-anchor="middle" font-size="10.5" fill="#1d6b40">→ 干干净净</text>
+  </g>
+
+  <!-- ============ 右：偏置过头 → 彼得潘 ============ -->
+  <g>
+    <rect x="508" y="56" width="224" height="290" rx="8" fill="#efece4"/>
+    <text x="620" y="82" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">偏置过头：彼得潘</text>
+    <!-- 旗杆 + 影子飞离 -->
+    <rect x="566" y="120" width="10" height="150" rx="3" fill="#9a6a3a"/>
+    <line x1="520" y1="270" x2="720" y2="270" stroke="#b8b1a4" stroke-width="3"/>
+    <!-- 本该的影子（虚） vs 实际影子（实，飘走） -->
+    <path d="M576,270 L648,270" stroke="#b8b1a4" stroke-width="6" stroke-dasharray="6 4"/>
+    <path d="M604,270 L676,270" stroke="#5a544a" stroke-width="7"/>
+    <text x="586" y="292" font-size="10.5" fill="#7a7468">该在这</text>
+    <text x="664" y="292" font-size="10.5" fill="#c05a2e">飘到这</text>
+    <text x="620" y="322" text-anchor="middle" font-size="10.5" fill="#c05a2e">让得太多，影子根部“不算被挡”</text>
+    <text x="620" y="338" text-anchor="middle" font-size="10.5" fill="#c05a2e">→ 影子和脚脱开，像飞起来</text>
+  </g>
+
+  <text x="380" y="376" text-anchor="middle" font-size="11.5" fill="#7a7468">shadow_depth_bias 顺着光让、shadow_normal_bias 顺着法线让——两根旋钮拧的都是这“一小步”</text>
+</svg>

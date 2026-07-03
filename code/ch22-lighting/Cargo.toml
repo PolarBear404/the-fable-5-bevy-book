@@ -1,0 +1,11 @@
+# ANCHOR: deps
+[package]
+name = "ch22-lighting"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# RectLight 的亮度查找表不在默认 feature 里，要额外点名 area_light_luts（22.5 节）；
+# debug 让报错里印出系统名（第 4 章起的老习惯）
+bevy = { workspace = true, features = ["area_light_luts", "debug"] }
+# ANCHOR_END: deps
