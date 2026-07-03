@@ -46,6 +46,10 @@ fn main() {
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 title: "打瓦".into(),
+                // 下面两行只在网页版里生效（桌面构建原样忽略）：
+                // 把画面挂到页面上指定的 <canvas>，尺寸跟着它的父元素走
+                canvas: Some("#bevy-canvas".into()),
+                fit_canvas_to_parent: true,
                 ..default()
             }),
             ..default()

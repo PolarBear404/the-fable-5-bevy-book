@@ -1,0 +1,125 @@
+<!doctype html>
+<!-- ch20《打瓦》内嵌 demo 的宿主页（手写、入库；wasm/js/assets 由
+     scripts/build_ch20_wasm.py 重建）。这页解决三件网页特有的事：
+
+     1. 固定画幅——场地几何是固定像素常量（±430 的墙、302 的记分牌），
+        画布锁 920×720 再整体 transform 缩放到 iframe 大小；游戏是纯键盘
+        操作，缩放不会引入鼠标坐标偏移。
+     2. 启动层——浏览器规定音频要用户手势才许出声，点「启动」的手势链里
+        加载 wasm，AudioContext 就能生而可用；层上顺便放键位说明。
+     3. 音频兜底——网络慢时手势时效过期，AudioContext 仍会挂起：劫持
+        构造函数记下实例，此后任何按键/点击都把挂起的捅醒。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>打瓦</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #1a1a24; }
+
+  /* 固定 920×720 的“戏台”，居中后按 iframe 视口等比缩放 */
+  #stage {
+    position: absolute; left: 50%; top: 50%;
+    width: 920px; height: 720px;
+    transform: translate(-50%, -50%) scale(var(--s, 1));
+  }
+  #bevy-canvas { display: block; width: 100%; height: 100%; outline: none; }
+
+  /* 启动层：一颗按钮 + 键位说明，点击前不下载一个字节的 wasm */
+  #boot {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1.1em;
+    color: #e8e0cc; font-family: system-ui, sans-serif;
+    text-align: center;
+  }
+  #boot button {
+    font: inherit; font-size: 1.05em;
+    color: #fff; background: rgba(20, 16, 20, 0.72);
+    border: 1px solid rgba(232, 224, 204, 0.4);
+    border-radius: 999px; padding: 0.6em 1.4em;
+    cursor: pointer;
+  }
+  #boot button:hover { background: rgba(60, 50, 60, 0.8); }
+  #boot .keys { margin: 0; font-size: 0.88em; color: #9a97a4; line-height: 1.8; }
+
+  /* 散场幕布：菜单里按 Esc 真退出后盖上，点击刷新重开 */
+  #curtain {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.8em;
+    background: #1a1a24; color: #e8e0cc;
+    font-family: system-ui, sans-serif; cursor: pointer;
+  }
+  #curtain .hint { font-size: 0.88em; color: #9a97a4; }
+</style>
+</head>
+<body>
+  <div id="stage"><canvas id="bevy-canvas"></canvas></div>
+  <div id="boot">
+    <button id="boot-btn" type="button">▶ 启动《打瓦》（约 25 MB）</button>
+    <p class="keys">空格：开局 / 发球　　A D 或 ← →：移凳<br>
+      P：中场暂停　　− =：音量　　Esc：散场</p>
+  </div>
+
+  <script type="module">
+    // —— 散场幕布：菜单里按 Esc 是真退出（AppExit），画面会冻在最后一帧。
+    // 退出时音频设备随之关闭（AudioContext 转 closed），拿它当谢幕信号 ——
+    const showCurtain = () => {
+      if (document.getElementById("curtain")) return;
+      const div = document.createElement("div");
+      div.id = "curtain";
+      div.innerHTML = "<p>已散场</p><p class='hint'>点击这里，再开新台</p>";
+      div.addEventListener("click", () => location.reload());
+      document.body.appendChild(div);
+    };
+
+    // —— 音频兜底：先于一切 wasm 代码劫持 AudioContext，记住每个实例 ——
+    const audioCtxs = [];
+    for (const name of ["AudioContext", "webkitAudioContext"]) {
+      const Orig = window[name];
+      if (!Orig) continue;
+      window[name] = class extends Orig {
+        constructor(...args) {
+          super(...args);
+          audioCtxs.push(this);
+          this.addEventListener("statechange", () => {
+            if (this.state === "closed") showCurtain();
+          });
+        }
+      };
+    }
+    window.__audioCtxs = audioCtxs; // 供自动化验证读状态，游戏本身不用
+    const wakeAudio = () => audioCtxs.forEach(c => {
+      if (c.state === "suspended") c.resume();
+    });
+    // capture 阶段监听：不受 canvas 上 winit 停止冒泡的影响
+    document.addEventListener("keydown", wakeAudio, true);
+    document.addEventListener("pointerdown", wakeAudio, true);
+
+    // —— 固定画幅：把 920×720 的戏台等比缩进 iframe 视口 ——
+    const stage = document.getElementById("stage");
+    const fit = () => stage.style.setProperty(
+      "--s", Math.min(innerWidth / 920, innerHeight / 720));
+    addEventListener("resize", fit);
+    fit();
+
+    // —— 启动层：手势链内加载 wasm，AudioContext 生而可用 ——
+    const boot = document.getElementById("boot");
+    const btn = document.getElementById("boot-btn");
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.textContent = "加载中…";
+      try {
+        const { default: init } = await import("./ch20-breakout.js");
+        await init();
+        boot.remove();
+        document.getElementById("bevy-canvas").focus();
+      } catch (e) {
+        btn.textContent = "启动失败（需要支持 WebGL2 的浏览器）";
+        console.error(e);
+      }
+    });
+  </script>
+</body>
+</html>

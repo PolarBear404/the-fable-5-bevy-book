@@ -8,9 +8,12 @@ cargo run -p ch20-breakout
 
 后台招牌亮起，空格开局。球趴在凳上随你走，再按空格——上天。接住，弹墙，砸瓦；筒瓦第一下掉釉、第二下才碎；记分牌随脆响走字，半场时场记报“过半了”。打到兴头按 P，全世界定格，曲子停在半拍；倒杯水回来再按 P，从那一拍接着演。三只绣球都喂了沟，下行三叹里“绣球散尽”落幕，空格再来——新台新账。手稳的那一局，第五十六片瓦碎掉的瞬间，上行琶音收锣，“满堂彩”：
 
-![动图：开局发球后，球在凳与瓦阵之间往返，瓦片接连碎裂，左上角记分牌随之走字](images/ch20/fig-20-11-playthrough.webp)
-
-<span class="caption">Figure 20-11：《打瓦》——五十六片瓦、三只绣球、一条凳</span>
+<figure class="bevy-demo" data-src="demos/ch20/index.html" data-ratio="920 / 720">
+  <img src="images/ch20/fig-20-11-playthrough.webp"
+       alt="动图：开局发球后，球在凳与瓦阵之间往返，瓦片接连碎裂，左上角记分牌随之走字">
+  <figcaption><span class="caption">Figure 20-11：《打瓦》——五十六片瓦、三只绣球、一条凳。
+  读的是网页版就不必只看动图：点击画面，当场开一局</span></figcaption>
+</figure>
 
 ## 脉络收拢
 

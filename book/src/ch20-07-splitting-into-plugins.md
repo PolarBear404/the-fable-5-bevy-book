@@ -55,7 +55,7 @@ note: the struct `Score` is defined here
 
 <span class="caption">Listing 20-9：src/main.rs——声明模块、定义全场公认的状态与配色、装配 App</span>
 
-状态机和配色留在 `main.rs`，因为它们是“全场公认”的——每一摊都 `use crate::{GameState, IsPaused}`。相机也留下：它不归任何一摊管。每个插件的门面长一个样——一个空结构体，把原来写在 `main()` 里的注册搬进 `build`（第 2 章说过，`build` 的参数就是 `&mut App`，你能对 App 做的事都能搬进来）。玩法摊的门面与合同：
+状态机和配色留在 `main.rs`，因为它们是“全场公认”的——每一摊都 `use crate::{GameState, IsPaused}`。相机也留下：它不归任何一摊管。`Window` 里多出的两行是给网页版留的记号：`canvas` 指定把画面挂到页面上哪个 `<canvas>` 元素，`fit_canvas_to_parent` 让画布尺寸跟着页面走——这两个字段只在编成 WebAssembly 进浏览器时才起作用，桌面构建原样忽略，所以它们不改变你眼前这个游戏的任何行为。下一节你会在书页里直接开一局，跑的就是这份一字未改的 `main.rs`。每个插件的门面长一个样——一个空结构体，把原来写在 `main()` 里的注册搬进 `build`（第 2 章说过，`build` 的参数就是 `&mut App`，你能对 App 做的事都能搬进来）。玩法摊的门面与合同：
 
 ```rust
 {{#include ../../code/ch20-breakout/src/game.rs:contract}}
