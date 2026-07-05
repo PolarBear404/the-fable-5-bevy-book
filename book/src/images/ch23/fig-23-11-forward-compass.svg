@@ -1,0 +1,69 @@
+<svg viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-c23" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr-c23o" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+    <marker id="arr-c23b" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#274a91"/>
+    </marker>
+    <marker id="arr-c23d" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#4a463f"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="760" height="400" rx="10" fill="#f7f5f0"/>
+
+  <text x="380" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">两家的「前」差半圈（俯视，+Y 出纸面）</text>
+
+  <!-- ============ 左半：glTF ============ -->
+  <text x="170" y="76" text-anchor="middle" font-size="15" fill="#c05a2e" font-weight="bold">glTF</text>
+  <text x="170" y="94" text-anchor="middle" font-size="11" fill="#7a7468">规范：模型正脸朝 +Z</text>
+
+  <!-- 轴 -->
+  <g stroke="#7a7468" stroke-width="1.6" fill="none">
+    <path d="M170,150 L170,296" marker-end="url(#arr-c23)"/>
+    <path d="M110,220 L246,220" marker-end="url(#arr-c23)"/>
+  </g>
+  <text x="256" y="224" font-size="12" fill="#7a7468">+X</text>
+  <text x="164" y="316" font-size="12" fill="#7a7468">+Z</text>
+
+  <!-- 俯视小人立在原点：肩 + 头 + 鼻尖朝 +Z（画面下方） -->
+  <g>
+    <ellipse cx="170" cy="220" rx="33" ry="13" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <circle cx="170" cy="220" r="12" fill="#fdf3ea" stroke="#c05a2e" stroke-width="2"/>
+    <path d="M164,231 L176,231 L170,240 z" fill="#c05a2e"/>
+  </g>
+  <path d="M170,246 L170,282" stroke="#c05a2e" stroke-width="3" fill="none" marker-end="url(#arr-c23o)"/>
+  <text x="182" y="268" font-size="12" fill="#c05a2e" font-weight="bold">脸朝 +Z</text>
+
+  <!-- ============ 中：拧半圈 ============ -->
+  <path d="M380,163 A 52,52 0 1 1 379,267" stroke="#4a463f" stroke-width="2.4" fill="none" marker-end="url(#arr-c23d)"/>
+  <circle cx="380" cy="215" r="4" fill="none" stroke="#4a463f" stroke-width="1.6"/>
+  <circle cx="380" cy="215" r="1.4" fill="#4a463f"/>
+  <text x="380" y="238" text-anchor="middle" font-size="10" fill="#7a7468">Y 轴出纸面</text>
+  <text x="380" y="308" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">rotate_scene_entity</text>
+  <text x="380" y="326" text-anchor="middle" font-size="11" fill="#7a7468">装卸时把场景根绕 Y 拧半圈（180°）</text>
+
+  <!-- ============ 右半：Bevy ============ -->
+  <text x="590" y="76" text-anchor="middle" font-size="15" fill="#274a91" font-weight="bold">Bevy</text>
+  <text x="590" y="94" text-anchor="middle" font-size="11" fill="#7a7468">Transform::forward() = −Z</text>
+
+  <g stroke="#7a7468" stroke-width="1.6" fill="none">
+    <path d="M590,150 L590,296" marker-end="url(#arr-c23)"/>
+    <path d="M530,220 L666,220" marker-end="url(#arr-c23)"/>
+  </g>
+  <text x="676" y="224" font-size="12" fill="#7a7468">+X</text>
+  <text x="584" y="316" font-size="12" fill="#7a7468">+Z</text>
+  <text x="584" y="144" font-size="12" fill="#7a7468">−Z</text>
+
+  <!-- 同一个小人立在原点，脸应当朝 −Z（画面上方） -->
+  <g>
+    <ellipse cx="590" cy="220" rx="33" ry="13" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+    <circle cx="590" cy="220" r="12" fill="#fdf3ea" stroke="#274a91" stroke-width="2"/>
+    <path d="M584,209 L596,209 L590,200 z" fill="#274a91"/>
+  </g>
+  <path d="M590,194 L590,162" stroke="#274a91" stroke-width="3" fill="none" marker-end="url(#arr-c23b)"/>
+  <text x="602" y="182" font-size="12" fill="#274a91" font-weight="bold">脸朝 −Z</text>
+</svg>

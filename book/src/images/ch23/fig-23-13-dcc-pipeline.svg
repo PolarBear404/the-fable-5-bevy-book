@@ -1,0 +1,96 @@
+<svg viewBox="0 0 840 540" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-p23" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="840" height="540" rx="10" fill="#f7f5f0"/>
+
+  <text x="420" y="32" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">从作坊到园子：名字、材质、动画、附注，各走各的桥</text>
+
+  <text x="150" y="62" text-anchor="middle" font-size="13.5" fill="#c05a2e" font-weight="bold">Blender（作坊）</text>
+  <text x="420" y="62" text-anchor="middle" font-size="13.5" fill="#7a7468" font-weight="bold">glTF 字段（桥）</text>
+  <text x="688" y="62" text-anchor="middle" font-size="13.5" fill="#274a91" font-weight="bold">Bevy（园子）</text>
+
+  <!-- 行框：左 36..264，中 330..510，右 576..800；行高 70，框高 52 -->
+  <g>
+    <!-- 1 物体与层级 -->
+    <rect x="36" y="80" width="228" height="52" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <text x="150" y="102" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">物体与层级</text>
+    <text x="150" y="121" text-anchor="middle" font-size="10.5" fill="#7a7468">大纲视图里的父子树</text>
+    <rect x="330" y="80" width="180" height="52" rx="8" fill="#efe9dd" stroke="#7a7468" stroke-width="1.4"/>
+    <text x="420" y="111" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">nodes</text>
+    <rect x="576" y="80" width="228" height="52" rx="8" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+    <text x="690" y="102" text-anchor="middle" font-size="13" fill="#274a91" font-weight="bold">实体树</text>
+    <text x="690" y="121" text-anchor="middle" font-size="10.5" fill="#7a7468">ChildOf / Children</text>
+
+    <!-- 2 物体名 -->
+    <rect x="36" y="150" width="228" height="52" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <text x="150" y="172" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">物体名</text>
+    <text x="150" y="191" text-anchor="middle" font-size="10.5" fill="#7a7468">LeftArm、MainRod…</text>
+    <rect x="330" y="150" width="180" height="52" rx="8" fill="#efe9dd" stroke="#7a7468" stroke-width="1.4"/>
+    <text x="420" y="181" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">name</text>
+    <rect x="576" y="150" width="228" height="52" rx="8" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+    <text x="690" y="172" text-anchor="middle" font-size="13" fill="#274a91" font-weight="bold">Name 组件</text>
+    <text x="690" y="191" text-anchor="middle" font-size="10.5" fill="#7a7468">按名找人、挂道具凭它</text>
+
+    <!-- 3 材质名 -->
+    <rect x="36" y="220" width="228" height="52" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <text x="150" y="242" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">材质名</text>
+    <text x="150" y="261" text-anchor="middle" font-size="10.5" fill="#7a7468">AfuRobe、RodWood…</text>
+    <rect x="330" y="220" width="180" height="52" rx="8" fill="#efe9dd" stroke="#7a7468" stroke-width="1.4"/>
+    <text x="420" y="251" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">materials</text>
+    <rect x="576" y="220" width="228" height="52" rx="8" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+    <text x="690" y="242" text-anchor="middle" font-size="12.5" fill="#274a91" font-weight="bold">GltfMaterialName</text>
+    <text x="690" y="261" text-anchor="middle" font-size="10.5" fill="#7a7468">两本账：Material{N} 与 /std</text>
+
+    <!-- 4 动画 -->
+    <rect x="36" y="290" width="228" height="52" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <text x="150" y="312" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">动画（Action）</text>
+    <text x="150" y="331" text-anchor="middle" font-size="10.5" fill="#7a7468">关键帧烤成曲线</text>
+    <rect x="330" y="290" width="180" height="52" rx="8" fill="#efe9dd" stroke="#7a7468" stroke-width="1.4"/>
+    <text x="420" y="321" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">animations</text>
+    <rect x="576" y="290" width="228" height="52" rx="8" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+    <text x="690" y="312" text-anchor="middle" font-size="12.5" fill="#274a91" font-weight="bold">named_animations</text>
+    <text x="690" y="331" text-anchor="middle" font-size="10.5" fill="#7a7468">AnimationClip，按名/按序取</text>
+
+    <!-- 5 自定义属性 -->
+    <rect x="36" y="360" width="228" height="52" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <text x="150" y="382" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">自定义属性</text>
+    <text x="150" y="401" text-anchor="middle" font-size="10.5" fill="#7a7468">Custom Properties</text>
+    <rect x="330" y="360" width="180" height="52" rx="8" fill="#efe9dd" stroke="#7a7468" stroke-width="1.4"/>
+    <text x="420" y="391" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">extras</text>
+    <rect x="576" y="360" width="228" height="52" rx="8" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+    <text x="690" y="382" text-anchor="middle" font-size="13" fill="#274a91" font-weight="bold">GltfExtras</text>
+    <text x="690" y="401" text-anchor="middle" font-size="10.5" fill="#7a7468">JSON 原文，一字不动递到手</text>
+
+    <!-- 6 相机与灯 -->
+    <rect x="36" y="430" width="228" height="52" rx="8" fill="#ffffff" stroke="#c05a2e" stroke-width="2"/>
+    <text x="150" y="452" text-anchor="middle" font-size="13" fill="#c05a2e" font-weight="bold">摆好的相机与灯</text>
+    <text x="150" y="471" text-anchor="middle" font-size="10.5" fill="#7a7468">机位与照明随箱走</text>
+    <rect x="330" y="430" width="180" height="52" rx="8" fill="#efe9dd" stroke="#7a7468" stroke-width="1.4"/>
+    <text x="420" y="450" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">cameras</text>
+    <text x="420" y="468" text-anchor="middle" font-size="10.5" fill="#4a463f">KHR_lights_punctual</text>
+    <rect x="576" y="430" width="228" height="52" rx="8" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+    <text x="690" y="452" text-anchor="middle" font-size="12.5" fill="#274a91" font-weight="bold">Camera3d / PointLight</text>
+    <text x="690" y="471" text-anchor="middle" font-size="10.5" fill="#7a7468">默认照单全收（23.5 的开关）</text>
+  </g>
+
+  <!-- 桥上的箭头：两两相连 -->
+  <g stroke="#7a7468" stroke-width="1.6" fill="none">
+    <path d="M268,106 L326,106" marker-end="url(#arr-p23)"/>
+    <path d="M514,106 L572,106" marker-end="url(#arr-p23)"/>
+    <path d="M268,176 L326,176" marker-end="url(#arr-p23)"/>
+    <path d="M514,176 L572,176" marker-end="url(#arr-p23)"/>
+    <path d="M268,246 L326,246" marker-end="url(#arr-p23)"/>
+    <path d="M514,246 L572,246" marker-end="url(#arr-p23)"/>
+    <path d="M268,316 L326,316" marker-end="url(#arr-p23)"/>
+    <path d="M514,316 L572,316" marker-end="url(#arr-p23)"/>
+    <path d="M268,386 L326,386" marker-end="url(#arr-p23)"/>
+    <path d="M514,386 L572,386" marker-end="url(#arr-p23)"/>
+    <path d="M268,456 L326,456" marker-end="url(#arr-p23)"/>
+    <path d="M514,456 L572,456" marker-end="url(#arr-p23)"/>
+  </g>
+
+  <text x="420" y="516" text-anchor="middle" font-size="10.5" fill="#7a7468">导出 .glb → 丢进 assets/ → 按本章的手艺开箱；名字是两边事实上的 API</text>
+</svg>

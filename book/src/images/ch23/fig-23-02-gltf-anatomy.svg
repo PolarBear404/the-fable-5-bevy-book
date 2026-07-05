@@ -1,0 +1,147 @@
+<svg viewBox="0 0 840 560" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-a23" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr-a23c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="840" height="560" rx="10" fill="#f7f5f0"/>
+
+  <text x="420" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">glTF 的指针链：JSON 记账，二进制装货，贴图外挂</text>
+
+  <!-- ============ 左：afu.gltf 大卡片，八层小格 ============ -->
+  <rect x="28" y="58" width="292" height="470" rx="10" fill="#ffffff" stroke="#7a7468" stroke-width="1.6"/>
+  <text x="48" y="84" font-size="14" fill="#4a463f" font-weight="bold">afu.gltf</text>
+  <text x="112" y="84" font-size="11" fill="#7a7468">JSON 主档，10 KB</text>
+
+  <!-- 八层小格：scenes → … → buffers -->
+  <g>
+    <rect x="48" y="96" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="118" font-size="12.5" fill="#274a91" font-weight="bold">scenes</text>
+    <text x="264" y="118" font-size="10.5" fill="#7a7468" text-anchor="end">AfuShow / Workbench</text>
+
+    <rect x="48" y="144" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="166" font-size="12.5" fill="#274a91" font-weight="bold">nodes</text>
+    <text x="264" y="166" font-size="10.5" fill="#7a7468" text-anchor="end">AfuRoot、LeftArm…</text>
+
+    <rect x="48" y="192" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="214" font-size="12.5" fill="#274a91" font-weight="bold">meshes</text>
+    <text x="264" y="214" font-size="10.5" fill="#7a7468" text-anchor="end">primitive＝顶点＋材质号</text>
+
+    <rect x="48" y="240" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="262" font-size="12.5" fill="#274a91" font-weight="bold">materials</text>
+    <text x="264" y="262" font-size="10.5" fill="#7a7468" text-anchor="end">AfuFace、AfuRobe…</text>
+
+    <rect x="48" y="288" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="310" font-size="12.5" fill="#274a91" font-weight="bold">animations</text>
+    <text x="264" y="310" font-size="10.5" fill="#7a7468" text-anchor="end">Swing</text>
+
+    <rect x="48" y="336" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="358" font-size="12.5" fill="#274a91" font-weight="bold">accessors</text>
+    <text x="264" y="358" font-size="10.5" fill="#7a7468" text-anchor="end">怎么读一段二进制</text>
+
+    <rect x="48" y="384" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="406" font-size="12.5" fill="#274a91" font-weight="bold">bufferViews</text>
+    <text x="264" y="406" font-size="10.5" fill="#7a7468" text-anchor="end">划一段字节</text>
+
+    <rect x="48" y="432" width="228" height="34" rx="6" fill="#eef0f7" stroke="#274a91" stroke-width="1.4"/>
+    <text x="60" y="454" font-size="12.5" fill="#274a91" font-weight="bold">buffers</text>
+    <text x="264" y="454" font-size="10.5" fill="#7a7468" text-anchor="end">货在箱外</text>
+  </g>
+
+  <!-- 层间箭头：顺着序号一层层向下指 -->
+  <g stroke="#7a7468" stroke-width="1.5" fill="none">
+    <path d="M96,130 L96,142" marker-end="url(#arr-a23)"/>
+    <path d="M96,178 L96,190" marker-end="url(#arr-a23)"/>
+    <path d="M96,226 L96,238" marker-end="url(#arr-a23)"/>
+    <path d="M120,322 L120,334" marker-end="url(#arr-a23)"/>
+    <path d="M96,370 L96,382" marker-end="url(#arr-a23)"/>
+    <path d="M96,418 L96,430" marker-end="url(#arr-a23)"/>
+    <!-- meshes 的顶点数据绕过材质/动画两层，直指 accessors -->
+    <path d="M276,214 C 302,238 302,320 278,350" marker-end="url(#arr-a23)"/>
+  </g>
+  <g font-size="9.5" fill="#7a7468">
+    <text x="104" y="140">nodes: [0]</text>
+    <text x="104" y="188">mesh: 2</text>
+    <text x="104" y="236">material: 1</text>
+    <text x="128" y="332">input / output</text>
+    <text x="104" y="380">bufferView: 0</text>
+    <text x="104" y="428">buffer: 0</text>
+    <text x="297" y="285" text-anchor="middle" transform="rotate(90 297 285)">POSITION / indices</text>
+  </g>
+  <text x="174" y="514" text-anchor="middle" font-size="10.5" fill="#7a7468">几乎所有引用都是序号，一路指到底</text>
+
+  <!-- ============ 中：卡片外的两件货 ============ -->
+  <!-- afu.bin：二进制条带 -->
+  <rect x="372" y="130" width="104" height="176" rx="7" fill="#3a3d44"/>
+  <g font-size="10" fill="#9aa0ac" font-family="Consolas, monospace">
+    <text x="384" y="152">01101100</text>
+    <text x="384" y="170">11010010</text>
+    <text x="384" y="188">00101101</text>
+    <text x="384" y="206">10011010</text>
+    <text x="384" y="224">01010011</text>
+    <text x="384" y="242">11001001</text>
+    <text x="384" y="260">00110110</text>
+    <text x="384" y="278">10100101</text>
+    <text x="384" y="296">01011010</text>
+  </g>
+  <text x="424" y="326" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">afu.bin</text>
+  <text x="424" y="342" text-anchor="middle" font-size="10.5" fill="#7a7468">二进制副档，36 KB</text>
+
+  <!-- afu-face.png：贴图缩略（阿福的脸） -->
+  <rect x="376" y="386" width="96" height="96" rx="7" fill="#ffffff" stroke="#7a7468" stroke-width="1.4"/>
+  <g>
+    <circle cx="424" cy="434" r="38" fill="#fdf3ea" stroke="#4a463f" stroke-width="1.2"/>
+    <path d="M390,422 A38,38 0 0 1 458,422 L458,414 A38,38 0 0 0 390,414 z" fill="#2b2320"/>
+    <path d="M392,420 A38,38 0 0 1 456,420 A46,40 0 0 0 392,420 z" fill="#2b2320"/>
+    <circle cx="406" cy="446" r="7.5" fill="#e88c8c" opacity="0.75"/>
+    <circle cx="442" cy="446" r="7.5" fill="#e88c8c" opacity="0.75"/>
+    <path d="M400,430 q8,-7 16,0" stroke="#2b2320" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M432,430 q8,-7 16,0" stroke="#2b2320" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <circle cx="424" cy="424" r="3" fill="#b3402e"/>
+    <path d="M416,456 q8,6 16,0" stroke="#b3402e" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <text x="424" y="502" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">afu-face.png</text>
+  <text x="424" y="518" text-anchor="middle" font-size="10.5" fill="#7a7468">贴图，1 KB</text>
+
+  <!-- buffers 层伸出的两支 uri 箭头 -->
+  <g stroke="#c05a2e" stroke-width="1.8" fill="none">
+    <path d="M276,443 C 322,420 336,300 366,230" marker-end="url(#arr-a23c)"/>
+    <path d="M276,458 C 320,470 336,440 370,434" marker-end="url(#arr-a23c)"/>
+  </g>
+  <g font-size="10" fill="#c05a2e">
+    <text x="336" y="346">uri</text>
+    <text x="330" y="478">uri</text>
+  </g>
+
+  <!-- ============ 右：afu.glb 单件箱 ============ -->
+  <rect x="560" y="120" width="250" height="330" rx="10" fill="#ffffff" stroke="#274a91" stroke-width="2"/>
+  <text x="580" y="148" font-size="14" fill="#4a463f" font-weight="bold">afu.glb</text>
+  <text x="638" y="148" font-size="11" fill="#7a7468">单件箱</text>
+
+  <rect x="580" y="166" width="210" height="76" rx="6" fill="#efe9dd" stroke="#7a7468" stroke-width="1.2"/>
+  <text x="592" y="196" font-size="13" fill="#4a463f" font-weight="bold">JSON</text>
+  <text x="592" y="216" font-size="10.5" fill="#7a7468">同一份账本</text>
+
+  <rect x="580" y="252" width="210" height="76" rx="6" fill="#3a3d44"/>
+  <text x="592" y="282" font-size="13" fill="#e6e2da" font-weight="bold">BIN</text>
+  <text x="592" y="302" font-size="10.5" fill="#9aa0ac">同一批顶点与曲线</text>
+
+  <rect x="580" y="338" width="210" height="76" rx="6" fill="#ffffff" stroke="#7a7468" stroke-width="1.2"/>
+  <text x="592" y="368" font-size="13" fill="#4a463f" font-weight="bold">PNG</text>
+  <text x="592" y="388" font-size="10.5" fill="#7a7468">同一张脸</text>
+  <g>
+    <circle cx="752" cy="376" r="22" fill="#fdf3ea" stroke="#4a463f" stroke-width="1"/>
+    <path d="M733,369 A22,22 0 0 1 771,369 A27,23 0 0 0 733,369 z" fill="#2b2320"/>
+    <circle cx="742" cy="382" r="4.2" fill="#e88c8c" opacity="0.75"/>
+    <circle cx="762" cy="382" r="4.2" fill="#e88c8c" opacity="0.75"/>
+    <path d="M738,373 q5,-4 9,0" stroke="#2b2320" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M757,373 q5,-4 9,0" stroke="#2b2320" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+    <path d="M746,388 q6,4 12,0" stroke="#b3402e" stroke-width="2" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <text x="685" y="482" text-anchor="middle" font-size="12.5" fill="#4a463f">同一套内容，打成一件</text>
+  <text x="685" y="502" text-anchor="middle" font-size="10.5" fill="#7a7468">标签照旧：#Scene0 还是 #Scene0</text>
+</svg>

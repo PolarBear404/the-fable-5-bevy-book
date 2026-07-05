@@ -1,0 +1,11 @@
+# ANCHOR: deps
+[package]
+name = "ch23-gltf"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# glTF 加载与动画都在默认 feature 里，无须点名；
+# debug 让报错里印出系统名（第 4 章起的老习惯）
+bevy = { workspace = true, features = ["debug"] }
+# ANCHOR_END: deps

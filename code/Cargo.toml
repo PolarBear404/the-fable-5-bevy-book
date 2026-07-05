@@ -23,6 +23,7 @@ members = [
     "ch20-breakout",
     "ch21-meshes",
     "ch22-lighting",
+    "ch23-gltf",
 ]
 
 [workspace.package]

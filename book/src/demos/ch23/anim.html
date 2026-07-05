@@ -1,0 +1,64 @@
+<!doctype html>
+<!-- ch23「哑巴坑」内嵌 demo 的宿主页（手写、入库；wasm/js/assets 由
+     scripts/build_ch23_wasm.py 重建）。同源代码是 examples/listing-23-13.rs：
+     点一下画面抽走 AnimationGraphHandle（动画冻住、日志无声），再点还回
+     （原样复活）。结构同 index.html：3D 相机自适应画幅，canvas 铺满 iframe；
+     启动层点击才下载 wasm；无音频，不需要 ch20 的音频三件套。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>哑巴坑：抽谱与还谱</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #2b2c2f; }
+
+  /* 底色取 Bevy 默认 ClearColor（srgb_u8 43,44,47），加载时不跳色 */
+  #bevy-ch23-anim { display: block; width: 100%; height: 100%; outline: none; }
+
+  /* 启动层：一颗按钮 + 操作说明，点击前不下载一个字节的 wasm */
+  #boot {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1.1em;
+    color: #e8e0cc; font-family: system-ui, sans-serif;
+    text-align: center;
+  }
+  #boot button {
+    font: inherit; font-size: 1.05em;
+    color: #fff; background: rgba(20, 16, 20, 0.72);
+    border: 1px solid rgba(232, 224, 204, 0.4);
+    border-radius: 999px; padding: 0.6em 1.4em;
+    cursor: pointer;
+  }
+  #boot button:hover { background: rgba(60, 50, 60, 0.8); }
+  #boot .keys { margin: 0; font-size: 0.88em; color: #9a97a4; line-height: 1.8; }
+</style>
+</head>
+<body>
+  <canvas id="bevy-ch23-anim"></canvas>
+  <div id="boot">
+    <button id="boot-btn" type="button">▶ 开始排练（约 26 MB）</button>
+    <p class="keys">点一下画面：抽谱——动画冻住，日志一声不吭<br>
+      再点一下：还谱——从僵住那一拍原样接着演</p>
+  </div>
+
+  <script type="module">
+    // 启动层：点击才加载 wasm；init 返回后撤幕布、给画布焦点
+    const boot = document.getElementById("boot");
+    const btn = document.getElementById("boot-btn");
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.textContent = "加载中…";
+      try {
+        const { default: init } = await import("./ch23_anim.js");
+        await init();
+        boot.remove();
+        document.getElementById("bevy-ch23-anim").focus();
+      } catch (e) {
+        btn.textContent = "启动失败（需要支持 WebGL2 的浏览器）";
+        console.error(e);
+      }
+    });
+  </script>
+</body>
+</html>
