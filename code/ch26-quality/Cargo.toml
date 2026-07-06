@@ -1,0 +1,10 @@
+[package]
+name = "ch26-quality"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug 让报错里印出系统名（第 4 章起的老习惯）。
+# 本章的主角 bevy_post_process / bevy_anti_alias，连同 tonemapping_luts / smaa_luts
+# 两套查色表，都在默认 feature 集合里——画质这摊事开箱即用，一扇门都不用另开
+bevy = { workspace = true, features = ["debug"] }

@@ -1,0 +1,135 @@
+<svg viewBox="0 0 980 500" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <rect x="0" y="0" width="980" height="500" rx="10" fill="#f7f5f0"/>
+  <text x="490" y="34" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">锯齿的病理与 MSAA 的药理：一票定黑白 vs 四票分深浅</text>
+
+  <!-- ============ 左：一像素一票 ============ -->
+  <g>
+    <rect x="20" y="60" width="460" height="404" rx="8" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+    <text x="250" y="88" text-anchor="middle" font-size="13.5" fill="#c05a2e" font-weight="bold">一像素一票——非黑即白</text>
+
+    <!-- 阶梯着色：row k 的暗格 = 第 0..2k 列（按“格心是否在线左下”逐格判定） -->
+    <g fill="#3b3733">
+      <rect x="45" y="110" width="35" height="35"/>
+      <rect x="45" y="145" width="105" height="35"/>
+      <rect x="45" y="180" width="175" height="35"/>
+      <rect x="45" y="215" width="245" height="35"/>
+      <rect x="45" y="250" width="315" height="35"/>
+      <rect x="45" y="285" width="385" height="35"/>
+      <rect x="45" y="320" width="385" height="35"/>
+    </g>
+
+    <!-- 网格：11 列（45..430）× 7 行（110..355），步长 35 -->
+    <g stroke="#ded8ca" stroke-width="1">
+      <line x1="45" y1="145" x2="430" y2="145"/><line x1="45" y1="180" x2="430" y2="180"/>
+      <line x1="45" y1="215" x2="430" y2="215"/><line x1="45" y1="250" x2="430" y2="250"/>
+      <line x1="45" y1="285" x2="430" y2="285"/><line x1="45" y1="320" x2="430" y2="320"/>
+      <line x1="80" y1="110" x2="80" y2="355"/><line x1="115" y1="110" x2="115" y2="355"/>
+      <line x1="150" y1="110" x2="150" y2="355"/><line x1="185" y1="110" x2="185" y2="355"/>
+      <line x1="220" y1="110" x2="220" y2="355"/><line x1="255" y1="110" x2="255" y2="355"/>
+      <line x1="290" y1="110" x2="290" y2="355"/><line x1="325" y1="110" x2="325" y2="355"/>
+      <line x1="360" y1="110" x2="360" y2="355"/><line x1="395" y1="110" x2="395" y2="355"/>
+    </g>
+    <rect x="45" y="110" width="385" height="245" fill="none" stroke="#4a463f" stroke-width="1.6"/>
+
+    <!-- 真实几何边：斜率＝每向右 2 格下落 1 格，从 (45,110) 到 (430,302.5) -->
+    <line x1="45" y1="110" x2="430" y2="302.5" stroke="#274a91" stroke-width="3"/>
+    <text x="150" y="103" text-anchor="middle" font-size="10" fill="#274a91">真实几何边（下方属于三角形）</text>
+
+    <!-- 采样点：贴线走廊逐格的“格心一票”。在线下＝命中（实心橙），线上＝落空（空心） -->
+    <g>
+      <circle cx="62.5" cy="127.5" r="3.4" fill="#c05a2e"/>
+      <circle cx="97.5" cy="127.5" r="3.4" fill="none" stroke="#c05a2e" stroke-width="1.6"/>
+      <circle cx="132.5" cy="162.5" r="3.4" fill="#c05a2e"/>
+      <circle cx="167.5" cy="162.5" r="3.4" fill="none" stroke="#c05a2e" stroke-width="1.6"/>
+      <circle cx="202.5" cy="197.5" r="3.4" fill="#c05a2e"/>
+      <circle cx="237.5" cy="197.5" r="3.4" fill="none" stroke="#c05a2e" stroke-width="1.6"/>
+      <circle cx="272.5" cy="232.5" r="3.4" fill="#c05a2e"/>
+      <circle cx="307.5" cy="232.5" r="3.4" fill="none" stroke="#c05a2e" stroke-width="1.6"/>
+      <circle cx="342.5" cy="267.5" r="3.4" fill="#c05a2e"/>
+      <circle cx="377.5" cy="267.5" r="3.4" fill="none" stroke="#c05a2e" stroke-width="1.6"/>
+    </g>
+
+    <text x="250" y="382" text-anchor="middle" font-size="10.5" fill="#7a7468">每格只在格心问一次“在不在三角形里”：实心＝命中整格涂黑，空心＝落空整格留白</text>
+    <text x="250" y="400" text-anchor="middle" font-size="10.5" fill="#c05a2e" font-weight="bold">线斜着走，格子只能整进整出——边缘断成两格宽的硬台阶</text>
+  </g>
+
+  <!-- ============ 右：MSAA 4x ============ -->
+  <g>
+    <rect x="500" y="60" width="460" height="404" rx="8" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+    <text x="730" y="88" text-anchor="middle" font-size="13.5" fill="#1d6b40" font-weight="bold">MSAA 4x——四票分深浅</text>
+
+    <!-- 覆盖着色：row k 全暗格 = 第 0..2k-1 列；交界两格按真实覆盖率——
+         第 2k 列（线从格顶左角切到右沿半高）＝75%，第 2k+1 列＝25% -->
+    <g fill="#3b3733">
+      <rect x="525" y="110" width="35" height="35" fill-opacity="0.75"/>
+      <rect x="560" y="110" width="35" height="35" fill-opacity="0.25"/>
+      <rect x="525" y="145" width="70" height="35"/>
+      <rect x="595" y="145" width="35" height="35" fill-opacity="0.75"/>
+      <rect x="630" y="145" width="35" height="35" fill-opacity="0.25"/>
+      <rect x="525" y="180" width="140" height="35"/>
+      <rect x="665" y="180" width="35" height="35" fill-opacity="0.75"/>
+      <rect x="700" y="180" width="35" height="35" fill-opacity="0.25"/>
+      <rect x="525" y="215" width="210" height="35"/>
+      <rect x="735" y="215" width="35" height="35" fill-opacity="0.75"/>
+      <rect x="770" y="215" width="35" height="35" fill-opacity="0.25"/>
+      <rect x="525" y="250" width="280" height="35"/>
+      <rect x="805" y="250" width="35" height="35" fill-opacity="0.75"/>
+      <rect x="840" y="250" width="35" height="35" fill-opacity="0.25"/>
+      <rect x="525" y="285" width="350" height="35"/>
+      <rect x="875" y="285" width="35" height="35" fill-opacity="0.75"/>
+      <rect x="525" y="320" width="385" height="35"/>
+    </g>
+
+    <g stroke="#ded8ca" stroke-width="1">
+      <line x1="525" y1="145" x2="910" y2="145"/><line x1="525" y1="180" x2="910" y2="180"/>
+      <line x1="525" y1="215" x2="910" y2="215"/><line x1="525" y1="250" x2="910" y2="250"/>
+      <line x1="525" y1="285" x2="910" y2="285"/><line x1="525" y1="320" x2="910" y2="320"/>
+      <line x1="560" y1="110" x2="560" y2="355"/><line x1="595" y1="110" x2="595" y2="355"/>
+      <line x1="630" y1="110" x2="630" y2="355"/><line x1="665" y1="110" x2="665" y2="355"/>
+      <line x1="700" y1="110" x2="700" y2="355"/><line x1="735" y1="110" x2="735" y2="355"/>
+      <line x1="770" y1="110" x2="770" y2="355"/><line x1="805" y1="110" x2="805" y2="355"/>
+      <line x1="840" y1="110" x2="840" y2="355"/><line x1="875" y1="110" x2="875" y2="355"/>
+    </g>
+    <rect x="525" y="110" width="385" height="245" fill="none" stroke="#4a463f" stroke-width="1.6"/>
+
+    <line x1="525" y1="110" x2="910" y2="302.5" stroke="#274a91" stroke-width="3"/>
+
+    <!-- 交界两格的四点采样示范（第 1 行）：75% 格 3 中 1 空，25% 格 1 中 3 空 -->
+    <g>
+      <circle cx="604" cy="154" r="2.6" fill="#1d6b40"/>
+      <circle cx="621" cy="154" r="2.6" fill="none" stroke="#1d6b40" stroke-width="1.4"/>
+      <circle cx="604" cy="171" r="2.6" fill="#1d6b40"/>
+      <circle cx="621" cy="171" r="2.6" fill="#1d6b40"/>
+      <circle cx="639" cy="154" r="2.6" fill="none" stroke="#1d6b40" stroke-width="1.4"/>
+      <circle cx="656" cy="154" r="2.6" fill="none" stroke="#1d6b40" stroke-width="1.4"/>
+      <circle cx="639" cy="171" r="2.6" fill="#1d6b40"/>
+      <circle cx="656" cy="171" r="2.6" fill="none" stroke="#1d6b40" stroke-width="1.4"/>
+    </g>
+
+    <!-- 图例：命中票数 → 灰阶 -->
+    <g>
+      <rect x="562" y="372" width="26" height="26" fill="#3b3733" fill-opacity="0.25" stroke="#c9c2b2" stroke-width="1"/>
+      <circle cx="570" cy="380" r="2.2" fill="#1d6b40"/>
+      <circle cx="580" cy="380" r="2.2" fill="none" stroke="#1d6b40" stroke-width="1.2"/>
+      <circle cx="570" cy="390" r="2.2" fill="none" stroke="#1d6b40" stroke-width="1.2"/>
+      <circle cx="580" cy="390" r="2.2" fill="none" stroke="#1d6b40" stroke-width="1.2"/>
+      <text x="596" y="390" font-size="10" fill="#7a7468">1 票＝25%</text>
+      <rect x="676" y="372" width="26" height="26" fill="#3b3733" fill-opacity="0.5" stroke="#c9c2b2" stroke-width="1"/>
+      <circle cx="684" cy="380" r="2.2" fill="#1d6b40"/>
+      <circle cx="694" cy="380" r="2.2" fill="none" stroke="#1d6b40" stroke-width="1.2"/>
+      <circle cx="684" cy="390" r="2.2" fill="#1d6b40"/>
+      <circle cx="694" cy="390" r="2.2" fill="none" stroke="#1d6b40" stroke-width="1.2"/>
+      <text x="710" y="390" font-size="10" fill="#7a7468">2 票＝50%</text>
+      <rect x="790" y="372" width="26" height="26" fill="#3b3733" fill-opacity="0.75" stroke="#c9c2b2" stroke-width="1"/>
+      <circle cx="798" cy="380" r="2.2" fill="#1d6b40"/>
+      <circle cx="808" cy="380" r="2.2" fill="#1d6b40"/>
+      <circle cx="798" cy="390" r="2.2" fill="#1d6b40"/>
+      <circle cx="808" cy="390" r="2.2" fill="none" stroke="#1d6b40" stroke-width="1.2"/>
+      <text x="824" y="390" font-size="10" fill="#7a7468">3 票＝75%</text>
+    </g>
+
+    <text x="730" y="424" text-anchor="middle" font-size="10.5" fill="#1d6b40" font-weight="bold">交界格按命中票数着色出过渡灰阶——台阶化成渐变</text>
+  </g>
+
+  <text x="490" y="486" text-anchor="middle" font-size="11.5" fill="#7a7468">MSAA 的多票只花在“覆盖判定”上，着色每像素仍只算一次——这是它比全屏超采样便宜得多的原因</text>
+</svg>

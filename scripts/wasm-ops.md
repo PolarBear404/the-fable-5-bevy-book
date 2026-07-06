@@ -82,3 +82,20 @@
   节流到 1Hz），把步骤数组交给 iframe 的 `requestAnimationFrame` 链、每 ~6 帧发一步，
   与 Bevy 帧序天然对齐；队列置完成 flag，eval 轮询 flag 确认跑完再验证下一段，
   绝不并行两条队列（交错序列会把状态搅脏）。
+- **合成 KeyboardEvent 不保证被收**（ch26 教训，与上文 ch23 经验相反）：同为 winit 0.30，
+  ch26 的 demo 里 dispatch 到 canvas 的合成 KeyboardEvent 全程无效（疑与键盘监听挂点/
+  isTrusted 检查的路径差异有关）。合成键失灵时改走 claude-in-chrome `computer` 的 `key`
+  动作（CDP 真实按键，需 tab 真前台），实测全键路可靠命中。先试合成、不行换 CDP，两条
+  路都记进回报。
+- **Claude Preview 面板对重型 demo 可能恒 `document.hidden=true`**（ch26 实测）：面板内
+  RAF 不跑、screenshot 必超时，与 demo 本身无关。重型 demo 验证直接走真 Chrome tab
+  （claude-in-chrome + 系统前台），preview 面板只用来起 server。
+- **WebGL2 两条硬红线**（ch26 实测，正文 26.13 已入册）：①MSAA≠Off 时创建带
+  TEXTURE_BINDING 的 prepass 纹理 → glow 层 `Tex storage 2D multisample is not supported`
+  当场 panic——摘效果组件不够，required 补票的 prepass 组件要一并手摘；②TAA 管线
+  naga 译 GLSL ES 报 `A image was used with multiple samplers` → RenderError 直接
+  AppExit。两者桌面均无恙；web 构建里用 `cfg!(target_arch = "wasm32")` 把危险挡位封存。
+- **隐藏 tab 卡管线预热的无干扰解法**（ch26 实测）：后台 tab 被 Chrome 停发 RAF 时，Bevy
+  会卡在窗口创建/管线预热阶段一百多秒不动。连续调 CDP `Page.captureScreenshot`（computer
+  的 screenshot 动作）会强制 Chrome 给隐藏 tab 出帧——两三张就能把 Bevy 泵过预热直到出图，
+  不必抢用户前台。验证结论仍以状态牌文字/帧间变化为准。

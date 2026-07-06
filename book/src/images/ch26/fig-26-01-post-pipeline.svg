@@ -1,0 +1,99 @@
+<svg viewBox="0 0 1180 420" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr26a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr26b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L9,5 L0,10 z" fill="#b8862e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1180" height="420" rx="10" fill="#f7f5f0"/>
+  <text x="590" y="32" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">后处理流水线：主 pass 到屏幕之间的一条龙</text>
+
+  <!-- ============ HDR 段（左，暖底色区分） ============ -->
+  <rect x="20" y="56" width="560" height="300" rx="10" fill="#fbf1de" stroke="#d9c194" stroke-width="1.6" stroke-dasharray="0"/>
+  <text x="300" y="80" text-anchor="middle" font-size="13" fill="#8a6a1e" font-weight="bold">HDR 段——数值可以比 1.0 大，后处理吃的是这批原料</text>
+
+  <!-- 主 pass -->
+  <rect x="36" y="102" width="118" height="60" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="95" y="128" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">主 pass</text>
+  <text x="95" y="146" text-anchor="middle" font-size="10" fill="#7a7468">场景画进中间画布</text>
+  <path d="M158,132 L180,132" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <!-- TAA -->
+  <rect x="184" y="102" width="94" height="60" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="231" y="128" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">TAA</text>
+  <text x="231" y="146" text-anchor="middle" font-size="9.5" fill="#7a7468">历史帧混合</text>
+  <path d="M282,132 L302,132" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <!-- 运动模糊 -->
+  <rect x="306" y="102" width="94" height="60" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="353" y="122" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">运动</text>
+  <text x="353" y="138" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">模糊</text>
+  <text x="353" y="154" text-anchor="middle" font-size="9.5" fill="#7a7468">shutter_angle</text>
+  <path d="M404,132 L424,132" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <!-- 辉光 -->
+  <rect x="428" y="102" width="94" height="60" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="475" y="128" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">辉光</text>
+  <text x="475" y="146" text-anchor="middle" font-size="9.5" fill="#7a7468">Bloom</text>
+
+  <!-- 景深 -->
+  <rect x="36" y="216" width="94" height="58" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="83" y="242" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">景深</text>
+  <text x="83" y="259" text-anchor="middle" font-size="9.5" fill="#7a7468">DoF</text>
+  <path d="M130,245 L150,245" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <!-- 镜头三件套 -->
+  <rect x="154" y="216" width="118" height="58" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="213" y="238" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">镜头三件套</text>
+  <text x="213" y="255" text-anchor="middle" font-size="9" fill="#7a7468">暗角/畸变/色差</text>
+  <path d="M272,245 L292,245" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <!-- 自动测光 -->
+  <rect x="296" y="216" width="118" height="58" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="355" y="238" text-anchor="middle" font-size="12" fill="#4a463f" font-weight="bold">自动测光</text>
+  <text x="355" y="255" text-anchor="middle" font-size="9" fill="#7a7468">AutoExposure</text>
+
+  <!-- 辉光收尾折行接景深：上排走完回到下排开头 -->
+  <path d="M475,162 L475,190" stroke="#7a7468" stroke-width="2" fill="none"/>
+  <path d="M475,190 L83,190 L83,212" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+  <path d="M414,245 L592,245" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <!-- ============ 分水岭：冲印 ============ -->
+  <rect x="596" y="56" width="120" height="300" rx="10" fill="#efe0c4" stroke="#b8862e" stroke-width="2.4"/>
+  <text x="656" y="90" text-anchor="middle" font-size="13.5" fill="#8a6a1e" font-weight="bold">冲印</text>
+  <text x="656" y="108" text-anchor="middle" font-size="11" fill="#8a6a1e" font-family="Consolas, monospace">tonemapping</text>
+  <text x="656" y="180" text-anchor="middle" font-size="10.5" fill="#8a6a1e">HDR 数值</text>
+  <text x="656" y="196" text-anchor="middle" font-size="10.5" fill="#8a6a1e">压回</text>
+  <text x="656" y="212" text-anchor="middle" font-size="10.5" fill="#8a6a1e">0.0~1.0</text>
+  <text x="656" y="260" text-anchor="middle" font-size="10" fill="#a3752a">分水岭</text>
+  <text x="656" y="276" text-anchor="middle" font-size="10" fill="#a3752a">HDR ↔ LDR</text>
+
+  <path d="M656,356 L656,300" stroke="#b8862e" stroke-width="3" fill="none" marker-end="url(#arr26b)"/>
+
+  <!-- ============ LDR 段（右，冷底色区分） ============ -->
+  <rect x="736" y="56" width="424" height="300" rx="10" fill="#eef1f4" stroke="#b6c2cc" stroke-width="1.6"/>
+  <text x="948" y="80" text-anchor="middle" font-size="13" fill="#33586e" font-weight="bold">LDR 段——在 0~1 的显示范围里做形状/边缘的活儿</text>
+
+  <rect x="752" y="102" width="94" height="60" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="799" y="128" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">FXAA</text>
+  <text x="799" y="146" text-anchor="middle" font-size="9.5" fill="#7a7468">/SMAA</text>
+  <path d="M850,132 L870,132" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <rect x="874" y="102" width="94" height="60" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="1.6"/>
+  <text x="921" y="128" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">锐化</text>
+  <text x="921" y="146" text-anchor="middle" font-size="9.5" fill="#7a7468">CAS</text>
+  <path d="M968,132 L988,132" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr26a)"/>
+
+  <rect x="992" y="102" width="140" height="60" rx="8" fill="#ffffff" stroke="#4a463f" stroke-width="2"/>
+  <text x="1062" y="128" text-anchor="middle" font-size="13" fill="#4a463f" font-weight="bold">屏幕</text>
+  <text x="1062" y="146" text-anchor="middle" font-size="9.5" fill="#7a7468">最终显示</text>
+
+  <text x="948" y="200" text-anchor="middle" font-size="11" fill="#33586e">MSAA 不在这条队伍里——</text>
+  <text x="948" y="218" text-anchor="middle" font-size="11" fill="#33586e">它在最左边的主 pass 里</text>
+  <text x="948" y="236" text-anchor="middle" font-size="11" fill="#33586e">就把样采完了，是光栅化</text>
+  <text x="948" y="254" text-anchor="middle" font-size="11" fill="#33586e">阶段的抗锯齿（26.9）</text>
+
+  <text x="590" y="398" text-anchor="middle" font-size="11.5" fill="#7a7468">本章大多数工序排在冲印前面：辉光要认哪盏灯比 1.0 亮多少倍，自动测光要读真实亮度——这些账算完，才轮到冲印把结果摁回屏幕能显示的范围</text>
+</svg>
