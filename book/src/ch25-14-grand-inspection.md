@@ -31,9 +31,9 @@
 
 这台相机总共两个旋钮：`yaw`（绕场角）与 `dist`（机位距离），装在 `Rig` 资源里。输入侧全是本章的熟面孔：
 
-- **拖空处转台**：窗口实体的 `Drag` 观察者。命门在那个判定——`drag.original_event_target() == stage_door`：拖**货**的事件也会冒泡到窗口（25.5 的账单规则），不筛掉的话拖着琉璃盏挪两步、镜头也跟着晃。「起头是窗口自己」才是真的拖空处；
+- **拖空处转台**：窗口实体的 `Drag` 观察者。命门在那个判定——`drag.original_event_target() == stage_door`：拖**货**的事件也会冒泡到窗口（25.5 的账单规则），不筛掉的话拖着琉璃盏挪两步、镜头也跟着晃。「起头是窗口自己」才是真的拖空处。系数 0.008 这回的量纲是**弧度/像素**（与 25.7 那个米/像素的 0.008 只是数值巧合）——拖满一屏 1280 像素约转一圈半（10.2 弧度），横扫一把就能看遍全场的转台手感；
 - **台面让路**：台面挂了 `Pickable::IGNORE`（官方 mesh_picking 示例给地面的同款），拖「地板」于是等于拖空处——转台的手感来源。布景退出牌桌，交互立刻宽敞；
-- **滚轮推拉**：窗口的 `Scroll` 观察者，`scroll.y` 是滚轮格数（正对性与 25.13 相反方向的账：这里滚轮向上减 `dist`，凑近），`clamp(3.0, 12.0)` 给个不穿模不失联的行程；
+- **滚轮推拉**：窗口的 `Scroll` 观察者。`scroll.y` 对鼠标滚轮是格数，对触控板是**像素值**（一划就是几十上百——`scroll.unit` 字段区分两种单位，跨设备要按单位换算，FreeCamera 源码里有现成写法）；步长 0.6 米/格配上 `clamp(3.0, 12.0)` 的行程——不穿模不失联，滚十五格走完全程；
 - **摆机位**：`seat_camera` 系统读 `Rig` 算圆轨坐标。`rig.is_changed()` 门控（第 5 章资源变更检测）——旋钮没动就不碰 `Transform`，省掉每帧的无谓写入。
 
 装箱的托盘照抄 25.8，唯一的新意是收进了同一台总机。全场跑起来：
@@ -61,7 +61,7 @@ cargo run -p ch25-picking
 ## 小结
 
 - **管线四段**：指针归拢输入 → 后端报命中 → 悬停裁决名单 → 事件派发冒泡；全程跑在 `PreUpdate`，`Update` 里看到的是尘埃落定的世界。三个后端出厂姿势各异：**mesh 手动请插件（忘了=全场装聋零日志）、sprite 手动挂 `Pickable` 牌、UI 全自动**
-- **事件一族**：悬停 `Over`/`Out`（逢冒泡必到）与 `Enter`/`Leave`（只认地界进出，子货间挪动不惊动）；按压 `Press` → `Click` → `Release`（成交先于抬手播报），`Click` 带 `count` 连击计数（按实体各记一本、秒表是 `PickingSettings::multi_click_interval`）与 `duration`；拖拽 `DragStart`/`Drag`/`DragEnd` 发给被拖的货，拖放 `DragEnter`/`DragOver`/`DragDrop`/`DragLeave` 发给地界（信里 `dragged`/`dropped` 点名货）；`Scroll` 滚轮；还有一员冷门的 `Cancel`——指针被系统收回（触摸中断、窗口失焦一类）时的善后信，桌面开发难得一见，做触屏时记得给它留善后逻辑；**拖起让路**（DragStart 换 `IGNORE`、DragEnd 复牌）是拖放的命门工序
+- **事件一族**：悬停 `Over`/`Out`（逢冒泡必到）与 `Enter`/`Leave`（只认地界进出，子货间挪动不惊动）；按压 `Press` → `Click` → `Release`（成交先于抬手播报），`Click` 带 `count` 连击计数（按实体各记一本、秒表是 `PickingSettings::multi_click_interval`）与 `duration`；拖拽 `DragStart`/`Drag`/`DragEnd` 发给被拖的货，拖放 `DragEnter`/`DragOver`/`DragDrop`/`DragLeave` 发给地界（信里 `dragged`/`dropped` 点名货）；`Scroll` 滚轮；还有一员冷门的 `Cancel`——触摸被系统打断（来电、手势冲突一类）时的善后信，桌面开发难得一见，做触屏时记得给它留善后逻辑；**拖起让路**（DragStart 换 `IGNORE`、DragEnd 复牌）是拖放的命门工序
 - **冒泡**：`entity` 是当前站、`original_event_target()` 是起头人、`propagate(false)` 拦账；父链到头跳**窗口实体**兜底——点空处也是事件
 - **`Pickable` 四档**：挡不挡下家 × 自己收不收；`IGNORE` 让布景退出牌桌。「吸音」档 sprite 后端货真价实、**mesh 后端退化成隐身**（射线阶段就剔了人）
 - **屏幕坐标的账**：`delta`/`distance` 是屏幕像素、y 朝下——挪世界坐标先翻 y 再乘换算系数
@@ -73,7 +73,7 @@ cargo run -p ch25-picking
 1. **长按拿起**：用 `Click::duration` 给收场戏加一档交互——按住超过 400 毫秒松开算「端详」（打印货名与端详时长），短按仍走报名。想想为什么这个判定放 `Click` 观察者里就够，不需要计时器。
 2. **像素级跟手**：25.7 节的 0.008 是固定镜头下的近似。用 `camera.viewport_to_world()` 把拖动改成精确版：`DragStart` 时记下命中点所在的、正对相机的平面；`Drag` 时把光标射线与该平面求交，货直接钉在交点上。推拉镜头后再拖，验证是否依然指哪儿跟哪儿。（提示：`Ray3d` 有现成的 `intersect_plane`。）
 3. **验流水线**：把收场戏的 `MeshPickingPlugin` 换成 `MeshPickingSettings { require_markers: true, ..default() }` 的配置（插件照加、资源覆写），再给相机挂 `MeshPickingCamera`、只给鎏金锣挂 `Pickable::default()`——预测哪些交互还活着，跑一遍对答案。
-4. **吸音蒙层**：给收场戏加一层「暂停纱幕」：按 P 罩住全场、再按 P 掀开。罩住期间任何货都不可点、也不许点穿到转台——用本章哪一档 `Pickable` 加哪一句观察者能凑出来？（提示：25.6 节说过 mesh 后端下纯 `Pickable` 凑不出吸音，想想「守门 + 空观察者」。）
+4. **吸音蒙层**：给收场戏加一层「暂停纱幕」：按 P 罩住全场、再按 P 掀开。罩住期间任何货都不可点、也不许点穿到转台——用本章哪一档 `Pickable` 加哪几句观察者能凑出来？（提示：25.6 节说过 mesh 后端下纯 `Pickable` 凑不出吸音，想想「守门 + 空观察者」。滚轮那路呢？想想账单还会不会冒泡到窗口。）
 5. **读源码**：打开 `vendor/bevy/crates/bevy_camera_controller/src/pan_camera.rs`，找到左键拖动平移的那段观察者，回答两个问题：它怎么处理「拖动发生在 UI 元素上」的情形？`zoom_factor` 参与拖动换算的方式和你在 25.13 节实测的 313 像素对得上吗？
 
 ## 下一章

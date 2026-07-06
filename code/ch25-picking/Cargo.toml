@@ -10,7 +10,7 @@ publish.workspace = true
 bevy = { workspace = true, features = ["debug"] }
 
 # 现成相机控制器不在 bevy 默认集合：free_camera 与 pan_camera 两扇门要自己开。
-# 做成本 crate 的默认 feature：平时全绿，25.9 的报错实验用 --no-default-features 复现
+# 做成本 crate 的默认 feature：平时全绿，25.12 的报错实验用 --no-default-features 复现
 [features]
 default = ["camera-controllers"]
 camera-controllers = ["bevy/free_camera", "bevy/pan_camera"]

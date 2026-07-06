@@ -16,10 +16,10 @@
 
 **放线**。`ray_cast.cast_ray(ray, &settings)` 返回 `&[(Entity, RayMeshHit)]`——**按距离从近到远排好序**的命中清单。`RayMeshHit` 比 25.1 节的 `HitData` 详细得多：`point` 命中点、`normal` 法线、`distance` 距离之外，还有 `triangle`（命中的那个三角形的三个顶点）、`uv`（命中处的纹理坐标——第 21 章的 UV 在这里能反查）、`barycentric_coords`（重心坐标，做插值用）。贴弹孔要 `point`+`normal`，在模型表面画画要 `uv`——单据比拾取事件的细一个档次。
 
-**`MeshRayCastSettings`** 是放线的规矩单，三个字段一个不能少（它没有 `Default`，就是要你逐项表态）：
+**`MeshRayCastSettings`** 是放线的规矩单，三个字段。它有 `Default`——`VisibleInView`、不筛人、**最近一件即收队**（`early_exit_test` 恒 `true`）：`..default()` 出来的就是拾取管线口味的单发射线。本例三项全手填，一是要穿透模式，二是把每一项的含义摆上台面：
 
 - **`visibility`**：拿不拿「看不见的」开刀。`RayCastVisibility` 三档——`Any` 全都算、`Visible` 按可见性组件算、`VisibleInView`（拾取管线用的默认档）只算镜头里真出现的；
-- **`filter`**：一个 `Fn(Entity) -> bool` 的闭包，谁有资格参与检测。要「只打敌人不打友军」，在这里按标记组件筛；
+- **`filter`**：一个 `Fn(Entity) -> bool` 的闭包，谁有资格参与检测。要「只打敌人不打友军」，在这里按标记组件筛。拾取管线自己也用这道口子：`MeshPickingSettings` 资源有个 `require_markers` 总闸（出厂 `false`），拨 `true` 后整个 mesh 拾取改行**白名单制**——只有挂了 `MeshPickingCamera` 的相机、挂了 `Pickable` 的实体才参检；
 - **`early_exit_test`**：走到哪个实体算「到头」。返回 `true` 的实体挡住射线（拾取管线的 `should_block_lower` 就是从这儿接的线）；恒 `false` 则一穿到底，收整串命中。
 
 ## 一线串糖葫芦
