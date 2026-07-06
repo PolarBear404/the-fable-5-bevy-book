@@ -1,0 +1,67 @@
+<!doctype html>
+<!-- ch24《琉璃记·验货》内嵌 demo 的宿主页（手写、入库；wasm/js/assets 由
+     scripts/build_ch24_wasm.py 重建）。结构照抄 ch23 的 index.html：
+
+     1. 画幅自适应——3D 透视相机随画布长宽比自适应，canvas 直接铺满 iframe
+        （fit_canvas_to_parent 会把画布 CSS 撑到父元素的 100%）。
+     2. 启动层——点「入场」才 import wasm，避免一进页面就下二十多兆；
+        init 后给 canvas 焦点，数字键不用先点画面就能用。
+     本 demo 无音频，ch20 的音频三件套（劫持 AudioContext、兜底 resume、
+     散场幕布）一概不需要。 -->
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>琉璃记·验货</title>
+<style>
+  html, body { margin: 0; height: 100%; overflow: hidden; background: #2b2c2f; }
+
+  /* 影棚底色与默认 ClearColor 同源（srgb_u8 43/44/47），加载时不跳色 */
+  #bevy-ch24 { display: block; width: 100%; height: 100%; outline: none; }
+
+  /* 启动层：一颗按钮 + 操作说明，点击前不下载一个字节的 wasm */
+  #boot {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 1.1em;
+    color: #e8e4da; font-family: system-ui, sans-serif;
+    text-align: center;
+  }
+  #boot button {
+    font: inherit; font-size: 1.05em;
+    color: #fff; background: rgba(24, 22, 20, 0.72);
+    border: 1px solid rgba(232, 228, 218, 0.4);
+    border-radius: 999px; padding: 0.6em 1.4em;
+    cursor: pointer;
+  }
+  #boot button:hover { background: rgba(58, 54, 48, 0.8); }
+  #boot .keys { margin: 0; font-size: 0.88em; color: #9d9a94; line-height: 1.8; }
+</style>
+</head>
+<body>
+  <canvas id="bevy-ch24"></canvas>
+  <div id="boot">
+    <button id="boot-btn" type="button">▶ 入场《琉璃记·验货》（约 27 MB）</button>
+    <p class="keys">数字键 1~8：逐件上前看展品　　0：退回全景<br>左键拖动：绕转台看高光流动</p>
+  </div>
+
+  <script type="module">
+    // 启动层：点击才加载 wasm；init 返回后撤幕布、给画布焦点
+    const boot = document.getElementById("boot");
+    const btn = document.getElementById("boot-btn");
+    btn.addEventListener("click", async () => {
+      btn.disabled = true;
+      btn.textContent = "加载中…";
+      try {
+        const { default: init } = await import("./ch24_gallery.js");
+        await init();
+        boot.remove();
+        document.getElementById("bevy-ch24").focus();
+      } catch (e) {
+        btn.textContent = "启动失败（需要支持 WebGL2 的浏览器）";
+        console.error(e);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<svg viewBox="0 0 860 560" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-in24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#b8862e"/>
+    </marker>
+    <marker id="arr-spec24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#c05a2e"/>
+    </marker>
+    <marker id="arr-diff24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#274a91"/>
+    </marker>
+    <marker id="arr-trans24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#3c7a4e"/>
+    </marker>
+    <marker id="arr-emis24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#b3402e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="860" height="560" rx="10" fill="#f7f5f0"/>
+
+  <text x="430" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">一束光的四路账单——每个字段管一行</text>
+
+  <!-- 表面板：上表面一条粗线，板体有厚度（透射要穿过它） -->
+  <rect x="90" y="300" width="680" height="66" fill="#e9e3d6" stroke="#7a7468" stroke-width="1.2"/>
+  <line x1="90" y1="300" x2="770" y2="300" stroke="#4a463f" stroke-width="3"/>
+  <text x="108" y="352" font-size="12" fill="#7a7468">表面</text>
+
+  <!-- 入射光：左上斜射到入射点 (365,300) -->
+  <path d="M175,112 L355,290" stroke="#b8862e" stroke-width="4" fill="none" marker-end="url(#arr-in24)"/>
+  <text x="150" y="96" font-size="13" fill="#8a6a1e" font-weight="bold">入射光</text>
+
+  <!-- ① 镜面反射：入射点对称弹向右上 -->
+  <path d="M372,293 L548,118" stroke="#c05a2e" stroke-width="3.4" fill="none" marker-end="url(#arr-spec24)"/>
+  <text x="562" y="96" font-size="13.5" fill="#c05a2e" font-weight="bold">镜面反射：在表面弹走</text>
+  <text x="562" y="115" font-size="11" fill="#7a7468" font-family="Consolas, monospace">metallic · perceptual_roughness</text>
+  <text x="562" y="131" font-size="11" fill="#7a7468" font-family="Consolas, monospace">reflectance · specular_tint</text>
+  <text x="562" y="147" font-size="11" fill="#7a7468" font-family="Consolas, monospace">clearcoat · anisotropy_*</text>
+
+  <!-- ② 漫反射：钻进表面染色，再从旁边向上散出一把小箭头 -->
+  <path d="M365,300 q-12,26 -38,20" stroke="#274a91" stroke-width="2" fill="none" stroke-dasharray="4 3"/>
+  <g stroke="#274a91" stroke-width="2.4" fill="none">
+    <path d="M300,296 L232,246" marker-end="url(#arr-diff24)"/>
+    <path d="M300,296 L262,228" marker-end="url(#arr-diff24)"/>
+    <path d="M300,296 L300,220" marker-end="url(#arr-diff24)"/>
+    <path d="M300,296 L338,232" marker-end="url(#arr-diff24)"/>
+  </g>
+  <text x="238" y="196" text-anchor="middle" font-size="13.5" fill="#274a91" font-weight="bold">漫反射：吃进去染色再散出</text>
+  <text x="238" y="215" text-anchor="middle" font-size="11" fill="#7a7468" font-family="Consolas, monospace">base_color(_texture)</text>
+  <text x="238" y="231" text-anchor="middle" font-size="10.5" fill="#7a7468">金属没有这一路</text>
+
+  <!-- ③ 透射：穿过板体到背面去——一支直的（成像）、两支散的（糊光） -->
+  <path d="M365,300 L412,364" stroke="#3c7a4e" stroke-width="2.4" fill="none" stroke-dasharray="5 4"/>
+  <path d="M412,366 L458,452" stroke="#3c7a4e" stroke-width="2.8" fill="none" marker-end="url(#arr-trans24)"/>
+  <g stroke="#3c7a4e" stroke-width="1.8" fill="none" opacity="0.75">
+    <path d="M412,366 L386,442" marker-end="url(#arr-trans24)"/>
+    <path d="M412,366 L424,448" marker-end="url(#arr-trans24)"/>
+  </g>
+  <text x="470" y="428" font-size="13.5" fill="#3c7a4e" font-weight="bold">透射：穿到背后去</text>
+  <text x="470" y="447" font-size="11" fill="#7a7468" font-family="Consolas, monospace">diffuse_transmission（糊光，便宜）</text>
+  <text x="470" y="463" font-size="11" fill="#7a7468" font-family="Consolas, monospace">specular_transmission（成像，贵）</text>
+
+  <!-- ④ 自发光：表面右端自己冒光，没有入射来源 -->
+  <circle cx="672" cy="300" r="26" fill="#f3c9a6" opacity="0.5"/>
+  <g stroke="#b3402e" stroke-width="2.4" fill="none">
+    <path d="M672,294 L672,226" marker-end="url(#arr-emis24)"/>
+    <path d="M660,296 L618,240" marker-end="url(#arr-emis24)"/>
+    <path d="M684,296 L726,240" marker-end="url(#arr-emis24)"/>
+  </g>
+  <text x="694" y="196" text-anchor="middle" font-size="13.5" fill="#b3402e" font-weight="bold">自发光：不靠外来光</text>
+  <text x="694" y="215" text-anchor="middle" font-size="11" fill="#7a7468" font-family="Consolas, monospace">emissive(_texture)</text>
+  <text x="694" y="231" text-anchor="middle" font-size="10.5" fill="#7a7468">尼特计价，不照亮邻居</text>
+
+  <text x="430" y="530" text-anchor="middle" font-size="11" fill="#7a7468">同一束光的能量在四行账里分配——本章每一节拆一行</text>
+</svg>

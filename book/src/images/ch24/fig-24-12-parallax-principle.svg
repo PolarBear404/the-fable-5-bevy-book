@@ -1,0 +1,65 @@
+<svg viewBox="0 0 860 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr-view24" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#274a91"/>
+    </marker>
+    <marker id="arr-shift24" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L7,4 L0,8 z" fill="#c05a2e"/>
+    </marker>
+    <linearGradient id="depth-strip24" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#1c1c1c"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="860" height="470" rx="10" fill="#f7f5f0"/>
+
+  <text x="430" y="34" text-anchor="middle" font-size="16" fill="#4a463f" font-weight="bold">视差贴图（侧剖）：沿视线在深度场里找真交点</text>
+
+  <!-- 眼睛 -->
+  <g>
+    <path d="M62,108 q28,-20 56,0 q-28,20 -56,0 z" fill="#ffffff" stroke="#4a463f" stroke-width="2"/>
+    <circle cx="90" cy="108" r="7" fill="#4a463f"/>
+  </g>
+  <text x="60" y="82" font-size="12" fill="#4a463f">视线</text>
+
+  <!-- 深度场轮廓：平面下方的起伏（云纹意象的波浪） -->
+  <path d="M140,250 C 190,250 205,296 250,296 C 295,296 306,254 350,254 C 394,254 402,312 452,312 C 502,312 512,258 556,258 C 600,258 612,300 660,300 C 700,300 712,252 740,252 L 740,250 L 140,250 z"
+        fill="#e8e2d2" stroke="#7a7468" stroke-width="1.6" stroke-dasharray="7 4"/>
+  <text x="238" y="348" font-size="11.5" fill="#7a7468">深度场：depth_map 骗出来的起伏（几何本身没动）</text>
+
+  <!-- 几何平面：一条水平粗实线 -->
+  <line x1="140" y1="250" x2="740" y2="250" stroke="#4a463f" stroke-width="3"/>
+  <text x="600" y="236" font-size="11.5" fill="#4a463f">几何平面（真实网格）</text>
+
+  <!-- 视线：斜插，先交平面于 A，再撞深度场于 B -->
+  <path d="M118,116 L446,254" stroke="#274a91" stroke-width="2.2" fill="none" stroke-dasharray="8 5"/>
+  <path d="M446,254 L512,282" stroke="#274a91" stroke-width="2.2" fill="none" stroke-dasharray="8 5" marker-end="url(#arr-view24)"/>
+
+  <!-- A：视线与平面的交点（空心） -->
+  <circle cx="437" cy="250" r="6" fill="#f7f5f0" stroke="#274a91" stroke-width="2.4"/>
+  <text x="404" y="200" font-size="12.5" fill="#274a91" font-weight="bold">A</text>
+  <text x="330" y="200" font-size="11" fill="#274a91">与平面的交点</text>
+  <path d="M432,206 L436,242" stroke="#274a91" stroke-width="1.2" fill="none"/>
+
+  <!-- B：视线与深度场的真交点（实心） -->
+  <circle cx="516" cy="284" r="6" fill="#c05a2e" stroke="#c05a2e"/>
+  <text x="530" y="308" font-size="12.5" fill="#c05a2e" font-weight="bold">B</text>
+  <text x="548" y="308" font-size="11" fill="#c05a2e">与起伏的真交点——采样用它</text>
+
+  <!-- B 投回平面的 B' 与偏移标注 -->
+  <line x1="516" y1="284" x2="516" y2="250" stroke="#c05a2e" stroke-width="1.4" stroke-dasharray="4 3"/>
+  <circle cx="516" cy="250" r="4" fill="#c05a2e"/>
+  <path d="M441,226 L510,226" stroke="#c05a2e" stroke-width="2.2" fill="none" marker-end="url(#arr-shift24)"/>
+  <line x1="437" y1="244" x2="437" y2="220" stroke="#c05a2e" stroke-width="1.2" stroke-dasharray="3 3"/>
+  <text x="476" y="172" text-anchor="middle" font-size="12.5" fill="#c05a2e" font-weight="bold">采样点往视线来向挪</text>
+  <text x="476" y="190" text-anchor="middle" font-size="10.5" fill="#7a7468">越斜挪得越多，越深挪得越多</text>
+
+  <!-- 右上：深度图灰度条与约定 -->
+  <rect x="590" y="76" width="200" height="88" rx="8" fill="#ffffff" stroke="#7a7468" stroke-width="1.2"/>
+  <rect x="606" y="92" width="168" height="22" fill="url(#depth-strip24)" stroke="#7a7468" stroke-width="0.8"/>
+  <text x="606" y="134" font-size="10.5" fill="#7a7468">白 = 深（陷下去）</text>
+  <text x="774" y="134" text-anchor="end" font-size="10.5" fill="#7a7468">黑 = 凸（顶到面）</text>
+  <text x="690" y="154" text-anchor="middle" font-size="10.5" fill="#4a463f">depth_map 的约定，与直觉相反</text>
+
+  <text x="430" y="440" text-anchor="middle" font-size="11" fill="#7a7468">着色器把深度切层、沿视线逐层试探（Occlusion）；层数不够、刻痕太深，脚印就露出来——Figure 24-14 的阶梯</text>
+</svg>

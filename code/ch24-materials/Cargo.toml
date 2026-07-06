@@ -1,0 +1,17 @@
+# ANCHOR: deps
+[package]
+name = "ch24-materials"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug 让报错里印出系统名（第 4 章起的老习惯）
+bevy = { workspace = true, features = ["debug"] }
+
+# 各向异性的完整着色器路径锁在 bevy 的 pbr_anisotropy_texture feature 里
+# （不开它就拨 anisotropy_strength，画面会炸白——24.8 节的实验）。
+# 做成本 crate 的默认 feature：平时全绿，实验时用 --no-default-features 亲眼看坏
+[features]
+default = ["aniso"]
+aniso = ["bevy/pbr_anisotropy_texture"]
+# ANCHOR_END: deps
