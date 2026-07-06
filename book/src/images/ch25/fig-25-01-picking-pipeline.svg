@@ -1,0 +1,142 @@
+<svg viewBox="0 0 1000 500" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr25a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr25b" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L9,5 L0,10 z" fill="#b8862e"/>
+    </marker>
+    <marker id="arr25c" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#274a91"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1000" height="500" rx="10" fill="#f7f5f0"/>
+  <text x="500" y="36" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">拾取流水线：四段一条龙</text>
+
+  <!-- ============ ① 指针 ============ -->
+  <rect x="30" y="66" width="205" height="356" rx="10" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+  <text x="132" y="96" text-anchor="middle" font-size="14.5" fill="#4a463f" font-weight="bold">① 指针 pointer</text>
+  <text x="132" y="115" text-anchor="middle" font-size="11" fill="#7a7468">鼠标、触摸、手写笔归一</text>
+
+  <!-- 鼠标 -->
+  <rect x="62" y="140" width="38" height="56" rx="18" fill="#f0ece2" stroke="#4a463f" stroke-width="2"/>
+  <line x1="81" y1="140" x2="81" y2="166" stroke="#4a463f" stroke-width="1.6"/>
+  <rect x="77.5" y="148" width="7" height="12" rx="3.5" fill="#4a463f"/>
+  <!-- 触摸手指：指尖圆 + 指身，指尖两圈涟漪 -->
+  <path d="M162,196 L162,158 q0,-9 9,-9 q9,0 9,9 L180,196" fill="#f0ece2" stroke="#4a463f" stroke-width="2"/>
+  <path d="M156,150 a15,15 0 0 1 30,0" fill="none" stroke="#7a7468" stroke-width="1.6"/>
+  <path d="M148,148 a23,23 0 0 1 46,0" fill="none" stroke="#c9c2b2" stroke-width="1.6"/>
+
+  <path d="M81,206 L120,238" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr25a)"/>
+  <path d="M171,206 L144,238" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr25a)"/>
+  <rect x="52" y="246" width="160" height="30" rx="8" fill="#efe9db" stroke="#b8862e" stroke-width="1.6"/>
+  <text x="132" y="266" text-anchor="middle" font-size="12.5" fill="#8a6a1e" font-family="Consolas, monospace">PointerLocation</text>
+  <text x="132" y="310" text-anchor="middle" font-size="11" fill="#7a7468">每帧更新：这枚指针</text>
+  <text x="132" y="327" text-anchor="middle" font-size="11" fill="#7a7468">落在屏幕的哪一点</text>
+  <text x="132" y="396" text-anchor="middle" font-size="10.5" fill="#9a9280">手柄也能自造一枚虚拟指针</text>
+
+  <path d="M239,244 L266,244" stroke="#b8862e" stroke-width="4" fill="none" marker-end="url(#arr25b)"/>
+
+  <!-- ============ ② 后端 ============ -->
+  <rect x="270" y="66" width="205" height="356" rx="10" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+  <text x="372" y="96" text-anchor="middle" font-size="14.5" fill="#4a463f" font-weight="bold">② 后端 backend</text>
+  <text x="372" y="115" text-anchor="middle" font-size="11" fill="#7a7468">三家车间同时开工，各自报账</text>
+
+  <!-- mesh 车间：射线打中球 -->
+  <rect x="284" y="136" width="104" height="48" rx="8" fill="#f0ece2" stroke="#7a7468" stroke-width="1.2"/>
+  <line x1="292" y1="176" x2="318" y2="150" stroke="#274a91" stroke-width="1.8"/>
+  <circle cx="322" cy="147" r="7" fill="none" stroke="#274a91" stroke-width="1.8"/>
+  <text x="340" y="156" font-size="11.5" fill="#4a463f">mesh</text>
+  <text x="340" y="172" font-size="10.5" fill="#7a7468">放射线</text>
+  <path d="M392,160 L402,160" stroke="#7a7468" stroke-width="1.8" fill="none" marker-end="url(#arr25a)"/>
+  <rect x="405" y="146" width="62" height="28" rx="6" fill="#efe9db" stroke="#b8862e" stroke-width="1.2"/>
+  <text x="436" y="164" text-anchor="middle" font-size="8" fill="#8a6a1e" font-family="Consolas, monospace">PointerHits</text>
+
+  <!-- sprite 车间：像素格 -->
+  <rect x="284" y="206" width="104" height="48" rx="8" fill="#f0ece2" stroke="#7a7468" stroke-width="1.2"/>
+  <g stroke="#7a7468" stroke-width="1">
+    <rect x="296" y="216" width="27" height="27" fill="none"/>
+    <line x1="305" y1="216" x2="305" y2="243"/><line x1="314" y1="216" x2="314" y2="243"/>
+    <line x1="296" y1="225" x2="323" y2="225"/><line x1="296" y1="234" x2="323" y2="234"/>
+  </g>
+  <rect x="305" y="225" width="9" height="9" fill="#274a91"/>
+  <text x="340" y="226" font-size="11.5" fill="#4a463f">sprite</text>
+  <text x="340" y="242" font-size="10.5" fill="#7a7468">查像素</text>
+  <path d="M392,230 L402,230" stroke="#7a7468" stroke-width="1.8" fill="none" marker-end="url(#arr25a)"/>
+  <rect x="405" y="216" width="62" height="28" rx="6" fill="#efe9db" stroke="#b8862e" stroke-width="1.2"/>
+  <text x="436" y="234" text-anchor="middle" font-size="8" fill="#8a6a1e" font-family="Consolas, monospace">PointerHits</text>
+
+  <!-- UI 车间：嵌套节点 -->
+  <rect x="284" y="276" width="104" height="48" rx="8" fill="#f0ece2" stroke="#7a7468" stroke-width="1.2"/>
+  <rect x="294" y="286" width="30" height="28" rx="3" fill="none" stroke="#7a7468" stroke-width="1.4"/>
+  <rect x="300" y="292" width="18" height="10" rx="2" fill="none" stroke="#274a91" stroke-width="1.4"/>
+  <text x="340" y="296" font-size="11.5" fill="#4a463f">UI</text>
+  <text x="340" y="312" font-size="10.5" fill="#7a7468">查节点</text>
+  <path d="M392,300 L402,300" stroke="#7a7468" stroke-width="1.8" fill="none" marker-end="url(#arr25a)"/>
+  <rect x="405" y="286" width="62" height="28" rx="6" fill="#efe9db" stroke="#b8862e" stroke-width="1.2"/>
+  <text x="436" y="304" text-anchor="middle" font-size="8" fill="#8a6a1e" font-family="Consolas, monospace">PointerHits</text>
+
+  <text x="372" y="366" text-anchor="middle" font-size="11" fill="#7a7468">报的都是 PointerHits：</text>
+  <text x="372" y="383" text-anchor="middle" font-size="11" fill="#7a7468">打到了谁、离相机多深</text>
+
+  <path d="M479,244 L506,244" stroke="#b8862e" stroke-width="4" fill="none" marker-end="url(#arr25b)"/>
+
+  <!-- ============ ③ 悬停 ============ -->
+  <rect x="510" y="66" width="205" height="356" rx="10" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+  <text x="612" y="96" text-anchor="middle" font-size="14.5" fill="#4a463f" font-weight="bold">③ 悬停 hover</text>
+  <text x="612" y="115" text-anchor="middle" font-size="11" fill="#7a7468">各家命中并到一处裁决</text>
+
+  <!-- 三枚命中片落进漏斗 -->
+  <rect x="540" y="128" width="30" height="14" rx="4" fill="#efe9db" stroke="#b8862e" stroke-width="1"/>
+  <rect x="597" y="124" width="30" height="14" rx="4" fill="#efe9db" stroke="#b8862e" stroke-width="1"/>
+  <rect x="654" y="128" width="30" height="14" rx="4" fill="#efe9db" stroke="#b8862e" stroke-width="1"/>
+  <polygon points="530,154 694,154 640,268 584,268" fill="#e9e3d6" stroke="#7a7468" stroke-width="1.6"/>
+  <text x="612" y="192" text-anchor="middle" font-size="11.5" fill="#4a463f">按深度排序</text>
+  <text x="612" y="212" text-anchor="middle" font-size="11.5" fill="#4a463f">被挡的筛掉</text>
+  <text x="612" y="232" text-anchor="middle" font-size="10" fill="#7a7468">（Pickable 的规矩）</text>
+  <path d="M612,268 L612,290" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr25a)"/>
+  <rect x="566" y="296" width="92" height="30" rx="8" fill="#efe9db" stroke="#b8862e" stroke-width="1.6"/>
+  <text x="612" y="316" text-anchor="middle" font-size="12.5" fill="#8a6a1e" font-family="Consolas, monospace">HoverMap</text>
+  <text x="612" y="360" text-anchor="middle" font-size="11" fill="#7a7468">「此刻指针真正悬停在</text>
+  <text x="612" y="377" text-anchor="middle" font-size="11" fill="#7a7468">谁身上」的权威名单</text>
+
+  <path d="M719,244 L746,244" stroke="#b8862e" stroke-width="4" fill="none" marker-end="url(#arr25b)"/>
+
+  <!-- ============ ④ 事件 ============ -->
+  <rect x="750" y="66" width="220" height="356" rx="10" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+  <text x="860" y="96" text-anchor="middle" font-size="14.5" fill="#4a463f" font-weight="bold">④ 事件 events</text>
+  <text x="860" y="115" text-anchor="middle" font-size="11" fill="#7a7468">名单变化＋按键 → 高层事件</text>
+
+  <!-- 父子树：根在上 -->
+  <circle cx="912" cy="150" r="12" fill="#f0ece2" stroke="#4a463f" stroke-width="1.8"/>
+  <circle cx="878" cy="222" r="12" fill="#f0ece2" stroke="#4a463f" stroke-width="1.8"/>
+  <circle cx="944" cy="222" r="12" fill="#f0ece2" stroke="#4a463f" stroke-width="1.8"/>
+  <circle cx="878" cy="294" r="12" fill="#ffe9b0" stroke="#b8862e" stroke-width="2.2"/>
+  <line x1="905" y1="161" x2="884" y2="212" stroke="#7a7468" stroke-width="1.6"/>
+  <line x1="919" y1="161" x2="938" y2="212" stroke="#7a7468" stroke-width="1.6"/>
+  <line x1="878" y1="234" x2="878" y2="282" stroke="#7a7468" stroke-width="1.6"/>
+  <text x="878" y="322" text-anchor="middle" font-size="10" fill="#8a6a1e">目标实体</text>
+  <!-- 信封沿树向上飘 -->
+  <path d="M872,286 C 858,262 862,240 872,230 M878,222 C 868,200 884,170 900,156"
+        stroke="#b8862e" stroke-width="2" fill="none" stroke-dasharray="5 4" marker-end="url(#arr25b)"/>
+  <g>
+    <rect x="774" y="270" width="52" height="32" rx="4" fill="#ffffff" stroke="#b8862e" stroke-width="1.6" transform="rotate(-8 800 286)"/>
+    <path d="M776,274 L800,290 L824,274" stroke="#b8862e" stroke-width="1.3" fill="none" transform="rotate(-8 800 286)"/>
+    <text x="800" y="298" text-anchor="middle" font-size="9.5" fill="#8a6a1e" font-family="Consolas, monospace" transform="rotate(-8 800 286)">Drag</text>
+  </g>
+  <g>
+    <rect x="768" y="216" width="52" height="32" rx="4" fill="#ffffff" stroke="#b8862e" stroke-width="1.6" transform="rotate(6 794 232)"/>
+    <path d="M770,220 L794,236 L818,220" stroke="#b8862e" stroke-width="1.3" fill="none" transform="rotate(6 794 232)"/>
+    <text x="794" y="244" text-anchor="middle" font-size="9.5" fill="#8a6a1e" font-family="Consolas, monospace" transform="rotate(6 794 232)">Click</text>
+  </g>
+  <g>
+    <rect x="774" y="162" width="52" height="32" rx="4" fill="#ffffff" stroke="#b8862e" stroke-width="1.6" transform="rotate(-6 800 178)"/>
+    <path d="M776,166 L800,182 L824,166" stroke="#b8862e" stroke-width="1.3" fill="none" transform="rotate(-6 800 178)"/>
+    <text x="800" y="190" text-anchor="middle" font-size="9.5" fill="#8a6a1e" font-family="Consolas, monospace" transform="rotate(-6 800 178)">Over</text>
+  </g>
+  <text x="860" y="348" text-anchor="middle" font-size="11" fill="#7a7468">派发到目标实体门上，</text>
+  <text x="860" y="365" text-anchor="middle" font-size="11" fill="#7a7468">再沿父子树一路向上冒泡</text>
+  <text x="860" y="396" text-anchor="middle" font-size="10.5" fill="#9a9280">Over / Out / Click / Drag / …</text>
+
+  <text x="500" y="464" text-anchor="middle" font-size="11.5" fill="#7a7468">四段全部跑在 PreUpdate——你的 Update 系统看到的，永远是「本帧拾取已处理完」的世界</text>
+</svg>

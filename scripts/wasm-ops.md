@@ -68,3 +68,17 @@
   画面长相用同源 main.rs 的桌面截图核对，交互在桌面同路径按键验证 + 网页 click 无
   error 旁证。
 - 发布前把全部交互路径（按键/点击/暂停/退出重开）走一遍，记录进回报。
+- **合成 pointermove 必须补 coalesced**（ch25 教训）：winit 0.30 在 Chrome 上只从
+  `getCoalescedEvents()` 取 move 位置，合成 PointerEvent 该列表为空会被静默丢弃——
+  dispatch 前给事件实例覆写 `e.getCoalescedEvents = () => [e]`。down/up/wheel 不受影响。
+  用 iframe 自己 realm 的构造器（`new frame.contentWindow.PointerEvent(...)`），
+  move 记得 `button: -1`（缺省 0 会被 winit 当按键弦事件）。
+- **tab 必须真前台，否则全是假象**（ch25 教训）：后台 tab RAF 停摆，Bevy 一帧不跑，
+  合成事件全部积压、回前台同帧涌入——press 到达时 hover map 还是旧位置的，「拖货」
+  会被误判成拖空处，且 preview_screenshot 30s 超时。preview 面板不可见时换真 Chrome
+  （claude-in-chrome）验证，并先用 Windows-MCP `App switch` 把 Chrome 窗口带到系统前台
+  （`document.visibilityState` 变 visible 才算数）；zoom/screenshot 只带前台一瞬，不够跑帧。
+- **多步交互用 RAF 分帧队列**：按下→拖→松手这类序列别用 setTimeout 定时发（后台被
+  节流到 1Hz），把步骤数组交给 iframe 的 `requestAnimationFrame` 链、每 ~6 帧发一步，
+  与 Bevy 帧序天然对齐；队列置完成 flag，eval 轮询 flag 确认跑完再验证下一段，
+  绝不并行两条队列（交错序列会把状态搅脏）。

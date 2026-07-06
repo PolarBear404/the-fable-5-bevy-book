@@ -1,0 +1,57 @@
+<svg viewBox="0 0 980 470" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr25s" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L9,5 L0,10 z" fill="#274a91"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="980" height="470" rx="10" fill="#f7f5f0"/>
+  <text x="490" y="36" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">一线串糖葫芦（侧视剖面）：按距离排序的完整命中清单</text>
+
+  <!-- 台面：粗线 + 下方浅影 -->
+  <rect x="200" y="332" width="740" height="14" fill="#e6e0d2"/>
+  <line x1="200" y1="332" x2="940" y2="332" stroke="#4a463f" stroke-width="3"/>
+  <text x="912" y="366" text-anchor="end" font-size="12" fill="#4a463f">台面</text>
+
+  <!-- 相机 -->
+  <rect x="96" y="86" width="54" height="42" rx="7" fill="#ffffff" stroke="#4a463f" stroke-width="2"/>
+  <circle cx="112" cy="100" r="6" fill="none" stroke="#4a463f" stroke-width="1.6"/>
+  <polygon points="150,96 178,104 178,118 150,122" fill="#ffffff" stroke="#4a463f" stroke-width="2"/>
+  <text x="123" y="74" text-anchor="middle" font-size="12" fill="#4a463f">相机</text>
+  <text x="123" y="150" text-anchor="middle" font-size="10.5" fill="#7a7468">viewport_to_world</text>
+  <text x="123" y="166" text-anchor="middle" font-size="10.5" fill="#7a7468">反算出 Ray3d</text>
+
+  <!-- 射线：虚线，扎进台面 -->
+  <line x1="176" y1="117" x2="833" y2="323" stroke="#274a91" stroke-width="2.4" stroke-dasharray="9 6" marker-end="url(#arr25s)"/>
+
+  <!-- 琉璃盏：半透明球 -->
+  <circle cx="532" cy="228" r="44" fill="#bfe0dd" fill-opacity="0.55" stroke="#5a8a86" stroke-width="2"/>
+  <text x="532" y="170" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">琉璃盏</text>
+
+  <!-- 鎏金锣：立环側影（下缘半埋进台面，与实测场景一致） -->
+  <rect x="639" y="230" width="42" height="120" rx="21" fill="#f3e2b8" stroke="#8a6a1e" stroke-width="2"/>
+  <rect x="651" y="262" width="18" height="56" rx="9" fill="#f7f5f0" stroke="#8a6a1e" stroke-width="1.4"/>
+  <rect x="637" y="334" width="46" height="18" fill="#e6e0d2"/>
+  <text x="660" y="212" text-anchor="middle" font-size="12.5" fill="#4a463f" font-weight="bold">鎏金锣</text>
+
+  <!-- 备用漆盒：Hidden，虚线轮廓 -->
+  <rect x="766" y="256" width="76" height="76" fill="none" stroke="#8a4a42" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="826" y="240" text-anchor="middle" font-size="12.5" fill="#8a4a42" font-weight="bold">备用漆盒</text>
+  <text x="856" y="382" text-anchor="middle" font-size="10.5" fill="#8a4a42">Visibility::Hidden</text>
+  <text x="856" y="398" text-anchor="middle" font-size="10.5" fill="#8a4a42">——Any 档才串上</text>
+
+  <!-- 四枚串珠 + 距离 -->
+  <g fill="#c05a2e" stroke="#f7f5f0" stroke-width="2">
+    <circle cx="490" cy="215" r="7"/>
+    <circle cx="644" cy="263" r="7"/>
+    <circle cx="766" cy="301" r="7"/>
+    <circle cx="850" cy="328" r="7"/>
+  </g>
+  <g font-size="12.5" fill="#c05a2e" font-weight="bold" text-anchor="middle" stroke="#f7f5f0" stroke-width="4" paint-order="stroke">
+    <text x="474" y="196">4.38 m</text>
+    <text x="628" y="244">6.39 m</text>
+    <text x="752" y="282">7.99 m</text>
+    <text x="874" y="310">9.29 m</text>
+  </g>
+
+  <text x="490" y="446" text-anchor="middle" font-size="11.5" fill="#7a7468">cast_ray 不早退（early_exit_test 恒 false）时给出整串命中，从近到远排好序；VisibleInView 档会跳过隐身的漆盒</text>
+</svg>

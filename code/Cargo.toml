@@ -25,6 +25,7 @@ members = [
     "ch22-lighting",
     "ch23-gltf",
     "ch24-materials",
+    "ch25-picking",
 ]
 
 [workspace.package]

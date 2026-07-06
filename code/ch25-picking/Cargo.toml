@@ -1,0 +1,17 @@
+# ANCHOR: deps
+[package]
+name = "ch25-picking"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug 让报错里印出系统名（第 4 章起的老习惯）；
+# 拾取本体（picking = mesh/sprite/ui 三后端）在默认 feature 里，无需点名
+bevy = { workspace = true, features = ["debug"] }
+
+# 现成相机控制器不在 bevy 默认集合：free_camera 与 pan_camera 两扇门要自己开。
+# 做成本 crate 的默认 feature：平时全绿，25.9 的报错实验用 --no-default-features 复现
+[features]
+default = ["camera-controllers"]
+camera-controllers = ["bevy/free_camera", "bevy/pan_camera"]
+# ANCHOR_END: deps
