@@ -1,0 +1,16 @@
+# ANCHOR: deps
+[package]
+name = "ch27-dev-tools"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug 让报错里印出系统名（第 4 章起的老习惯）
+bevy = { workspace = true, features = ["debug"] }
+
+# 开发工具箱不在 bevy 默认集合：bevy_dev_tools 这扇门要自己开。
+# 做成本 crate 的默认 feature：平时全绿，27.10 的报错实验用 --no-default-features 复现
+[features]
+default = ["dev-tools"]
+dev-tools = ["bevy/bevy_dev_tools"]
+# ANCHOR_END: deps

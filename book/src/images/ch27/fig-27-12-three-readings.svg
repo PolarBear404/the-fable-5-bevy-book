@@ -1,0 +1,70 @@
+<svg viewBox="0 0 900 540" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr27t" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L7,4 L0,8 z" fill="#9a9280"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="900" height="540" rx="10" fill="#f7f5f0"/>
+  <text x="450" y="30" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">一本 Diagnostic 账，三种读数</text>
+
+  <!-- ============ 上半部：测量历史队列 ============ -->
+  <text x="60" y="62" font-size="12" fill="#4a463f">最近 120 笔测量，附时间戳：</text>
+  <g stroke="#4a463f" stroke-width="1.2" fill="#ffffff">
+    <rect x="60"  y="72" width="24" height="24" rx="3"/><rect x="88"  y="72" width="24" height="24" rx="3"/>
+    <rect x="116" y="72" width="24" height="24" rx="3"/><rect x="144" y="72" width="24" height="24" rx="3"/>
+    <rect x="172" y="72" width="24" height="24" rx="3"/><rect x="200" y="72" width="24" height="24" rx="3"/>
+    <rect x="228" y="72" width="24" height="24" rx="3"/><rect x="256" y="72" width="24" height="24" rx="3"/>
+    <rect x="284" y="72" width="24" height="24" rx="3"/><rect x="312" y="72" width="24" height="24" rx="3"/>
+    <rect x="340" y="72" width="24" height="24" rx="3"/><rect x="368" y="72" width="24" height="24" rx="3"/>
+    <rect x="396" y="72" width="24" height="24" rx="3"/><rect x="424" y="72" width="24" height="24" rx="3"/>
+    <rect x="452" y="72" width="24" height="24" rx="3"/><rect x="480" y="72" width="24" height="24" rx="3"/>
+    <rect x="508" y="72" width="24" height="24" rx="3"/><rect x="536" y="72" width="24" height="24" rx="3"/>
+    <rect x="564" y="72" width="24" height="24" rx="3"/><rect x="592" y="72" width="24" height="24" rx="3"/>
+    <rect x="620" y="72" width="24" height="24" rx="3"/><rect x="648" y="72" width="24" height="24" rx="3"/>
+  </g>
+  <rect x="676" y="72" width="24" height="24" rx="3" fill="#efe0c4" stroke="#b8862e" stroke-width="2.2"/>
+  <text x="688" y="116" text-anchor="middle" font-size="10.5" fill="#8a6a1e">最新一笔</text>
+  <path d="M716,84 L764,84" stroke="#9a9280" stroke-width="1.6" fill="none" marker-end="url(#arr27t)"/>
+  <text x="790" y="89" font-size="11" fill="#9a9280">时间</text>
+  <text x="60" y="116" font-size="10.5" fill="#9a9280">（史册长度 with_max_history_length 可调，装满就挤掉最旧的）</text>
+
+  <!-- ============ 下半部：三条读数曲线 ============ -->
+  <line x1="70" y1="150" x2="70" y2="450" stroke="#c9c2b2" stroke-width="1.4"/>
+  <line x1="70" y1="450" x2="660" y2="450" stroke="#c9c2b2" stroke-width="1.4"/>
+  <text x="56" y="230" text-anchor="end" font-size="10.5" fill="#9a9280">大</text>
+  <text x="56" y="390" text-anchor="end" font-size="10.5" fill="#9a9280">小</text>
+  <text x="660" y="468" text-anchor="end" font-size="10.5" fill="#9a9280">时间 →</text>
+
+  <!-- 原始信号（粗浅灰）：前段低平 + 一根尖刺，中段跳上台阶，后段又两根尖刺 -->
+  <path d="M70,390 L160,390 L170,300 L180,390 L300,390 L306,230 L430,230 L440,310 L450,230 L560,230 L570,160 L580,230 L660,230"
+        fill="none" stroke="#c9c2b2" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- value()：细红线，完全贴着原始信号（连尖刺一起） -->
+  <path d="M70,390 L160,390 L170,300 L180,390 L300,390 L306,230 L430,230 L440,310 L450,230 L560,230 L570,160 L580,230 L660,230"
+        fill="none" stroke="#b3402e" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- average()：滑窗均值——最平缓，尖刺摊平，台阶后慢慢爬 -->
+  <path d="M70,388 L160,388 C185,388 190,380 215,383 L300,384 C340,380 370,290 430,252 C455,240 465,250 490,246 C520,242 545,238 575,236 C605,228 635,232 660,231"
+        fill="none" stroke="#33586e" stroke-width="2.4" stroke-linejoin="round"/>
+  <!-- smoothed()：EMA——快速跟上台阶，又滤掉毛刺 -->
+  <path d="M70,386 L162,386 C172,380 176,376 186,382 C196,387 240,387 300,387 C312,330 330,250 366,236 C392,228 420,229 436,236 C446,240 452,234 470,231 C500,228 552,228 566,222 C576,218 582,226 600,228 C620,229 645,228 660,228"
+        fill="none" stroke="#1d6b40" stroke-width="2.4" stroke-linejoin="round"/>
+
+  <text x="120" y="416" font-size="10.5" fill="#9a9280">原始信号（带尖刺）</text>
+
+  <!-- 右侧：三个方法名 -->
+  <line x1="660" y1="230" x2="700" y2="196" stroke="#b3402e" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <rect x="694" y="184" width="14" height="14" rx="3" fill="#b3402e"/>
+  <text x="716" y="196" font-size="12.5" fill="#b3402e" font-family="Consolas, monospace" font-weight="bold">value()</text>
+  <text x="716" y="212" font-size="10.5" fill="#7a7468">敏捷——每笔照录，连尖刺一起</text>
+
+  <line x1="660" y1="228" x2="700" y2="262" stroke="#1d6b40" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <rect x="694" y="250" width="14" height="14" rx="3" fill="#1d6b40"/>
+  <text x="716" y="262" font-size="12.5" fill="#1d6b40" font-family="Consolas, monospace" font-weight="bold">smoothed()</text>
+  <text x="716" y="278" font-size="10.5" fill="#7a7468">折中——跟得上台阶，滤得掉毛刺</text>
+
+  <line x1="660" y1="231" x2="700" y2="328" stroke="#33586e" stroke-width="1.4" stroke-dasharray="3 3"/>
+  <rect x="694" y="316" width="14" height="14" rx="3" fill="#33586e"/>
+  <text x="716" y="328" font-size="12.5" fill="#33586e" font-family="Consolas, monospace" font-weight="bold">average()</text>
+  <text x="716" y="344" font-size="10.5" fill="#7a7468">平稳——尖刺摊平，但整体慢半拍</text>
+
+  <text x="450" y="512" text-anchor="middle" font-size="11.5" fill="#7a7468">同一段测量史，三种口径：播报与水牌默认念 smoothed，翻旧账用 values()/duration 自己算</text>
+</svg>

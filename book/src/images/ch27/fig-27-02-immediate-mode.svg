@@ -1,0 +1,109 @@
+<svg viewBox="0 0 860 540" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr27a" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L8,4.5 L0,9 z" fill="#7a7468"/>
+    </marker>
+    <marker id="arr27b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L7,4 L0,8 z" fill="#9a9280"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="860" height="540" rx="10" fill="#f7f5f0"/>
+  <text x="430" y="30" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">即时模式：粉线只活一帧</text>
+
+  <!-- ============ 帧时间轴 ============ -->
+  <rect x="150" y="52" width="150" height="32" rx="6" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+  <text x="225" y="73" text-anchor="middle" font-size="12" fill="#7a7468">第 N-1 帧</text>
+  <rect x="330" y="52" width="150" height="32" rx="6" fill="#efe0c4" stroke="#b8862e" stroke-width="2"/>
+  <text x="405" y="73" text-anchor="middle" font-size="12.5" fill="#8a6a1e" font-weight="bold">第 N 帧</text>
+  <rect x="510" y="52" width="150" height="32" rx="6" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.4"/>
+  <text x="585" y="73" text-anchor="middle" font-size="12" fill="#7a7468">第 N+1 帧</text>
+  <path d="M304,68 L326,68" stroke="#9a9280" stroke-width="1.6" fill="none" marker-end="url(#arr27b)"/>
+  <path d="M484,68 L506,68" stroke="#9a9280" stroke-width="1.6" fill="none" marker-end="url(#arr27b)"/>
+  <path d="M664,68 L700,68" stroke="#9a9280" stroke-width="1.6" fill="none" marker-end="url(#arr27b)"/>
+  <text x="726" y="73" font-size="11" fill="#9a9280">时间</text>
+
+  <!-- 把第 N 帧展开 -->
+  <path d="M334,86 L28,128" stroke="#b8862e" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+  <path d="M476,86 L832,128" stroke="#b8862e" stroke-width="1.4" stroke-dasharray="5 4" fill="none"/>
+
+  <!-- ============ 一帧之内的四步 ============ -->
+  <rect x="24" y="130" width="812" height="298" rx="10" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.6"/>
+
+  <!-- 步骤一：系统们画线 -->
+  <text x="126" y="158" text-anchor="middle" font-size="13" fill="#4a463f" font-weight="bold">① 系统们画线</text>
+  <rect x="52" y="176" width="44" height="30" rx="5" fill="#eef1f4" stroke="#4a463f" stroke-width="1.4"/>
+  <rect x="104" y="176" width="44" height="30" rx="5" fill="#eef1f4" stroke="#4a463f" stroke-width="1.4"/>
+  <rect x="156" y="176" width="44" height="30" rx="5" fill="#eef1f4" stroke="#4a463f" stroke-width="1.4"/>
+  <text x="74" y="196" text-anchor="middle" font-size="10" fill="#4a463f">系统</text>
+  <text x="126" y="196" text-anchor="middle" font-size="10" fill="#4a463f">系统</text>
+  <text x="178" y="196" text-anchor="middle" font-size="10" fill="#4a463f">系统</text>
+  <path d="M74,206 C74,232 100,240 112,252" stroke="#7a7468" stroke-width="1.6" fill="none" marker-end="url(#arr27a)"/>
+  <path d="M126,206 L126,250" stroke="#7a7468" stroke-width="1.6" fill="none" marker-end="url(#arr27a)"/>
+  <path d="M178,206 C178,232 152,240 140,252" stroke="#7a7468" stroke-width="1.6" fill="none" marker-end="url(#arr27a)"/>
+  <!-- 公共桶 -->
+  <path d="M84,258 L168,258 L156,330 L96,330 Z" fill="#fbf1de" stroke="#4a463f" stroke-width="1.8"/>
+  <line x1="100" y1="286" x2="126" y2="274" stroke="#b8862e" stroke-width="3" stroke-linecap="round"/>
+  <line x1="118" y1="304" x2="148" y2="296" stroke="#2e8ba8" stroke-width="3" stroke-linecap="round"/>
+  <line x1="104" y1="316" x2="132" y2="318" stroke="#1d6b40" stroke-width="3" stroke-linecap="round"/>
+  <text x="126" y="352" text-anchor="middle" font-size="11" fill="#8a6a1e" font-family="Consolas, monospace">GizmoStorage</text>
+  <text x="126" y="376" text-anchor="middle" font-size="10.5" fill="#7a7468">每一笔线段都丢进</text>
+  <text x="126" y="392" text-anchor="middle" font-size="10.5" fill="#7a7468">这只公共桶</text>
+
+  <path d="M216,282 L242,282" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr27a)"/>
+
+  <!-- 步骤二：帧末汇总 -->
+  <text x="330" y="158" text-anchor="middle" font-size="13" fill="#4a463f" font-weight="bold">② 帧末汇总</text>
+  <path d="M262,258 L306,258 L300,296 L268,296 Z" fill="#fbf1de" stroke="#4a463f" stroke-width="1.6"/>
+  <line x1="272" y1="272" x2="288" y2="266" stroke="#b8862e" stroke-width="2.4" stroke-linecap="round"/>
+  <line x1="278" y1="284" x2="296" y2="282" stroke="#2e8ba8" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M310,276 L332,276" stroke="#7a7468" stroke-width="1.8" fill="none" marker-end="url(#arr27a)"/>
+  <rect x="336" y="250" width="72" height="52" rx="6" fill="#eef1f4" stroke="#33586e" stroke-width="1.8"/>
+  <line x1="346" y1="266" x2="398" y2="266" stroke="#33586e" stroke-width="2"/>
+  <line x1="346" y1="276" x2="398" y2="276" stroke="#33586e" stroke-width="2"/>
+  <line x1="346" y1="286" x2="386" y2="286" stroke="#33586e" stroke-width="2"/>
+  <text x="372" y="322" text-anchor="middle" font-size="10.5" fill="#33586e">一份顶点数据</text>
+  <text x="330" y="376" text-anchor="middle" font-size="10.5" fill="#7a7468">桶里的线段合成一份，</text>
+  <text x="330" y="392" text-anchor="middle" font-size="10.5" fill="#7a7468">交给渲染器</text>
+
+  <path d="M424,282 L450,282" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr27a)"/>
+
+  <!-- 步骤三：渲染上屏 -->
+  <text x="534" y="158" text-anchor="middle" font-size="13" fill="#4a463f" font-weight="bold">③ 渲染上屏</text>
+  <rect x="472" y="230" width="124" height="84" rx="8" fill="#2a2c31" stroke="#4a463f" stroke-width="2"/>
+  <polyline points="486,292 516,254 544,286 572,248" fill="none" stroke="#e8c34a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="522" y="314" width="24" height="10" fill="#c9c2b2"/>
+  <rect x="508" y="324" width="52" height="6" rx="3" fill="#c9c2b2"/>
+  <text x="534" y="376" text-anchor="middle" font-size="10.5" fill="#7a7468">和场景一起</text>
+  <text x="534" y="392" text-anchor="middle" font-size="10.5" fill="#7a7468">画到屏幕上</text>
+
+  <path d="M612,282 L638,282" stroke="#7a7468" stroke-width="2" fill="none" marker-end="url(#arr27a)"/>
+
+  <!-- 步骤四：清空桶 -->
+  <text x="732" y="158" text-anchor="middle" font-size="13" fill="#4a463f" font-weight="bold">④ 清空桶</text>
+  <g transform="rotate(64 726 292)">
+    <path d="M684,264 L768,264 L756,336 L696,336 Z" fill="#ffffff" stroke="#4a463f" stroke-width="1.8"/>
+  </g>
+  <path d="M700,238 C716,224 744,224 760,238" stroke="#9a9280" stroke-width="1.6" fill="none" stroke-dasharray="4 3" marker-end="url(#arr27b)"/>
+  <line x1="676" y1="330" x2="662" y2="342" stroke="#c9c2b2" stroke-width="2.4" stroke-linecap="round"/>
+  <line x1="690" y1="342" x2="682" y2="354" stroke="#c9c2b2" stroke-width="2.4" stroke-linecap="round"/>
+  <text x="732" y="376" text-anchor="middle" font-size="10.5" fill="#7a7468">桶一倒而空——</text>
+  <text x="732" y="392" text-anchor="middle" font-size="10.5" fill="#7a7468">这帧的线就此谢幕</text>
+
+  <!-- ============ 下一帧：虚线重复 ============ -->
+  <rect x="24" y="444" width="812" height="42" rx="8" fill="none" stroke="#9a9280" stroke-width="1.6" stroke-dasharray="7 5"/>
+  <text x="44" y="470" font-size="12" fill="#7a7468" font-weight="bold">下一帧</text>
+  <rect x="110" y="452" width="76" height="26" rx="5" fill="none" stroke="#9a9280" stroke-width="1.3" stroke-dasharray="4 3"/>
+  <text x="148" y="470" text-anchor="middle" font-size="11" fill="#7a7468">画</text>
+  <path d="M190,465 L212,465" stroke="#9a9280" stroke-width="1.4" fill="none" marker-end="url(#arr27b)"/>
+  <rect x="216" y="452" width="76" height="26" rx="5" fill="none" stroke="#9a9280" stroke-width="1.3" stroke-dasharray="4 3"/>
+  <text x="254" y="470" text-anchor="middle" font-size="11" fill="#7a7468">汇总</text>
+  <path d="M296,465 L318,465" stroke="#9a9280" stroke-width="1.4" fill="none" marker-end="url(#arr27b)"/>
+  <rect x="322" y="452" width="76" height="26" rx="5" fill="none" stroke="#9a9280" stroke-width="1.3" stroke-dasharray="4 3"/>
+  <text x="360" y="470" text-anchor="middle" font-size="11" fill="#7a7468">上屏</text>
+  <path d="M402,465 L424,465" stroke="#9a9280" stroke-width="1.4" fill="none" marker-end="url(#arr27b)"/>
+  <rect x="428" y="452" width="76" height="26" rx="5" fill="none" stroke="#9a9280" stroke-width="1.3" stroke-dasharray="4 3"/>
+  <text x="466" y="470" text-anchor="middle" font-size="11" fill="#7a7468">清空</text>
+  <text x="540" y="470" font-size="11" fill="#9a9280">……桶重新从空开始</text>
+
+  <text x="430" y="518" text-anchor="middle" font-size="11.5" fill="#7a7468">想让线常驻，就每帧都画——或者用 27.6 的保留模式</text>
+</svg>
