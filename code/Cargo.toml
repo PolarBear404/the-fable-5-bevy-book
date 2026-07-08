@@ -28,6 +28,7 @@ members = [
     "ch25-picking",
     "ch26-quality",
     "ch27-dev-tools",
+    "ch28-ui-layout",
 ]
 
 [workspace.package]

@@ -1,0 +1,52 @@
+<svg viewBox="0 0 880 440" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arr28m" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L9,5 L0,10 z" fill="#b8862e"/>
+    </marker>
+    <marker id="arr28c" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L9,5 L0,10 z" fill="#33586e"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="880" height="440" rx="10" fill="#f7f5f0"/>
+  <text x="440" y="32" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">Flexbox 的两根轴——flex_direction 定主轴，交叉轴与它垂直</text>
+
+  <!-- ============ 左：Row ============ -->
+  <text x="210" y="76" text-anchor="middle" font-size="13.5" fill="#4a463f" font-family="Consolas, monospace" font-weight="bold">flex_direction: Row（默认）</text>
+  <rect x="50" y="92" width="320" height="230" rx="6" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.8"/>
+  <rect x="66" y="108" width="64" height="60" rx="4" fill="#b3402e"/>
+  <rect x="144" y="108" width="64" height="95" rx="4" fill="#2e8ba8"/>
+  <rect x="222" y="108" width="64" height="130" rx="4" fill="#1d6b40"/>
+  <text x="98" y="144" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">1</text>
+  <text x="176" y="144" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">2</text>
+  <text x="254" y="144" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">3</text>
+
+  <!-- 主轴：水平向右 -->
+  <path d="M58,346 L356,346" stroke="#b8862e" stroke-width="3" fill="none" marker-end="url(#arr28m)"/>
+  <text x="60" y="372" font-size="12.5" fill="#8a6a1e" font-weight="bold">主轴 main axis</text>
+  <text x="60" y="390" font-size="10.5" fill="#8a6a1e">justify_content 管这根轴上怎么分空地</text>
+
+  <!-- 交叉轴：垂直向下 -->
+  <path d="M394,100 L394,300" stroke="#33586e" stroke-width="3" fill="none" marker-end="url(#arr28c)"/>
+  <text x="406" y="150" font-size="12.5" fill="#33586e" font-weight="bold" transform="rotate(90 406 150)">交叉轴 cross axis</text>
+
+  <!-- ============ 右：Column ============ -->
+  <text x="660" y="76" text-anchor="middle" font-size="13.5" fill="#4a463f" font-family="Consolas, monospace" font-weight="bold">flex_direction: Column</text>
+  <rect x="500" y="92" width="320" height="230" rx="6" fill="#ffffff" stroke="#c9c2b2" stroke-width="1.8"/>
+  <rect x="516" y="108" width="64" height="52" rx="4" fill="#b3402e"/>
+  <rect x="516" y="172" width="110" height="52" rx="4" fill="#2e8ba8"/>
+  <rect x="516" y="236" width="156" height="52" rx="4" fill="#1d6b40"/>
+  <text x="548" y="140" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">1</text>
+  <text x="548" y="204" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">2</text>
+  <text x="548" y="268" text-anchor="middle" font-size="14" fill="#ffffff" font-weight="bold">3</text>
+
+  <!-- 主轴：垂直向下 -->
+  <path d="M844,100 L844,300" stroke="#b8862e" stroke-width="3" fill="none" marker-end="url(#arr28m)"/>
+  <text x="856" y="150" font-size="12.5" fill="#8a6a1e" font-weight="bold" transform="rotate(90 856 150)">主轴 main axis</text>
+
+  <!-- 交叉轴：水平向右 -->
+  <path d="M508,346 L806,346" stroke="#33586e" stroke-width="3" fill="none" marker-end="url(#arr28c)"/>
+  <text x="510" y="372" font-size="12.5" fill="#33586e" font-weight="bold">交叉轴 cross axis</text>
+  <text x="510" y="390" font-size="10.5" fill="#33586e">align_items 管这根轴上怎么站</text>
+
+  <text x="440" y="424" text-anchor="middle" font-size="11.5" fill="#7a7468">记法：justify＝主轴、align＝交叉轴；Reverse 只是把主轴倒过来放</text>
+</svg>

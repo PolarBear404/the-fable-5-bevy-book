@@ -1,0 +1,46 @@
+<svg viewBox="0 0 900 380" xmlns="http://www.w3.org/2000/svg" font-family="system-ui, 'Segoe UI', 'Microsoft YaHei', sans-serif">
+  <rect x="0" y="0" width="900" height="380" rx="10" fill="#f7f5f0"/>
+  <text x="450" y="32" text-anchor="middle" font-size="17" fill="#4a463f" font-weight="bold">8 列地有 9 条格线——正数从头数，负数从尾数</text>
+
+  <!-- 8 个格子 -->
+  <g fill="#ffffff" stroke="#c9c2b2" stroke-width="1.2">
+    <rect x="90" y="150" width="90" height="90"/><rect x="180" y="150" width="90" height="90"/>
+    <rect x="270" y="150" width="90" height="90"/><rect x="360" y="150" width="90" height="90"/>
+    <rect x="450" y="150" width="90" height="90"/><rect x="540" y="150" width="90" height="90"/>
+    <rect x="630" y="150" width="90" height="90"/><rect x="720" y="150" width="90" height="90"/>
+  </g>
+
+  <!-- start_span(4, 2)：格线 4 → 格线 6 的色块 -->
+  <rect x="366" y="156" width="168" height="78" rx="3" fill="#e3c88a" stroke="#b8862e" stroke-width="2"/>
+  <text x="450" y="190" text-anchor="middle" font-size="14" fill="#5c4712" font-family="Consolas, monospace" font-weight="bold">start_span(4, 2)</text>
+  <text x="450" y="212" text-anchor="middle" font-size="10.5" fill="#5c4712">从格线 4 起步，跨 2 格</text>
+
+  <!-- 9 条竖格线（4 与 6 描金加粗） -->
+  <g stroke="#4a463f" stroke-width="2">
+    <line x1="90" y1="128" x2="90" y2="262"/><line x1="180" y1="128" x2="180" y2="262"/>
+    <line x1="270" y1="128" x2="270" y2="262"/>
+    <line x1="450" y1="128" x2="450" y2="262"/>
+    <line x1="630" y1="128" x2="630" y2="262"/>
+    <line x1="720" y1="128" x2="720" y2="262"/><line x1="810" y1="128" x2="810" y2="262"/>
+  </g>
+  <line x1="360" y1="122" x2="360" y2="268" stroke="#b8862e" stroke-width="3.5"/>
+  <line x1="540" y1="122" x2="540" y2="268" stroke="#b8862e" stroke-width="3.5"/>
+
+  <!-- 正数编号（上） -->
+  <g font-size="14" fill="#4a463f" font-weight="bold" text-anchor="middle">
+    <text x="90" y="114">1</text><text x="180" y="114">2</text><text x="270" y="114">3</text>
+    <text x="360" y="110" fill="#8a6a1e" font-size="15">4</text>
+    <text x="450" y="114">5</text><text x="540" y="114" fill="#8a6a1e">6</text><text x="630" y="114">7</text>
+    <text x="720" y="114">8</text><text x="810" y="114">9</text>
+  </g>
+
+  <!-- 负数编号（下） -->
+  <g font-size="13" fill="#7a7468" text-anchor="middle">
+    <text x="90" y="288">−9</text><text x="180" y="288">−8</text><text x="270" y="288">−7</text>
+    <text x="360" y="288">−6</text><text x="450" y="288">−5</text><text x="540" y="288">−4</text>
+    <text x="630" y="288">−3</text><text x="720" y="288">−2</text><text x="810" y="288">−1</text>
+  </g>
+
+  <text x="450" y="330" text-anchor="middle" font-size="11.5" fill="#8a6a1e">色块＝座位表里的包厢：从第 4 条格线起步、跨 2 个格子，到格线 6 为止</text>
+  <text x="450" y="358" text-anchor="middle" font-size="11.5" fill="#7a7468">n 列地有 n+1 条格线；−1 永远是最后一条——start_end(1, −1) 不管地有几列都横贯到底</text>
+</svg>

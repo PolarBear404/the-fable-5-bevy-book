@@ -28,6 +28,9 @@
 - **驱动脚本禁用 `subprocess.PIPE`**：ICU4X 对每次中文文本重排刷 stderr，4KB 管道塞满
   → 子进程阻塞 → winit 消息泵冻结（窗口未响应、按键全丢）。临时驱动用文件重定向，
   正式 make 脚本 DEVNULL。
+- **临时探针同样要先 `_set_dpi_aware()`**：漏了它截图几何错位（125% 缩放下坐标全偏），
+  配合暗色文字的阈值检测会得出「功能没生效」的误判（ch28 曾据此误判 Overflow::clip
+  无效，像素差分复核才翻案）。一行都不能省。
 - SendInput 三重保险（make_ch22_figures.py 已内置）：①每次 tap/hold 前
   force_foreground（带 Alt 空击解锁前台限制，失败即 raise）；②按住期间穿插抓帧时
   每 3 帧重发一次 keydown（PrintWindow 会吃掉抬键/按住状态）；③段落收尾 keyup 发

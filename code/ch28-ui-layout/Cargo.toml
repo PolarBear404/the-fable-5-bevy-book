@@ -1,0 +1,16 @@
+# ANCHOR: deps
+[package]
+name = "ch28-ui-layout"
+edition.workspace = true
+publish.workspace = true
+
+[dependencies]
+# debug 让报错里印出系统名（第 4 章起的老习惯）
+bevy = { workspace = true, features = ["debug"] }
+
+# UI 透视镜（28.4）不在 bevy 默认集合：bevy_ui_debug 这扇门要自己开。
+# 做成本 crate 的默认 feature，与第 27 章 dev-tools 同一手法
+[features]
+default = ["ui-debug"]
+ui-debug = ["bevy/bevy_ui_debug"]
+# ANCHOR_END: deps
