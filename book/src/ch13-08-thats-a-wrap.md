@@ -1,6 +1,6 @@
 # 杀青
 
-全章零件总装。机位单上三台机器：左路 `order 0` 跟拍阿燕，右路 `order 1` 跟拍踏雪，沙盘机 `order 2` 叠在右上角、两层通吃；马克点和两位主演的图例住在工作层，正片机位一概看不见；窗口一变，导播台整体重排；场记每四秒报一次左路的实拍范围。
+全章零件总装。机位单上三台机器：左路 `order 0` 跟拍阿燕，右路 `order 1` 跟拍踏雪，沙盘机 `order 2` 叠在右上角、两层通吃；衬布、马克点和两位主演的图例住在工作层，正片机位一概看不见；窗口一变，导播台整体重排；场记每四秒报一次左路的实拍范围。
 
 ```rust
 {{#include ../../code/ch13-cameras/src/main.rs}}
@@ -12,7 +12,7 @@
 cargo run -p ch13-cameras
 ```
 
-窗口左右分屏各追各的主角，右上角的沙盘里两个大图例在小黄点阵中画着各自的轨迹；控制台同步记着台账：
+窗口左右分屏各追各的主角，右上角衬布垫底的沙盘里，两个大图例在小黄点阵中画着各自的轨迹；控制台同步记着台账：
 
 ```text
 老雷：《侠客行》最后一场——全机位联动，开机！
@@ -22,7 +22,7 @@ cargo run -p ch13-cameras
 场记：左路实拍 x [-501, 32]，y [-122, 478]。
 ```
 
-![总装画面：左右分屏分别跟拍侠客与白马，右上角叠着沙盘小图，沙盘里有马克点与两位主演的大号图例，分屏画面里则没有](images/ch13/fig-13-09-wrap.png)
+![总装画面：左右分屏分别跟拍侠客与白马，右上角叠着深色衬布垫底的沙盘小图，沙盘里有马克点与两位主演的大号图例，分屏画面里则没有](images/ch13/fig-13-09-wrap.png)
 
 <span class="caption">Figure 13-9：全机位联动——order 排出三层画面，RenderLayers 各自结算</span>
 
@@ -35,7 +35,7 @@ cargo run -p ch13-cameras
 ## 小结
 
 - **相机是实体**：`Camera2d`/`Camera3d` 靠 required components 带齐 `Camera`、`Projection`、`Transform` 等全家桶；2D 与 3D 各启用一条渲染管线。没有相机就没有画面
-- **清屏色**：底色是相机每帧擦出来的。全局默认在 `ClearColor` 资源（出厂深灰），每台相机可用 `clear_color: ClearColorConfig` 改持 `Custom(颜色)` 或 `None`（不擦、直接叠画）
+- **清屏色**：底色是相机每帧擦出来的。全局默认在 `ClearColor` 资源（出厂深灰），相机可用 `clear_color: ClearColorConfig` 改持 `Custom(颜色)` 或 `None`（不擦、直接叠画）；同一个窗口上多相机时**只有排最前的那台真正清屏**，后画的一律直接叠画，它们的 `clear_color` 不落地
 - **运镜即改 `Transform`**：跟拍是每帧更新相机坐标；`smooth_nudge(&target, decay_rate, delta)` 给镜头帧率无关的平滑迟滞，速率越大追得越紧。相机的 z 别乱动——±1000 的可见区间以它为基准
 - **`Projection`** 一个枚举两大流派：正交（远近等大，2D 默认）与透视（近大远小，3D 默认）。`OrthographicProjection` 故意不实现 `Default`，构造用 `..default_2d()`（near = −1000）或 `..default_3d()`（near = 0）打底；`area` 字段是以相机为原点的真取景框，平移到相机位置即实拍范围
 - **世界↔视口换算**：视口坐标原点在左上、y 朝下。`viewport_to_world_2d` 把视口点（如鼠标）反算成世界坐标，`world_to_viewport` 走反向（血条、标签定位）
@@ -48,7 +48,7 @@ cargo run -p ch13-cameras
 
 1. **手感调校**：把 Listing 13-12 左路跟拍的 `smooth_nudge` 速率从 `2.0` 分别改成 `0.5` 和 `10.0`（右路保持 `2.0`），先预测分屏两侧的运镜差异，再运行对比。
 2. **电影感推拉**：Listing 13-7 的切镜是硬切。把 `cut_shots` 改成“每帧把 `ortho.scale` 向目标档位平滑逼近”——`f32` 同样实现了 `StableInterpolate`，`scale.smooth_nudge(&target, 3.0, delta)` 即可。分镜切换瞬间的观感会发生什么变化？
-3. **沙盘三连改**：基于 Listing 13-10 依次实验——把沙盘机的 `clear_color` 改成 `ClearColorConfig::None`；把它的 `RenderLayers` 改成只看 `from_layers(&[1])`；删掉图例子实体上的 `RenderLayers::layer(CREW_LAYER)`。每一步先预测沙盘和正片各自的变化，再运行验证。第三步的结果请用“RenderLayers 不沿层级继承”解释。
-4. **谁埋了沙盘**：把 Listing 13-12 里沙盘机的 `order` 改成 `0`、左路改成 `2`，预测右上角会发生什么，运行印证。提示：每台相机动笔前都要按自己的 `clear_color` 擦一遍自己的地盘。
+3. **沙盘三连改**：基于 Listing 13-10 依次实验——给主机位挂 `clear_color: ClearColorConfig::Custom(Color::BLACK)`、同时给沙盘机挂 `Custom(Color::WHITE)`，看哪台的颜色真上了画面、上在哪些地方；把沙盘机的 `RenderLayers` 改成只看 `from_layers(&[1])`；删掉图例子实体上的 `RenderLayers::layer(CREW_LAYER)`。每一步先预测沙盘和正片各自的变化，再运行验证。第一步的结果请用“只有排最前的相机清屏”解释，第三步的请用“RenderLayers 不沿层级继承”解释。
+4. **谁埋了沙盘**：把 Listing 13-12 里沙盘机的 `order` 改成 `0`、左路改成 `2`，预测右上角会发生什么，运行后盯着看至少十几秒再下结论。提示：后画的相机不清屏，右路只是把自己看见的东西叠上去——沙盘什么时候被埋、什么时候透出来，取决于那一刻右路的镜头里、那块地皮上画没画东西。
 
 下一章拍摄继续，但镜头转向幕后——片场里所有看得见的东西至今都是代码里现编的色块。真正的美术素材（图片、音频、字体、模型）怎么进入游戏？第 14 章拆 Bevy 的 Asset 系统：`AssetServer`、`Handle`，以及“加载是异步的”这件事如何改变你组织代码的方式。

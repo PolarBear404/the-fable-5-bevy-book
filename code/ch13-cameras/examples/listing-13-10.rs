@@ -42,13 +42,13 @@ fn setup(mut commands: Commands) {
             ..OrthographicProjection::default_2d()
         }),
     ));
-    // 沙盘机：order 靠后（叠在主画面上方），看第 0 层和工作层
+    // 沙盘机：order 靠后（叠在主画面上方），看第 0 层和工作层。
+    // 后画的相机不清屏，沙盘的底色由下面工作层的衬布负责
     commands.spawn((
         Camera2d,
         MinimapLens,
         Camera {
             order: 1,
-            clear_color: ClearColorConfig::Custom(Color::srgb(0.09, 0.08, 0.07)),
             ..default()
         },
         Projection::Orthographic(OrthographicProjection {
@@ -77,6 +77,14 @@ fn setup(mut commands: Commands) {
     }
 
     // ANCHOR: crew_props
+    // 沙盘的衬布：一块盖满沙盘取景框的深色底，也只许工作层看见——
+    // 同一窗口只有排最前的相机清屏，沙盘想要自己的底色，得真画一块
+    commands.spawn((
+        Sprite::from_color(Color::srgb(0.09, 0.08, 0.07), Vec2::new(1240.0, 940.0)),
+        Transform::from_xyz(0.0, 0.0, -20.0),
+        RenderLayers::layer(CREW_LAYER),
+    ));
+
     // 马克点：阿燕的走位记号，只许工作层看见
     for (x, y) in [(0.0, 0.0), (420.0, 0.0), (-420.0, 0.0), (297.0, 210.0), (-297.0, -210.0)] {
         commands.spawn((
